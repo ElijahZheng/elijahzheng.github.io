@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>电子邮件的实现之 SMTP（Java版） | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">电子邮件的实现之 SMTP（Java版）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 22, 2017&nbsp;&nbsp;23:24:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>1.SMTP协议简介</p>
+<p>SMTP（Simple Mail Transfer Protocol）即简单邮件传输协议，目标是向用户提供高效、可靠的邮件传输。它的一个重要特点是它能够在传送中接力传送邮件，即邮件可以通过不同网络上的主机接力式传送。通常它工作在两种情况下：一是邮件从客户机传输到服务器；二是从某一个服务器传输到另一个服务器。SMTP 是一个请求/响应协议，它监听 25 号端口，用于接收用户的 Mail 请求，并与远端 Mail 服务器建立 SMTP 连接。</p>
+<a id="more"></a>
+
+<p>2.SMTP协议工作机制</p>
+<p>SMTP通常有两种工作模式。发送SMTP和接收SMTP。具体工作方式为：发送SMTP在接收到用户的邮件请求后，判断此邮件是否为本地邮件，若是直接投送到用户的邮箱，否则向DNS查询远端邮件服务器的MX记录，并建立与远端接收SMTP之间的一个双向传送通道，此后SMTP命令由发送SMTP发出，由接收SMTP接收，而应答则反方向传送。一旦传送通道建立，SMTP发送者发送MAIL命令指明邮件发送者。如果SMTP接收者可以接收邮件则返回OK应答。SMTP发送者再发出RCPT命令确认邮件是否接收到。如果SMTP接收者接收，则返回OK应答；如果不能接收到，则发出拒绝接收应答（但不中止整个邮件操作），双方将如此反复多次。当接收者收到全部邮件后会接收到特别的序列，入伏哦接收者成功处理了邮件，则返回OK应答。</p>
+<p>3.SMTP的连接和发送过程<br>（a）建立TCP连接<br>（b）客户端发送HELO命令以标识发件人自己的身份，然后客户端发送MAIL命令；服务器端正希望以OK作为响应，表明准备接收。<br>（c）客户端发送RCPT命令，以标识该电子邮件的计划接收人，可以有多个RCPT行；服务器端则表示是否愿意为收件人接收邮件<br>（d）协商结束，发送邮件，用命令DATA发送<br>（e）以.表示结束输入内容一起发送出去<br>（f）结束此次发送，用QUIT命令退出。</p>
+<p>4.准备工作<br>1）注册新浪邮箱<br>2）准备包文件<br>activation-1.1.jar 以及 javax.mail-1.4.4.jar<br>下载链接<br><a href="https://cdn.zhengxiangling.com/activation-1.1.jar" target="_blank" rel="noopener">activation-1.1.jar</a><br><a href="https://cdn.zhengxiangling.com/activation-1.1.jar" target="_blank" rel="noopener">javax.mail-1.4.4.jar</a><br>3)导入包文件    </p>
+<p>在项目中新建<code>lib</code>文件夹，将两个包文件放入文件夹中<br><img src="https://cdn.zhengxiangling.com/17-11-23/10495710.jpg" alt=""></p>
+<p>右击包文件，选择 Build Path -&gt; Configure Build Path，然后出现下图<br><img src="https://cdn.zhengxiangling.com/17-11-23/6832403.jpg" alt=""><br>点击 Libralies -&gt; Add JARS -&gt; 选中<code>lib</code>文件夹中的 <code>.jar</code>文件，重复步骤导入两个包文件</p>
+<p>5.代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">package SMTP;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Address;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Message;</span><br><span class="line"><span class="keyword">import</span> javax.mail.MessagingException;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Session;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Transport;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.InternetAddress;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><br><span class="line"><span class="keyword">import</span> com.sun.mail.util.MailSSLSocketFactory;</span><br><span class="line"><span class="keyword">import</span> java.security.GeneralSecurityException;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SMTP</span> </span>&#123;  </span><br><span class="line">	public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws MessagingException,</span><br><span class="line">			GeneralSecurityException &#123;</span><br><span class="line">		Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">		<span class="comment">// 开启debug调试</span></span><br><span class="line">		props.setProperty(<span class="string">"mail.debug"</span>, <span class="string">"true"</span>);</span><br><span class="line">		<span class="comment">// 发送服务器需要身份验证</span></span><br><span class="line">		props.setProperty(<span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span>);</span><br><span class="line">		<span class="comment">// 设置邮件服务器主机名</span></span><br><span class="line">		props.setProperty(<span class="string">"mail.host"</span>, <span class="string">"smtp.sina.cn"</span>);</span><br><span class="line">		<span class="comment">// 发送邮件协议名称</span></span><br><span class="line">		props.setProperty(<span class="string">"mail.transport.protocol"</span>, <span class="string">"smtp"</span>);</span><br><span class="line">		Session session = Session.getInstance(props);</span><br><span class="line">		Message msg = <span class="keyword">new</span> MimeMessage(session);</span><br><span class="line">		msg.setSubject(<span class="string">"STMP 测试"</span>);</span><br><span class="line">		StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">	</span><br><span class="line">		builder.append(<span class="string">"My name is Elijah"</span>);</span><br><span class="line">		msg.setText(builder.toString());</span><br><span class="line">		msg.setFrom(<span class="keyword">new</span> InternetAddress(<span class="string">"your_number@sina.cn"</span>));</span><br><span class="line">		Transport transport = session.getTransport();</span><br><span class="line">		transport.connect(<span class="string">"smtp.sina.cn"</span>, <span class="string">"xxx@sina.cn"</span>, <span class="string">"your_password"</span>);</span><br><span class="line">		transport.sendMessage(msg, <span class="keyword">new</span> Address[] &#123; <span class="keyword">new</span> InternetAddress(<span class="string">"xxx@sina.cn"</span>) &#125;);</span><br><span class="line">		transport.close();</span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数分析</p>
+<p> SMTP的响应，它的一般形式是：XXX  Readable Illustration。XXX是三位十进制数；Readable Illustration是可读的解释说明，用来表明命令是否成功等。XXX具有如下的规律：以2开头的表示成功，以4和5开头的表示失败，以3开头的表示未完成（进行中）</p>
+<p> C: client S: server</p>
+<p>域服务器准备好了，之后的为域服务器自动返回的信息</p>
+<p>HELO 客户端为标识自己的身份而发送的命令（通常带域名）</p>
+<p>250 请求动作完成</p>
+<p>AUTH LOGIN 请求认证</p>
+<p>等待用户输入验证信息</p>
+<p>dxNlcm5hbWU6  服务器的响应——经过base64编码了的“Username”= </p>
+<p>334 UGFzc3dvcmQ6  经过BASE64编码了的”Password:”= </p>
+<p>235 auth successfully 认证成功   </p>
+<p>MAIL FROM: 发送者邮箱</p>
+<p>RCPT TO:  接收者邮箱 </p>
+<p>DATA  请求发送数据  </p>
+<p>开始邮件输入，以.结束</p>
+<p><CR><LF> 回车 + 换行</p>
+<p>QUIT 终止会话</p>
+<p>服务器关闭</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/11/22/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-SMTP/">blog.zhengxiangling.com/2017/11/22/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-SMTP/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"># 电子邮件</a>
+                    
+                        <a href="/tags/SMTP/"># SMTP</a>
+                    
+                        <a href="/tags/JAVA/"># JAVA</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-POP3%EF%BC%88Java%E7%89%88%EF%BC%89/">电子邮件的实现之 POP3（Java版）</a>
+            
+            
+            <a class="next" rel="next" href="/2017/10/27/%E4%BD%BF%E7%94%A8uWSGI-nginx-%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%EF%BC%8C%E9%85%8D%E7%BD%AE-uWSGI-%E4%BD%BF%E7%94%A8-ini-%E6%96%87%E4%BB%B6%E5%8E%BB%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%EF%BC%89/">使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

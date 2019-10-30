@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>hexo博客搭建 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">hexo博客搭建</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 26, 2017&nbsp;&nbsp;21:56:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%88%AC%E5%9D%91/">爬坑</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>一、技术栈</p>
+<ol>
+<li>Markdown</li>
+<li>Hexo</li>
+<li>git</li>
+</ol>
+<p>二、工具</p>
+<ol>
+<li>图床 – <a href="https://jiantuku.com/" target="_blank" rel="noopener">极简图床</a></li>
+</ol>
+<p>三、开始搞事情</p>
+<blockquote>
+<blockquote>
+<p>注：此教程使用的命令基于 Linux, 在Window系统上的安装方式会稍有不同。</p>
+</blockquote>
+</blockquote>
+<a id="more"></a>
+
+<p>1.Hexo是什么？<br>简单地说，Hexo是一个轻量级的Node.js博客框架，反正我们搭建博客的框架就是他了。</p>
+<p>2.install git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git-core</span><br><span class="line">// 测试安装成功，输出版本号即安装成功</span><br><span class="line">git version</span><br></pre></td></tr></table></figure>
+
+<p>3.install node</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">"<span class="variable">$HOME</span>/.nvm"</span></span><br><span class="line">[ -s <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> ] &amp;&amp; . <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> <span class="comment"># This loads nvm</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">command</span> -v nvm</span><br><span class="line"></span><br><span class="line">nvm install stable</span><br><span class="line">// 测试安装成功，输出版本号即安装成功</span><br><span class="line">node --version</span><br></pre></td></tr></table></figure>
+
+<p>4.国内的npm速度受限，可以使用淘宝镜像加速。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install cnpm -g --registry=https://registry.npm.taobao.org</span><br><span class="line">// 测试安装成功，输出版本号即安装成功</span><br><span class="line">cnpm version</span><br></pre></td></tr></table></figure>
+
+<p>5.install hexo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cnpm install -g hexo-cli</span><br><span class="line">// 测试安装成功，输出版本号即安装成功</span><br><span class="line">hexo version</span><br></pre></td></tr></table></figure>
+
+<p>6.注册 极简图床 和 Coding 账号</p>
+<p>7.开始搭建    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 新建用于存放博客的文件夹</span><br><span class="line">mkdir hexo-start</span><br><span class="line"><span class="built_in">cd</span> hexo-start</span><br><span class="line"></span><br><span class="line">// 初始化hexo</span><br><span class="line">hexo init</span><br><span class="line">cnpm install</span><br></pre></td></tr></table></figure>
+
+<p>目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml	</span><br><span class="line">├── package.json	</span><br><span class="line">├── scaffolds	</span><br><span class="line">├── source	</span><br><span class="line">|   ├── _drafts	</span><br><span class="line">|   └── _posts	</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+
+<p>8.run起来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>然后访问<a href="http://localhost:4000/，访问成功说明成功了第一步了。" target="_blank" rel="noopener">http://localhost:4000/，访问成功说明成功了第一步了。</a></p>
+<p>9.使用hexo-admin可视化编写博客    </p>
+<p>1)install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install --save hexo-admin</span><br></pre></td></tr></table></figure>
+<p>2)创建admin的密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">node</span><br><span class="line">&gt; const bcrypt = require(<span class="string">'bcrypt-nodejs'</span>)</span><br><span class="line">// undefined</span><br><span class="line">&gt; bcrypt.hashSync(<span class="string">'your_ password'</span>)</span><br><span class="line">//<span class="string">'$2a$10$cHnT1Ri... 这是密码的哈希映射值'</span></span><br></pre></td></tr></table></figure>
+
+<p>3）编辑_config.yml，配置用户名和密码，加入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">admin:</span><br><span class="line">  username: user_name</span><br><span class="line">  password_hash: 填入前面生成的密码的哈希值</span><br><span class="line">  secret: a secret something (用于产生cookie值的，可以不用变)</span><br></pre></td></tr></table></figure>
+<p>重新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>此三句命令是重复的，我们加到<code>.sh</code>文件然后每次用<code>bash</code>命令执行即可。</p>
+<p>新建<code>restart.sh</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>然后每次执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash restart.sh</span><br></pre></td></tr></table></figure>
+<p>即可</p>
+<p>然后访问<a href="http://localhost:4000/admin，出现下图说明admin安装成功" target="_blank" rel="noopener">http://localhost:4000/admin，出现下图说明admin安装成功</a><br><img src="https://cdn.zhengxiangling.com/17-11-4/24341704.jpg" alt=""></p>
+<p>10.实现RRS订阅功能</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+
+<p>然后配置_config.yml</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># feed</span><br><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: <span class="number">20</span></span><br><span class="line">  hub:</span><br><span class="line">   content</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash restart.sh</span><br></pre></td></tr></table></figure>
+<p>即<a href="http://localhost:4000/atom.xml" target="_blank" rel="noopener">http://localhost:4000/atom.xml</a></p>
+<p>11.更换主题<br><a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a><br>其他主题自选，这里使用NexT主题作为演示</p>
+<p>1)install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next.git</span><br></pre></td></tr></table></figure>
+<p>2)启用主题<br>修改_config.yml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// theme: landscape</span><br><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash restart.sh</span><br></pre></td></tr></table></figure>
+
+<p>重新访问，主题更换了说明更换主题成功。<br>NexT主题更多配置（修改样式及第三方服务）自行查看文档。<br><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
+<p>12.将静态页面部署到 coding 上<br>1)install hexo-deployer-git 插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>2)coding新建项目，hexo-start    </p>
+<p>3)然后修改<code>_config.yml</code></p>
+<p>修改 root，将root改为coding上面的项目名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">...</span><br><span class="line">root: /hexo-start/</span><br><span class="line">...</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
+<p>修改远程coding的地址<br><img src="https://cdn.zhengxiangling.com/17-11-4/21989627.jpg" alt=""><br><code>repo</code>要填的仓库地址如图所示的位置，点击复制即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: 仓库地址</span><br><span class="line">  branch: master</span><br><span class="line">  message: blog update</span><br></pre></td></tr></table></figure>
+
+<p>4)修改完之后，部署到 coding 上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>5)开启 Pages 服务</p>
+<p><img src="https://cdn.zhengxiangling.com/17-11-4/88756341.jpg" alt=""></p>
+<p>点击 Pages服务，部署来源选择 master 分支，点击 保存。显示 Coding Pages 已经运行在 http://… ,说明已经成功将博客部署在 coding 上了。</p>
+<p><img src="https://cdn.zhengxiangling.com/59551e572a02a.jpg" alt=""></p>
+<blockquote>
+<blockquote>
+<p>代码地址 <a href="https://github.com/ElijahZheng/hexo-start" target="_blank" rel="noopener">https://github.com/ElijahZheng/hexo-start</a></p>
+</blockquote>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/06/26/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">blog.zhengxiangling.com/2017/06/26/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/06/29/markdown%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/">markdown语法入门指南（待续）</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

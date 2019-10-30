@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>Git入门 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Git入门</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 7, 2017&nbsp;&nbsp;10:36:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%88%AC%E5%9D%91/">爬坑</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="一、git实现简单的文件上传"><a href="#一、git实现简单的文件上传" class="headerlink" title="一、git实现简单的文件上传"></a>一、git实现简单的文件上传</h3><hr>
+<p>（这里会用到coding）<a href="https://coding.net/" target="_blank" rel="noopener">-&gt;</a></p>
+<h4 id="创建自己的项目"><a href="#创建自己的项目" class="headerlink" title="创建自己的项目"></a>创建自己的项目</h4><ul>
+<li>基础选项<ul>
+<li>项目名称 – 建议用全英文</li>
+<li>属性 – 公开</li>
+</ul>
+</li>
+<li>初始化仓库<ul>
+<li>启用README.md文件初始化项目</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="clone到本地仓库"><a href="#clone到本地仓库" class="headerlink" title="clone到本地仓库"></a>clone到本地仓库</h4><p><img src="https://cdn.zhengxiangling.com/17-8-2/99368394.jpg" alt="upload successful"><br>选择要clone到的文件夹，比如我要clone到桌面，我的桌面名字为Desktop</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> Desktop</span><br><span class="line">$ git <span class="built_in">clone</span> 你刚才复制的地址</span><br><span class="line"><span class="comment"># clone完成之后进入clone下来的文件夹里</span></span><br><span class="line">$ <span class="built_in">cd</span> [your_dir]</span><br></pre></td></tr></table></figure>
+
+<h4 id="在clone下来的文件夹里新建文件"><a href="#在clone下来的文件夹里新建文件" class="headerlink" title="在clone下来的文件夹里新建文件"></a>在clone下来的文件夹里新建文件</h4><ul>
+<li>然后进入clone好的文件夹里新建一个自定义文件，比如新建一个666.txt</li>
+</ul>
+<p><img src="https://cdn.zhengxiangling.com/17-8-2/28532100.jpg" alt="upload successful"></p>
+<h4 id="查看此时本地仓库的状态"><a href="#查看此时本地仓库的状态" class="headerlink" title="查看此时本地仓库的状态"></a>查看此时本地仓库的状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git status 命令</span></span><br><span class="line">$ git status</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.zhengxiangling.com/17-8-2/76557526.jpg" alt="upload successful"></p>
+<h4 id="将修改文件添加到暂缓区（index）"><a href="#将修改文件添加到暂缓区（index）" class="headerlink" title="将修改文件添加到暂缓区（index）"></a>将修改文件添加到暂缓区（index）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git add 命令</span></span><br><span class="line">$ git add 666.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="确认无误后添加到本地仓库（repository）"><a href="#确认无误后添加到本地仓库（repository）" class="headerlink" title="确认无误后添加到本地仓库（repository）"></a>确认无误后添加到本地仓库（repository）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git commit 命令 （-m 表示提交的信息）</span></span><br><span class="line">$ git commit -m <span class="string">'my_message'</span> (注意 -m 前后面都有一个空格)</span><br></pre></td></tr></table></figure>
+
+<p>附：(没有则跳过)<br>如果提示出现please tell me who you are，按照求输入就行了.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &apos;填写你的邮箱&apos;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &apos;你的名字&apos;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="本地修改完成后提交到远程仓库（remote）"><a href="#本地修改完成后提交到远程仓库（remote）" class="headerlink" title="本地修改完成后提交到远程仓库（remote）"></a>本地修改完成后提交到远程仓库（remote）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 git push 命令</span></span><br><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、修改工作区文件，传到远程仓库"><a href="#二、修改工作区文件，传到远程仓库" class="headerlink" title="二、修改工作区文件，传到远程仓库"></a>二、修改工作区文件，传到远程仓库</h3><hr>
+<ul>
+<li>修改666.txt的内容,添加信息 hello world</li>
+</ul>
+<p><img src="https://cdn.zhengxiangling.com/17-8-2/44073607.jpg" alt="upload successful"></p>
+<ul>
+<li><p>添加到暂缓区<br><code>$ git add 666.txt</code></p>
+</li>
+<li><p>添加到本地仓库<br><code>$ git commit -m &#39;我添加了一些信息&#39;</code></p>
+</li>
+<li><p>上传到远程仓库<br><code>$ git push</code></p>
+</li>
+</ul>
+<p><img src="https://cdn.zhengxiangling.com/17-8-2/70902125.jpg" alt="upload successful"></p>
+<p>然后就可以看到上传的文件和备注的一些信息了。</p>
+<blockquote>
+<p>分享<br>廖雪峰的官方网站-Git教程<br><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
+</blockquote>
+<blockquote>
+<p>   如有疑惑，欢迎留言提出~</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/07/07/Git%E5%85%A5%E9%97%A8/">blog.zhengxiangling.com/2017/07/07/Git%E5%85%A5%E9%97%A8/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/git/"># git</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/07/08/css%E5%B8%B8%E7%94%A8%E5%B1%85%E4%B8%AD/">css居中</a>
+            
+            
+            <a class="next" rel="next" href="/2017/07/07/Git%E5%88%9D%E6%8E%A2/">Git之常用代码</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

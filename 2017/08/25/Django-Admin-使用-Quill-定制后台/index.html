@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>Django Admin 使用富文本插件 Quill 定制后台 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Django Admin 使用富文本插件 Quill 定制后台</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 25, 2017&nbsp;&nbsp;17:22:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%88%AC%E5%9D%91/">爬坑</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="为什么选择-Quill"><a href="#为什么选择-Quill" class="headerlink" title="为什么选择 Quill"></a>为什么选择 Quill</h4><p>自从网站的出现，内容创作已经成为了核心。文本域<code>textarea</code>对几乎所有的网站应用提供了一个基础的解决方法。但是在某些情况下你可能需要对文本输入做一些格式设置。这就出现了富文本编辑器。现在拥有很多的解决途径，但是 Quill 会给你一些 Modern Ideas 来考虑去使用它。</p>
+<a id="more"></a>
+
+<p>图例</p>
+<p><img src="https://cdn.zhengxiangling.com/17-8-25/16063078.jpg" alt=""></p>
+<h5 id="在admin-py中注册你需要增加富文本插件的表"><a href="#在admin-py中注册你需要增加富文本插件的表" class="headerlink" title="在admin.py中注册你需要增加富文本插件的表"></a>在admin.py中注册你需要增加富文本插件的表</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> app <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="meta">@admin.register(models.YourTable)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">YourTableAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    search_fields = (<span class="string">'name'</span>, <span class="string">'desc'</span>, <span class="string">'type__name'</span>)</span><br><span class="line">    list_display = (<span class="string">'name'</span>, <span class="string">'desc'</span>, <span class="string">'type'</span>)</span><br><span class="line">    ordering = (<span class="string">'-id'</span>, )</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Media</span>:</span></span><br><span class="line">        js = (</span><br><span class="line">            <span class="string">'http://cdn.quilljs.com/1.2.4/quill.min.js'</span>,</span><br><span class="line">            <span class="string">'静态路径/my_admin.js'</span>,</span><br><span class="line">        )</span><br><span class="line">        css = &#123;</span><br><span class="line">            <span class="string">'all'</span>: (</span><br><span class="line">                <span class="string">'http://cdn.quilljs.com/1.2.4/quill.snow.css'</span>,</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.zhengxiangling.com/17-8-25/85990711.jpg" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>要点</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@admin.register()</td>
+<td align="center">括号里填你要运用富文本的数据表</td>
+</tr>
+<tr>
+<td>search_fields</td>
+<td align="center">加入搜索功能，括号里填表中拥有的字段，搜索内容会从填入字段中进行查询</td>
+</tr>
+<tr>
+<td>list_display</td>
+<td align="center">填入表中拥有的字段，定义在admin中显示的字段信息</td>
+</tr>
+<tr>
+<td>ordering</td>
+<td align="center">排序关键字，-id代表按id倒序排列，也就是最新的会排在上面</td>
+</tr>
+<tr>
+<td>class Media</td>
+<td align="center">引入外部资源，引入我们需要用到的Quill的css和js文件，其中 静态路径/my_admin.js是我们自己新建的js文件，用来自定义Quill所需要的样式</td>
+</tr>
+</tbody></table>
+<h5 id="在my-admin-js-中定义Quill样式及富文本要显示的位置"><a href="#在my-admin-js-中定义Quill样式及富文本要显示的位置" class="headerlink" title="在my_admin.js 中定义Quill样式及富文本要显示的位置"></a>在my_admin.js 中定义Quill样式及富文本要显示的位置</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">django.jQuery(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $ = django.jQuery</span><br><span class="line"></span><br><span class="line">    $(<span class="string">'#id_desc'</span>).css(&#123;</span><br><span class="line">        <span class="string">'opacity'</span>: <span class="string">'0'</span>,</span><br><span class="line">        <span class="string">'height'</span>: <span class="string">'1em'</span>,</span><br><span class="line">    &#125;).after(<span class="string">'&lt;div id="descEditor" style="height: 600px"&gt;&lt;/div&gt;'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> toolbarOptions = [</span><br><span class="line">        [<span class="string">'bold'</span>, <span class="string">'italic'</span>, <span class="string">'underline'</span>, <span class="string">'strike'</span>], <span class="comment">// toggled buttons</span></span><br><span class="line">        [<span class="string">'blockquote'</span>, <span class="string">'code-block'</span>],</span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">'list'</span>: <span class="string">'ordered'</span> &#125;, &#123; <span class="string">'list'</span>: <span class="string">'bullet'</span> &#125;],</span><br><span class="line">        [&#123; <span class="string">'indent'</span>: <span class="string">'-1'</span> &#125;, &#123; <span class="string">'indent'</span>: <span class="string">'+1'</span> &#125;], <span class="comment">// outdent/indent</span></span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">'header'</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="literal">false</span>] &#125;],</span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">'color'</span>: [] &#125;], <span class="comment">// dropdown with defaults from theme</span></span><br><span class="line">        [&#123; <span class="string">'font'</span>: [] &#125;],</span><br><span class="line">        [&#123; <span class="string">'align'</span>: [] &#125;],</span><br><span class="line">        [<span class="string">'clean'</span>], <span class="comment">// remove formatting button</span></span><br><span class="line">        [<span class="string">'image'</span>]</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> editor = <span class="keyword">new</span> Quill(<span class="string">'#descEditor'</span>, &#123;</span><br><span class="line">        modules: &#123;</span><br><span class="line">            toolbar: &#123;</span><br><span class="line">                container: toolbarOptions,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        theme: <span class="string">'snow'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> $textarea = <span class="built_in">document</span>.querySelector(<span class="string">'#id_desc'</span>)</span><br><span class="line">    editor.on(<span class="string">'text-change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">delta, oldDelta, source</span>) </span>&#123;</span><br><span class="line">        $textarea.value = editor.root.innerHTML</span><br><span class="line">    &#125;)</span><br><span class="line">    editor.root.innerHTML = $textarea.value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>要点</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>var $ = django.jQuery</td>
+<td align="center">Django自带jquery，赋值给$比较符合平常使用规范</td>
+</tr>
+<tr>
+<td>$(‘#id_desc’)</td>
+<td align="center">选中需要运用富文本元素的id（id为admin自己生成），所有id需要自行修改</td>
+</tr>
+<tr>
+<td>id=”descEditor”</td>
+<td align="center">id=”descEditor”为需要插入的富文本插件的id，可自行修改</td>
+</tr>
+<tr>
+<td>editor.on(‘text-change’)</td>
+<td align="center">官方api，当富文本的内容改变时，调用该接口</td>
+</tr>
+</tbody></table>
+<p>editor.on()的作用是，将富文本编辑好的源代码保存在原来的<code>textarea</code>中，这样点击保存修改时才会将富文本的源代码存回到数据库中。</p>
+<h5 id="点击上传图片按钮时，将图片保存到-七牛云"><a href="#点击上传图片按钮时，将图片保存到-七牛云" class="headerlink" title="点击上传图片按钮时，将图片保存到 七牛云"></a>点击上传图片按钮时，将图片保存到 七牛云</h5><p>首先，我们要获取token值    </p>
+<blockquote>
+<blockquote>
+<p>token值是什么，可以参考我的文章 – <a href="https://blog.zhengxiangling.com/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/">DJANGO 运用 七牛云 作为图床上传图片</a><br>定义获取token值的api</p>
+</blockquote>
+</blockquote>
+<p>urls.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r'^api/qntoken$'</span>, views.api_qn_token),</span><br></pre></td></tr></table></figure>
+
+<p>views.py中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">api_qn_token</span><span class="params">(request)</span>:</span></span><br><span class="line"></span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">'qntoken'</span>: qn.upload_token(<span class="string">'对象存储名'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(json.dumps(data), content_type=<span class="string">'application/json'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后再my_admin.js中增加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">django.jQuery(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $ = django.jQuery</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">var</span> editor = <span class="keyword">new</span> Quill(<span class="string">'#descEditor'</span>, &#123;</span><br><span class="line">        modules: &#123;</span><br><span class="line">            toolbar: &#123;</span><br><span class="line">                container: toolbarOptions,</span><br><span class="line">                handlers: &#123;</span><br><span class="line">                    image: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                        $(<span class="string">'#qnUpload'</span>).click()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        theme: <span class="string">'snow'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    $.<span class="keyword">get</span>('/api/qntoken', function(data)&#123;</span><br><span class="line">        $(<span class="string">'body'</span>).append(<span class="string">'&lt;form id="qn" method="post" action="http://upload.qiniu.com/" enctype="multipart/form-data"&gt;'</span> +</span><br><span class="line">            <span class="string">'&lt;input name="token" type="hidden" value="'</span>+ data.qntoken +<span class="string">'"&gt;'</span> +</span><br><span class="line">            <span class="string">'&lt;input id="qnUpload" name="file" type="file" style="display: none"/&gt;'</span> +</span><br><span class="line">        <span class="string">'&lt;/form&gt;'</span>)</span><br><span class="line"></span><br><span class="line">        $(<span class="string">'#qnUpload'</span>).change(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            $.ajax(&#123;                        </span><br><span class="line">                url: <span class="string">'http://up-z2.qiniu.com/'</span>,</span><br><span class="line">                type: <span class="string">'POST'</span>,</span><br><span class="line">                data: <span class="keyword">new</span> FormData($(<span class="string">'#qn'</span>)[<span class="number">0</span>]),</span><br><span class="line">                cache: <span class="literal">false</span>,</span><br><span class="line">                contentType: <span class="literal">false</span>,</span><br><span class="line">                processData: <span class="literal">false</span>,</span><br><span class="line">            &#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params"> data </span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> imgSrc = <span class="string">'http://ov8c***.bkt.clouddn.com/'</span> + data.hash</span><br><span class="line">                <span class="keyword">var</span> range = editor.getSelection();</span><br><span class="line">                editor.insertEmbed(range.index, <span class="string">'image'</span>, imgSrc, Quill.sources.USER);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>点击图片按钮，就可以将图片上传到 七牛云 了。</p>
+<p>到此，富文本插件就完成了。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/08/25/Django-Admin-%E4%BD%BF%E7%94%A8-Quill-%E5%AE%9A%E5%88%B6%E5%90%8E%E5%8F%B0/">blog.zhengxiangling.com/2017/08/25/Django-Admin-%E4%BD%BF%E7%94%A8-Quill-%E5%AE%9A%E5%88%B6%E5%90%8E%E5%8F%B0/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Django/"># Django</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/08/25/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/">Django 运用 七牛云 作为图床上传图片</a>
+            
+            
+            <a class="next" rel="next" href="/2017/08/03/http%E5%88%B0https-%E5%B9%B6%E7%94%A8cdn%E5%8A%A0%E9%80%9F%E8%B5%84%E6%BA%90/">http到https 并用cdn加速资源</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

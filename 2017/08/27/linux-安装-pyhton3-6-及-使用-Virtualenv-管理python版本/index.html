@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>linux 安装 python3.6 及 使用 Virtualenv 管理python版本 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">linux 安装 python3.6 及 使用 Virtualenv 管理python版本</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 27, 2017&nbsp;&nbsp;14:59:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>购买的云服务器装机的linux会自带python2.7和python3的版本，但是python3一般都不是最新版本的，所以想升级到最新版本，还得手动升级。文章主要讲怎么安装python3.6版本，使用Virtualenv管理python版本，使用豆瓣镜像的pip提速pip下载，以及一些安装时会遇到的bug。</p>
+<a id="more"></a>
+
+<p>1.安装必要的依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">apt-get install yum</span><br><span class="line">yum -y groupinstall development</span><br><span class="line">yum -y install zlib-devel</span><br><span class="line">yum -y install sqlite-devel</span><br><span class="line">apt-get install make</span><br></pre></td></tr></table></figure>
+
+<p>2.安装 gcc、make 和 zlib 压缩/解压缩库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aptitude -y install gcc make zlib1g-dev</span><br></pre></td></tr></table></figure>
+
+<p>3.安装python3.6</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//已经cdn加速</span><br><span class="line"> wget https://cdn.zhengxiangling.com/Python-3.6.2.tar.xz</span><br><span class="line"> tar xJf Python-3.6.2.tar.xz</span><br><span class="line"> <span class="built_in">cd</span> Python-3.6.2</span><br><span class="line"> ./configure --with-ssl</span><br><span class="line"> make &amp;&amp; make altinstall</span><br></pre></td></tr></table></figure>
+<p><code>--with-ssl</code> 是为了给 python3 增加 ssl模块</p>
+<p>4.查看python3的版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -V</span><br></pre></td></tr></table></figure>
+
+<p>5.配置pip，使用豆瓣镜像加速下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.pip</span><br><span class="line">vim pip.conf</span><br></pre></td></tr></table></figure>
+<p>  然后在<code>pip.conf</code>中添加内容，<br>  按 <code>a</code><br>  然后添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host = pypi.douban.com</span><br><span class="line">index-url = http://pypi.douban.com/simple</span><br></pre></td></tr></table></figure>
+<p>  写好后按<code>wq</code>保存</p>
+<p>6.下载virtualenv</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenv</span><br><span class="line">//涉及到权限时，使用 sudo 执行</span><br><span class="line">sudo pip install virtualenv</span><br></pre></td></tr></table></figure>
+
+<p>7.创建python虚拟环境</p>
+<p>上面安装的python3.6的文件夹路径默认是在 <code>/usr/python3</code>中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//进到用到存放虚拟环境文件夹的路径，一般放在 ~ 中</span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">virtualenv -p /usr/<span class="built_in">local</span>/bin/python3.6 env3.6</span><br></pre></td></tr></table></figure>
+<p>8.激活virtualenv</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> env3.6</span><br><span class="line"><span class="built_in">source</span> ./bin/activate</span><br></pre></td></tr></table></figure>
+
+<p>  这样就可以激活 virtualenv了</p>
+<p>  如果在其他文件夹操作时，想激活虚拟环境，也可以执行</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/env3.6/bin/activate</span><br></pre></td></tr></table></figure>
+<p>  来进行激活</p>
+<p>9.关闭virtualenv</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/08/27/linux-%E5%AE%89%E8%A3%85-pyhton3-6-%E5%8F%8A-%E4%BD%BF%E7%94%A8-Virtualenv-%E7%AE%A1%E7%90%86python%E7%89%88%E6%9C%AC/">blog.zhengxiangling.com/2017/08/27/linux-%E5%AE%89%E8%A3%85-pyhton3-6-%E5%8F%8A-%E4%BD%BF%E7%94%A8-Virtualenv-%E7%AE%A1%E7%90%86python%E7%89%88%E6%9C%AC/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        <a href="/tags/linux/"># linux</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/09/06/https%E9%83%A8%E7%BD%B2/">ssh 连接远程服务器</a>
+            
+            
+            <a class="next" rel="next" href="/2017/08/25/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/">Django 运用 七牛云 作为图床上传图片</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

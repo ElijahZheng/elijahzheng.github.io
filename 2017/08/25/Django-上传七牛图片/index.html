@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>Django 运用 七牛云 作为图床上传图片 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Django 运用 七牛云 作为图床上传图片</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 25, 2017&nbsp;&nbsp;22:40:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>用 七牛云 作为图床，是一个不错的选择，有一定免费量的存储空间。本文介绍怎么使用 七牛云 来存储图片。</p>
+<a id="more"></a>
+
+<h4 id="1-注册七牛云个人账户"><a href="#1-注册七牛云个人账户" class="headerlink" title="1.注册七牛云个人账户"></a>1.注册七牛云个人账户</h4><p>选择个人账户</p>
+<h4 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h4><p>注册成功在资源主页 点击对象存储 –&gt;立即添加，存储名称 （按自己喜好），这里为了后面方便先起名为chuangyi（创意），存储区域默认，访问空间选择公开空间。–&gt; 确定创建</p>
+<h4 id="3-获取有用的信息。"><a href="#3-获取有用的信息。" class="headerlink" title="3.获取有用的信息。"></a>3.获取有用的信息。</h4><p>1）秘钥<br>左边栏，进入个人中心，点击秘钥管理，然后会有公钥和密钥。    </p>
+<table>
+<thead>
+<tr>
+<th>AccessKey</th>
+<th align="center">SecretKey</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AK:a40Z71LFfbz_kDJnfOJflyI**</td>
+<td align="center">SK:JnfOJflyIOYpMy6eOnXMbsP**</td>
+</tr>
+</tbody></table>
+<p>这里的公钥和密钥后面会有用。<br>2）测试域名<br>  找到存储空间列表，点击chuangyi，空间概览里右边有测试域名。<br>  我这里是 <code>opjb0b***.bkt.clouddn.com</code> 每个人的都会不一样。</p>
+<h4 id="4-在django项目中引入七牛。"><a href="#4-在django项目中引入七牛。" class="headerlink" title="4.在django项目中引入七牛。"></a>4.在django项目中引入七牛。</h4><p>在有 manager.py的目录下，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install qiniu</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">easy_install qiniu</span><br></pre></td></tr></table></figure>
+<p>ps：如果受权限限制就用sudo执行。</p>
+<h4 id="5-配置七牛"><a href="#5-配置七牛" class="headerlink" title="5.配置七牛"></a>5.配置七牛</h4><p>1)在cyzc的settings.py中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qiniu</span><br><span class="line"></span><br><span class="line">qn = qiniu.Auth(</span><br><span class="line">    <span class="string">'a40Z71LFfbz_kDJnfOJflyI**'</span>,</span><br><span class="line">    <span class="string">'JnfOJflyIOYpMy6eOnXMbsP**'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>（说明：Auth中填入的是之前说的公钥和秘钥。每个人的公钥和密钥都不一样，请自行替换）</p>
+<p>2）运用七牛<br>从views.py中传token值到页面中。<br>引入qn<br>views.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> cyzc.settings <span class="keyword">import</span> qn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qn_test</span><span class="params">(request)</span>:</span></span><br><span class="line">	data = &#123;</span><br><span class="line">        <span class="string">'upload_token'</span>: qn.upload_token(<span class="string">"chuangyi"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+
+<p>将token值返回给html，因为用七牛上传图片时需要上传的权限，这个token值就是上传时需要的证明。<br>其中upload_token()中的值为对应的七牛上面创建的存储空间的名字。</p>
+<p>3）在html页面给input绑定这个token值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if upload_token %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"qn"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"http://upload.qiniu.com/"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"token"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"&#123;&#123; upload_token &#125;&#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"qnUpload"</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>这个直接复制粘贴就可以了。</p>
+<p>4）给需要上传图片的按钮增加class=”upload-btn”</p>
+<p>我们需要用到的是先创建一个隐藏的input，其中name对应着要上传的字段的名字。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">class</span>=<span class="string">"my_upload"</span> <span class="attr">name</span>=<span class="string">"img"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>5）然后给按钮绑定一个点击事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'.upload-btn'</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#qnUpload'</span>).click();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中upload-btn 为点击按钮的class名，qnUpload 为隐藏的七牛上传文件的input的Id名。<br>就相当于点击自定义按钮，实际上触发的是七牛的input的上传按钮。</p>
+<p>6）当上传图片时，触发change事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'#qnUpload'</span>).change(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.value) &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: <span class="string">'http://up-z2.qiniu.com/'</span>,</span><br><span class="line">            type: <span class="string">'POST'</span>,</span><br><span class="line">            data: <span class="keyword">new</span> FormData($(<span class="string">'#qn'</span>)[<span class="number">0</span>]),</span><br><span class="line">            cache: <span class="literal">false</span>,</span><br><span class="line">            contentType: <span class="literal">false</span>,</span><br><span class="line">            processData: <span class="literal">false</span></span><br><span class="line">        &#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> img_src = <span class="string">'http://opjb0b**.bkt.clouddn.com/'</span> + data.hash;</span><br><span class="line">           $(<span class="string">".my_upload"</span>).val(img_src); </span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里的也直接复制就好。（也可以自行修改class或id属性值）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>data为上传成功时返回的图片数据，data.hash则为图片的名称。</p>
+<p>7）然后我们可以直接获取上传成功的图片路径然后渲染在html页面上。<br>图片的路径为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> img_src = <span class="string">'http://opjb0***.bkt.clouddn.com/'</span> + data.hash;</span><br></pre></td></tr></table></figure>
+<p>其中<code>http://~~</code>为之前说的测试域名（ps：拼接路径名时别忘记了 ‘/‘ ）。</p>
+<h4 id="6-需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。"><a href="#6-需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。" class="headerlink" title="6. 需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。"></a>6. 需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。</h4>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/08/25/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/">blog.zhengxiangling.com/2017/08/25/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Django/"># Django</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/08/27/linux-%E5%AE%89%E8%A3%85-pyhton3-6-%E5%8F%8A-%E4%BD%BF%E7%94%A8-Virtualenv-%E7%AE%A1%E7%90%86python%E7%89%88%E6%9C%AC/">linux 安装 python3.6 及 使用 Virtualenv 管理python版本</a>
+            
+            
+            <a class="next" rel="next" href="/2017/08/25/Django-Admin-%E4%BD%BF%E7%94%A8-Quill-%E5%AE%9A%E5%88%B6%E5%90%8E%E5%8F%B0/">Django Admin 使用富文本插件 Quill 定制后台</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

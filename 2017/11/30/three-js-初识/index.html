@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>three.js 初识 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">three.js 初识</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 30, 2017&nbsp;&nbsp;14:07:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>什么是threejs，很简单，你将它理解成three + js就可以了。three表示3D的意思，js表示javascript的意思。那么合起来，three.js就是使用javascript 来写3D程序的意思。</p>
+<a id="more"></a>
+
+<p>在Three.js中，要渲染物体到网页中，我们需要3个组建：场景（scene）、相机（camera）和渲染器（renderer）。有了这三样东西，才能将物体渲染到网页中去。</p>
+<p>创建这三要素的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scene = <span class="keyword">new</span> THREE.Scene();  <span class="comment">// 场景</span></span><br><span class="line"><span class="keyword">var</span> camera = <span class="keyword">new</span> THREE.PerspectiveCamera(<span class="number">75</span>, <span class="built_in">window</span>.innerWidth/<span class="built_in">window</span>.innerHeight, <span class="number">0.1</span>, <span class="number">1000</span>);<span class="comment">// 透视相机</span></span><br><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> THREE.WebGLRenderer();   <span class="comment">// 渲染器</span></span><br><span class="line">renderer.setSize(<span class="built_in">window</span>.innerWidth, <span class="built_in">window</span>.innerHeight);    <span class="comment">// 设置渲染器的大小为窗口的内宽度，也就是内容区的宽度</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(renderer.domElement);</span><br></pre></td></tr></table></figure>
+
+<p>场景是所有物体的容器，如果要显示一个苹果，就需要将苹果对象加入场景中。</p>
+<p>相机，相机决定了场景中那个角度的景色会显示出来。相机就像人的眼睛一样，人站在不同位置，抬头或者低头都能够看到不同的景色。场景只有一种，但是相机却又很多种。</p>
+<p>渲染器决定了渲染的结果应该画在页面的什么元素上面，并且以怎样的方式来绘制。</p>
+<p>点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> point1 = <span class="keyword">new</span> THREE.Vector3();</span><br><span class="line"></span><br><span class="line">point1.set(<span class="number">4</span>,<span class="number">8</span>,<span class="number">9</span>);</span><br></pre></td></tr></table></figure>
+
+<p>线 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> geometry = <span class="keyword">new</span> THREE.Geometry();</span><br><span class="line"><span class="keyword">var</span> material = <span class="keyword">new</span> THREE.LineBasicMaterial( &#123; <span class="attr">vertexColors</span>: <span class="literal">true</span> &#125; );</span><br><span class="line"><span class="keyword">var</span> color1 = <span class="keyword">new</span> THREE.Color( <span class="number">0x444444</span> ), color2 = <span class="keyword">new</span> THREE.Color( <span class="number">0xFF0000</span> );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 线的材质可以由2点的颜色决定</span></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> THREE.Vector3( <span class="number">-100</span>, <span class="number">0</span>, <span class="number">100</span> );</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> THREE.Vector3(  <span class="number">100</span>, <span class="number">0</span>, <span class="number">-100</span> );</span><br><span class="line">geometry.vertices.push(p1);</span><br><span class="line">geometry.vertices.push(p2);</span><br><span class="line">geometry.colors.push( color1, color2 );</span><br><span class="line"><span class="keyword">var</span> line = <span class="keyword">new</span> THREE.Line( geometry, material, THREE.LinePieces );</span><br><span class="line">scene.add(line);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> geometry = <span class="keyword">new</span> THREE.Geometry();</span><br></pre></td></tr></table></figure>
+
+<p>几何体里面有一个vertices变量，可以用来存放点。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">LineBasicMaterial( parameters )</span><br><span class="line"></span><br><span class="line">Parameters是一个定义材质外观的对象，它包含多个属性来定义材质，这些属性是：</span><br><span class="line"></span><br><span class="line">Color：线条的颜色，用<span class="number">16</span>进制来表示，默认的颜色是白色。</span><br><span class="line"></span><br><span class="line">Linewidth：线条的宽度，默认时候<span class="number">1</span>个单位宽度。</span><br><span class="line"></span><br><span class="line">Linecap：线条两端的外观，默认是圆角端点，当线条较粗的时候才看得出效果，如果线条很细，那么你几乎看不出效果了。</span><br><span class="line"></span><br><span class="line">Linejoin：两个线条的连接点处的外观，默认是“round”，表示圆角。</span><br><span class="line"></span><br><span class="line">VertexColors：定义线条材质是否使用顶点颜色，这是一个boolean值。意思是，线条各部分的颜色会根据顶点的颜色来进行插值。（如果关于插值不是很明白，可以QQ问我，QQ在前言中你一定能够找到，嘿嘿，虽然没有明确写出）。</span><br><span class="line"></span><br><span class="line">Fog：定义材质的颜色是否受全局雾效的影响。</span><br><span class="line"></span><br><span class="line">好了，介绍完这些参数，你可以试一试了，在课后，我们会展示不同同学的杰出作品。下面，接着上面的讲，我们这里使用了顶点颜色vertexColors: THREE.VertexColors，就是线条的颜色会根据顶点来计算。</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> material = <span class="keyword">new</span> THREE.LineBasicMaterial( &#123; <span class="attr">vertexColors</span>: THREE.VertexColors &#125; );</span><br></pre></td></tr></table></figure>
+
+<p>改变视角，让画面动起来</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">animation</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// renderer.clear()</span></span><br><span class="line">  camera.position.x = camera.position.x + <span class="number">1</span></span><br><span class="line">  renderer.render(scene, camera)</span><br><span class="line">  requestAnimationFrame(animation)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*** 场景（scene） ***/</span></span><br><span class="line"><span class="keyword">var</span> scene = <span class="keyword">new</span> THREE.Scene(); <span class="comment">// 创建场景</span></span><br><span class="line">scene.add(x);                  <span class="comment">// 插入场景</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 相机（camera） ***/</span></span><br><span class="line"><span class="comment">// 正交投影相机</span></span><br><span class="line"><span class="keyword">var</span> camera = <span class="keyword">new</span> THREE.OrthographicCamera(left, right, top, bottom, near, far);</span><br><span class="line"><span class="comment">// 透视头像相机</span></span><br><span class="line"><span class="keyword">var</span> camera = <span class="keyword">new</span> THREE.PerspectiveCamera(fov, aspect, near, far); <span class="comment">// fov：人眼夹角，aspect：长宽比</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 渲染器（renderer） ***/</span></span><br><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> THREE.WebGLRenderer(options);</span><br><span class="line"><span class="comment">// options &#123;&#125; 可选。参数：</span></span><br><span class="line"><span class="comment">// canvas：element &lt;canvas&gt;&lt;/canvas&gt;</span></span><br><span class="line">renderer.setSize(长, 宽);</span><br><span class="line">element.appendChild(renderer.domElement); <span class="comment">// 插入节点</span></span><br><span class="line">renderer.setClearColor(color, opacity);   <span class="comment">// 设置清除后的颜色 16进制</span></span><br><span class="line">renderer.clear();                         <span class="comment">// 清除面板</span></span><br><span class="line">renderer.render(scene, camera);           <span class="comment">// 渲染</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 光照(light) ***/</span></span><br><span class="line"><span class="keyword">new</span> THREE.AmbientLight(颜色);                          <span class="comment">// 环境光</span></span><br><span class="line"><span class="keyword">new</span> THREE.PointLight(颜色, 强度, 距离);                <span class="comment">// 点光源</span></span><br><span class="line"><span class="keyword">new</span> THREE.DirectionalLight(颜色, 亮度);                <span class="comment">// 平行光</span></span><br><span class="line"><span class="keyword">new</span> THREE.SpotLight(颜色, 强度, 距离, 夹角, 衰减指数); <span class="comment">// 聚光灯</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 几何形状 ***/</span></span><br><span class="line"><span class="keyword">new</span> THREE.CubeGeometry(长, 宽, 高, 长的分割, 宽的分割, 高的分割);                           <span class="comment">// 立方体</span></span><br><span class="line"><span class="keyword">new</span> THREE.PlanGeometry(长,宽, 长的分割, 宽的分割);                                          <span class="comment">// 平面</span></span><br><span class="line"><span class="keyword">new</span> THREE.SphereGeometry(半径, 经度切片, 纬度分割, 经度分割, 经度跨过, 纬度开始, 纬度跨过); <span class="comment">// 球体</span></span><br><span class="line"><span class="keyword">new</span> THREE.CircleGeometry(半径, 切片数, 开始, 跨过角度);                                     <span class="comment">// 圆形</span></span><br><span class="line"><span class="keyword">new</span> THREE.CylinderGeometry(顶部面积, 底部面积, 高, 圆分割, 高分割, 是否没有顶面和底面);     <span class="comment">// 圆台</span></span><br><span class="line"><span class="keyword">new</span> THREE.TetrahedronGeometry(半径, 细节);  <span class="comment">// 正四边形</span></span><br><span class="line"><span class="keyword">new</span> THREE.OctahedronGeometry(半径, 细节);   <span class="comment">// 正八边形</span></span><br><span class="line"><span class="keyword">new</span> THREE.IconsahedronGeometry(半径, 细节); <span class="comment">// 正十二边形</span></span><br><span class="line"><span class="keyword">new</span> THREE.TorusGeometry(半径, 管道半径, 纬度分割, 经度分割, 圆环面的弧度); <span class="comment">// 圆环面</span></span><br><span class="line"><span class="comment">// 自定义形状</span></span><br><span class="line"><span class="keyword">var</span> geometry = <span class="keyword">new</span> THREE.Geometry();</span><br><span class="line">geometry.vertices.push(<span class="keyword">new</span> THREE.Vectory3(x, y, z)); <span class="comment">// 点，其中x、y、z为坐标</span></span><br><span class="line">geometry.faces.push(<span class="keyword">new</span> THREE.Faces3(x, y, z));      <span class="comment">// 面，其中x、y、z为点的数组的索引，三点确定一个面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 材质 ***/</span></span><br><span class="line"><span class="keyword">new</span> THREE.MeshBasicMaterial(options); <span class="comment">// 基本材质</span></span><br><span class="line"><span class="comment">// options &#123;&#125; 可选。参数：</span></span><br><span class="line"><span class="comment">//   visible：是否可见</span></span><br><span class="line"><span class="comment">//     color：颜色</span></span><br><span class="line"><span class="comment">// wireframe: 是否渲染线而非面</span></span><br><span class="line"><span class="comment">//      side：THREE.FrontSide 正面，THREE.BackSide 反面，THREE.DoubleSide 双面</span></span><br><span class="line"><span class="comment">//       map: 贴图</span></span><br><span class="line"><span class="keyword">new</span> THREE.MeshLambertMaterial(options); <span class="comment">// Lambert材质，适合光照</span></span><br><span class="line"><span class="comment">//  ambient：反射能力</span></span><br><span class="line"><span class="comment">// emissive：自发光颜色</span></span><br><span class="line"><span class="keyword">new</span> THREE.MeshPhongMaterial();  <span class="comment">// Phong材质，适合金属和镜面</span></span><br><span class="line"><span class="comment">//  specular：光罩颜色</span></span><br><span class="line"><span class="comment">// shininess：光斑大小（值越大，光斑越小）</span></span><br><span class="line"><span class="keyword">new</span> THREE.MeshNormalMaterial(); <span class="comment">// 方向材质</span></span><br><span class="line"><span class="comment">/* 贴图 */</span></span><br><span class="line"><span class="keyword">var</span> texture = THREE.ImageUtils.loadTexture(url, &#123;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;); <span class="comment">// 载入单个贴图（建议贴图的长宽为256的倍数）</span></span><br><span class="line"><span class="keyword">new</span> THREE.MeshFaceMaterial() <span class="comment">// 设置不同面的贴图，参数为单个贴图的数组</span></span><br><span class="line">texture.wrapS texture.wrapT = THREE.RepeatWrapping <span class="comment">// 贴图的重复方式</span></span><br><span class="line">texture.repeat.set(x, y)     <span class="comment">// 重复次数</span></span><br><span class="line"><span class="keyword">new</span> THREE.texture(canvas)    <span class="comment">// 将canvas作为贴图</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 将模型和贴图结合 ***/</span></span><br><span class="line"><span class="keyword">var</span> mesh = <span class="keyword">new</span> THREE.Mesh(形状, 材质);</span><br><span class="line">mesh.position <span class="comment">// 位置 mesh.position.x（y、z） 或 mesh.position.set(x, y, z)</span></span><br><span class="line">mesh.scale    <span class="comment">// 缩放</span></span><br><span class="line">mesh.rotation <span class="comment">// 旋转</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 监视FPS ***/</span></span><br><span class="line"><span class="keyword">var</span> stats = <span class="keyword">new</span> Stats();</span><br><span class="line">stats.domElement <span class="comment">// 节点</span></span><br><span class="line">stats.begin()    <span class="comment">// 开始</span></span><br><span class="line">stats.end()      <span class="comment">// 结束</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/11/30/three-js-%E5%88%9D%E8%AF%86/">blog.zhengxiangling.com/2017/11/30/three-js-%E5%88%9D%E8%AF%86/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/three/"># three</a>
+                    
+                        <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"># 图形学</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/">如何在邮件中写html</a>
+            
+            
+            <a class="next" rel="next" href="/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8BIMAP%EF%BC%88Java%E7%89%88%EF%BC%89/">电子邮件的实现之IMAP（Java版）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

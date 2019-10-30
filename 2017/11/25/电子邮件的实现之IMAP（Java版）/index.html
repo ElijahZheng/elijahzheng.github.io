@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>电子邮件的实现之IMAP（Java版） | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">电子邮件的实现之IMAP（Java版）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 25, 2017&nbsp;&nbsp;11:05:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>IMAP（Internet Mail Access Protocol，Internet邮件访问协议）以前称作交互邮件访问协议（Interactive Mail Access Protocol）。IMAP是斯坦福大学在1986年开发的一种邮件获取协议。它的主要作用是邮件客户端（例如MS Outlook Express)可以通过这种协议从邮件服务器上获取邮件的信息，下载邮件等。当前的权威定义是RFC3501。IMAP协议运行在TCP/IP协议之上，使用的端口是143。它与POP3协议的主要区别是用户可以不用把所有的邮件全部下载，可以通过客户端直接对服务器上的邮件进行操作。</p>
+<a id="more"></a>
+
+<p>与POP3协议类似，IMAP（Internet消息访问协议）也是提供面向用户的邮件收取服务。常用的版本是IMAP4。<br>IMAP4改进了POP3的不足，用户可以通过浏览信件头来决定是否收取、删除和检索邮件的特定部分，还可以在服务器上创建或更改文件夹或邮箱。它除了支持POP3协议的脱机操作模式外，还支持联机操作和断连接操作。它为用户提供了有选择的从邮件服务器接收邮件的功能、基于服务器的信息处理功能和共享信箱功能。IMAP4的脱机模式不同于POP3，它不会自动删除在邮件服务器上已取出的邮件，其联机模式和断连接模式也是将邮件服务器作为“远程文件服务器”进行访问，更加灵活方便。IMAP4支持多个邮箱。<br>IMAP4的这些特性非常适合在不同的计算机或终端之间操作邮件的用户（例如你可以在手机、PAD、PC上的邮件代理程序操作同一个邮箱），以及那些同时使用多个邮箱的用户。</p>
+<p>各参数返回的邮件信息：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>代表信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ALL</td>
+<td>只返回按照一定格式的邮件摘要，包括邮件标志、RFC822.SIZE、自身的时间和信封信息。IMAP客户机能够将标准邮件解析成这些信息并显示出来。</td>
+</tr>
+<tr>
+<td>BODY</td>
+<td>只返回邮件体文本格式和大小的摘要信息。IMAP客户机可以识别这些细腻，并向用户显示详细的关于邮件的信息。其实是一些非扩展的BODYSTRUCTURE的信息。</td>
+</tr>
+<tr>
+<td>FAST</td>
+<td>只返回邮件的一些摘要，包括邮件标志、RFC822.SIZE、和自身的时间。</td>
+</tr>
+<tr>
+<td>FULL</td>
+<td>同样的还是一些摘要信息，包括邮件标志、RFC822.SIZE、自身的时间和BODYSTRUCTURE的信息。</td>
+</tr>
+<tr>
+<td>BODYSTRUCTUR</td>
+<td>是邮件的[MIME-IMB]的体结构。这是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段和[MIME-IMB]头信息得出来 的。包括的内容有：邮件正文的类型、字符集、编码方式等和各附件的类型、字符集、编码方式、文件名称等等。</td>
+</tr>
+<tr>
+<td>ENVELOPE</td>
+<td>信息的信封结构。是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段得出来的，默认各字段都是需要的。主要包括：自身的时间、附件数、收件人、发件人等。</td>
+</tr>
+<tr>
+<td>FLAGS</td>
+<td>此邮件的标志。</td>
+</tr>
+<tr>
+<td>INTERNALDATE</td>
+<td>自身的时间。</td>
+</tr>
+<tr>
+<td>RFC822.SIZE</td>
+<td>邮件的[RFC-2822]大小</td>
+</tr>
+<tr>
+<td>RFC822.HEADER</td>
+<td>在功能上等同于BODY.PEEK[HEADER]，</td>
+</tr>
+<tr>
+<td>RFC822</td>
+<td>功能上等同于BODY[]。</td>
+</tr>
+<tr>
+<td>RFC822.TEXT</td>
+<td>功能上等同于BODY[TEXT]</td>
+</tr>
+<tr>
+<td>UID</td>
+<td>返回邮件的UID号，UID号是唯一标识邮件的一个号码。</td>
+</tr>
+<tr>
+<td>BODY[section] <code>&lt;&lt;partial&gt;&gt;</code></td>
+<td>返回邮件的中的某一指定部分，返回的部分用section来表示，section部分包含的信息通常是 代表某一部分的一个数字或者是下面的某一个部分：HEADER, HEADER.FIELDS, HEADER.FIELDS.NOT, MIME, and TEXT。如果section部分是空的话，那就代表返回全部的信息，包括头信息。</td>
+</tr>
+<tr>
+<td>BODY[HEADER]</td>
+<td>返回完整的文件头信息。</td>
+</tr>
+<tr>
+<td>BODY[HEADER.FIELDS ()]</td>
+<td>在小括号里面可以指定返回的特定字段。</td>
+</tr>
+<tr>
+<td>BODY[HEADER.FIELDS.NOT ()]</td>
+<td>在小括号里面可以指定不需要返回的特定字段。</td>
+</tr>
+<tr>
+<td>BODY[MIME]</td>
+<td>返回邮件的[MIME-IMB]的头信息，在正常情况下跟BODY[HEADER]没有区别。</td>
+</tr>
+<tr>
+<td>BODY[TEXT]</td>
+<td>返回整个邮件体，这里的邮件体并不包括邮件头。</td>
+</tr>
+</tbody></table>
+<p>代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">package IMAP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.mail.Folder;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Message;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Session;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Store;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeUtility;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> POP3.POP3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.mail.imap.IMAPMessage;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">IMAP</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) throws Exception &#123;</span><br><span class="line">		<span class="comment">// 准备连接服务器的会话信息</span></span><br><span class="line">		Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">		props.setProperty(<span class="string">"mail.store.protocol"</span>, <span class="string">"imap"</span>);</span><br><span class="line">		props.setProperty(<span class="string">"mail.imap.host"</span>, <span class="string">"imap.sina.cn"</span>);</span><br><span class="line">		props.setProperty(<span class="string">"mail.imap.port"</span>, <span class="string">"143"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建Session实例对象</span></span><br><span class="line">		Session session = Session.getInstance(props);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建IMAP协议的Store对象</span></span><br><span class="line">		Store store = session.getStore(<span class="string">"imap"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 连接邮件服务器</span></span><br><span class="line">		store.connect(<span class="string">"your_name@sina.cn"</span>, <span class="string">"your_password"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 获得收件箱</span></span><br><span class="line">		Folder folder = store.getFolder(<span class="string">"INBOX"</span>);</span><br><span class="line">		<span class="comment">// 以读写模式打开收件箱</span></span><br><span class="line">		folder.open(Folder.READ_WRITE);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 获得收件箱的邮件列表</span></span><br><span class="line">		Message[] messages = folder.getMessages();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 打印不同状态的邮件数量</span></span><br><span class="line">		System.out.println(<span class="string">"收件箱中共"</span> + messages.length + <span class="string">"封邮件!"</span>);</span><br><span class="line">		System.out.println(<span class="string">"收件箱中共"</span> + folder.getUnreadMessageCount() + <span class="string">"封未读邮件!"</span>);</span><br><span class="line">		System.out.println(<span class="string">"收件箱中共"</span> + folder.getNewMessageCount() + <span class="string">"封新邮件!"</span>);</span><br><span class="line">		System.out.println(<span class="string">"收件箱中共"</span> + folder.getDeletedMessageCount()</span><br><span class="line">				+ <span class="string">"封已删除邮件!"</span>);</span><br><span class="line"></span><br><span class="line">		System.out</span><br><span class="line">				.println(<span class="string">"------------------------开始解析邮件----------------------------------"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 解析邮件</span></span><br><span class="line">		<span class="keyword">for</span> (int i = <span class="number">0</span>, count = <span class="number">2</span>; i &lt; count; i++) &#123;</span><br><span class="line">			MimeMessage msg = (MimeMessage) messages[i];</span><br><span class="line">			<span class="built_in">String</span> subject = MimeUtility.decodeText(msg.getSubject());</span><br><span class="line">			System.out.println(<span class="string">"["</span> + subject + <span class="string">"]未读，是否需要阅读此邮件（yes/no）？"</span>);</span><br><span class="line">			POP3.parseMessage(msg); <span class="comment">// 解析邮件</span></span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 关闭资源</span></span><br><span class="line">		folder.close(<span class="literal">false</span>);</span><br><span class="line">		store.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数分析</p>
+<p>版本4rev1（IMAP4rev1）允许一个客户端访问和操作在一个服务器上的电子邮件。<br>SELECT INBOX： 选择收件箱<br>EXISTS： 3封存在<br>FETCH<code>&lt;mail id&gt;&lt;datanames&gt;</code><br>ENVELOPE：信息的信封结构。<br>INTERNALDATE：自身的时间。<br>RFC822.SIZE：邮件的[RFC-2822]大小。<br>BODYSTRUCTUR： 是邮件的[MIME-IMB]的体结构。这是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段和[MIME-IMB]头信息得出来 的。包括的内容有：邮件正文的类型、字符集、编码方式等。<br>BODY[TEXT]：返回整个邮件体，这里的邮件体并不包括邮件头。<br>FLAGS：此邮件的标志。<br>EXAMINE：以只读方式打开邮箱，参数是需要打开的邮箱的名字，使用EXAMINE命令打开的邮箱不允许对邮件进行改动，因此不能增加或删除邮件的标志。<br>CLOSE：表示Client结束对当前Folder（文件夹/邮箱）的访问，关闭邮箱该邮箱中所有标志为、DELETED的邮件就被从物理上删除。CLOSE没有命令参数。随后可以SELECT另一Folder。<br>LOGOUT：结束本次IMAP会话。    </p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8BIMAP%EF%BC%88Java%E7%89%88%EF%BC%89/">blog.zhengxiangling.com/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8BIMAP%EF%BC%88Java%E7%89%88%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"># 电子邮件</a>
+                    
+                        <a href="/tags/Java/"># Java</a>
+                    
+                        <a href="/tags/IMAP/"># IMAP</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/11/30/three-js-%E5%88%9D%E8%AF%86/">three.js 初识</a>
+            
+            
+            <a class="next" rel="next" href="/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-POP3%EF%BC%88Java%E7%89%88%EF%BC%89/">电子邮件的实现之 POP3（Java版）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

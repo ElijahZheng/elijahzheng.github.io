@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>macOS Mojave 安装双系统 bug 总结 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">macOS Mojave 安装双系统 bug 总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 23, 2019&nbsp;&nbsp;9:24:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>  在 mac 上装 windows10 双系统一般是由于    </p>
+<ol>
+<li>开发的需要，有些系统级的架构只支持windows，不适合在 mac 上开发。</li>
+<li>运行的游戏只支持 windows，无法在 mac 上运行。    </li>
+</ol>
+<p>macOS Mojave 只支持安装 windows10，往下的版本不再支持。<code>启动转移助理（BootCamp）</code>的功能目前也限制于制作双系统和将双系统恢复为单一分区，取消了之前支持windows多版本和制作u盘启动盘的选项。不过目前仍可用代码来制作u盘启动盘。</p>
+<p>在 mac 上用 windows10 u盘启动盘来安装双系统是行不通的，因为会导致缺少驱动而不能往下安装，所以就只能走<code>启动转移助理</code>这条路。<br>windows10 经常更新版本，导致 mac 使用<code>启动转移助理</code>安装双系统时会出现各种各样的问题。列举如下：    </p>
+<ol>
+<li>版本问题。用 macOS Mojave 10.14版本只能安装 windows10 4月版的，安装10月版的会出现错误。将macOS Mojave升级到 10.14.3版本解决版本问题。</li>
+<li>外接设备导致无法安装 windows 的问题。当进入到 windows 安装界面时，必须把所有外接设备（鼠标、u盘等）全部拔出，不然会出现分区找不到的错误导致无法安装 windows。</li>
+<li>一旦将 windows 安装完毕之后，分配的硬盘空间将无法调整，所以分磁盘空间的时候必须考虑清楚。</li>
+<li>用 mac 上的<code>磁盘工具</code>直接将 windows 分区抹除再合并分区，可能会导致下次安装 windows 失败，所以要删掉之前安装好的 windows 的办法是用<code>启动转移助理</code>将 windows 合并成单一分区。</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2019/03/23/macOS-Mojave%E5%AE%89%E8%A3%85%E5%8F%8C%E7%B3%BB%E7%BB%9F-bug-%E6%80%BB%E7%BB%93/">blog.zhengxiangling.com/2019/03/23/macOS-Mojave%E5%AE%89%E8%A3%85%E5%8F%8C%E7%B3%BB%E7%BB%9F-bug-%E6%80%BB%E7%BB%93/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/macOS/"># macOS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/10/28/hello-world/">Hello World</a>
+            
+            
+            <a class="next" rel="next" href="/2018/05/23/%E8%BD%AF%E8%80%83%E6%98%93%E9%94%99%E9%A2%98%E6%80%BB%E7%BB%93/">软考易错题总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

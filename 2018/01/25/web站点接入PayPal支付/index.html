@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>web站点接入PayPal支付 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">web站点接入PayPal支付</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 25, 2018&nbsp;&nbsp;18:38:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>官方教程：<br><a href="https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/" target="_blank" rel="noopener">PayPal Express Checkout</a></p>
+<p>根据官方教程整理了一下具体步骤。    </p>
+<a id="more"></a>
+<p>模板：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=edge"</span> /&gt;</span><br><span class="line">  &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span><br><span class="line">  &lt;script src=<span class="string">"https://www.paypalobjects.com/api/checkout.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">  &lt;div id="paypal-button"&gt;&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">      paypal.Button.render(&#123;</span><br><span class="line">          locale: <span class="string">'zh_CN'</span>, <span class="comment">// or en_US</span></span><br><span class="line">          env: <span class="string">'production'</span>, <span class="comment">// or sandbox</span></span><br><span class="line"></span><br><span class="line">          commit: <span class="literal">true</span>, <span class="comment">// Show a 'Pay Now' button</span></span><br><span class="line">          client: &#123;</span><br><span class="line">              sandbox:    <span class="string">'***'</span>,</span><br><span class="line">              production: <span class="string">'***'</span></span><br><span class="line">          &#125;,</span><br><span class="line">          style: &#123;</span><br><span class="line">              size: <span class="string">'small'</span>,</span><br><span class="line">              color: <span class="string">'silver'</span>,</span><br><span class="line">              shape: <span class="string">'pill'</span>,</span><br><span class="line">              label: <span class="string">'checkout'</span>,</span><br><span class="line">              tagline: <span class="literal">false</span></span><br><span class="line">          &#125;,</span><br><span class="line"></span><br><span class="line">          payment: <span class="function"><span class="keyword">function</span>(<span class="params">data, actions</span>) </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> actions.payment.create(&#123;</span><br><span class="line">                  payment: &#123;</span><br><span class="line">                      transactions: [</span><br><span class="line">                          &#123;</span><br><span class="line">                              amount: &#123; <span class="attr">total</span>: <span class="string">'填入金额'</span>, <span class="attr">currency</span>: <span class="string">'USD'</span> &#125;</span><br><span class="line">                          &#125;</span><br><span class="line">                      ]</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;);</span><br><span class="line">          &#125;,</span><br><span class="line"></span><br><span class="line">          onAuthorize: <span class="function"><span class="keyword">function</span>(<span class="params">data, actions</span>) </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> actions.payment.execute().then(<span class="function"><span class="keyword">function</span>(<span class="params">payment</span>) </span>&#123;</span><br><span class="line">                  $.ajax(&#123;</span><br><span class="line">                    type: <span class="string">'POST'</span>,</span><br><span class="line">                    url: <span class="string">'/'</span>,</span><br><span class="line">                    data: &#123;&#125;</span><br><span class="line">                  &#125;).done(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                      <span class="keyword">if</span> (data == <span class="string">'0'</span>) &#123;</span><br><span class="line">                          alert(<span class="string">'The payment is complete!'</span>);</span><br><span class="line">                          <span class="built_in">window</span>.location.reload();</span><br><span class="line">                      &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                          alert(<span class="string">'pay fail'</span>)</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;)</span><br><span class="line">              &#125;);</span><br><span class="line">          &#125;,</span><br><span class="line"></span><br><span class="line">          onCancel: <span class="function"><span class="keyword">function</span>(<span class="params">data, actions</span>) </span>&#123;</span><br><span class="line">              <span class="comment">/*</span></span><br><span class="line"><span class="comment">               * Buyer cancelled the payment</span></span><br><span class="line"><span class="comment">               */</span></span><br><span class="line">          &#125;,</span><br><span class="line"></span><br><span class="line">          onError: <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">              <span class="comment">/*</span></span><br><span class="line"><span class="comment">              * An error occurred during the transaction</span></span><br><span class="line"><span class="comment">              */</span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;, <span class="string">'#paypal-button'</span>);</span><br><span class="line">  &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-必须-js"><a href="#1-必须-js" class="headerlink" title="1. 必须 js"></a>1. 必须 js</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://www.paypalobjects.com/api/checkout.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-支付按钮"><a href="#2-支付按钮" class="headerlink" title="2. 支付按钮"></a>2. 支付按钮</h5><p><code>&lt;div id=&quot;paypal-button&quot;&gt;&lt;/div&gt;</code>，<code>paypal.Button.render</code>绑定对应的id(也可以是class)。</p>
+<h5 id="3-render-参数"><a href="#3-render-参数" class="headerlink" title="3. render 参数"></a>3. render 参数</h5><p>1)<code>env</code>： 运行环境<br>有两种：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sandbox</td>
+<td>沙盒，用于测试，用添加的sandbox账号测试能否交易成功</td>
+</tr>
+<tr>
+<td>production</td>
+<td>生产环境，部署上线时使用的环境</td>
+</tr>
+</tbody></table>
+<p>2)locale： 语言版本<br>配套有多国语言，中文选用 <code>zh_CN</code>，美式英文选用 <code>en_US</code></p>
+<p>3）<code>client</code>： 客户端<code>id</code><br>获取方式：登录 -&gt; <a href="https://developer.paypal.com/developer/applications/" target="_blank" rel="noopener">Applications</a>  -&gt; 选择 REST API apps -&gt; create App<br><img src="https://cdn.zhengxiangling.com/18-1-25/637642.jpg" alt=""></p>
+<p>创建成功后，可以从创建的应用获取<code>Sandbox</code> 和 <code>Live</code> 的 <code>client ID</code>，填入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">client: &#123;</span><br><span class="line">  	sandbox:    <span class="string">''</span>,</span><br><span class="line">  	production: <span class="string">''</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>4)<code>style</code>： 定义支付按钮样式，参考 <a href="https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/customize-button/" target="_blank" rel="noopener">Customize Checkout Button</a></p>
+<p>5)触发函数：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>payment</td>
+<td>点击支付时触发，total填入需要支付的金额，currency填入支付的货币类型</td>
+</tr>
+<tr>
+<td>onAuthorize</td>
+<td>支付成功时触发，当支付成功时可以用Ajax提交数据修改订单支付状态为已支付。</td>
+</tr>
+<tr>
+<td>onCancel</td>
+<td>当用户关闭支付页面时触发</td>
+</tr>
+<tr>
+<td>onError</td>
+<td>当支付出错时触发</td>
+</tr>
+</tbody></table>
+<h5 id="4-创建沙盒账号用于测试"><a href="#4-创建沙盒账号用于测试" class="headerlink" title="4. 创建沙盒账号用于测试"></a>4. 创建沙盒账号用于测试</h5><p><a href="https://developer.paypal.com/developer/accounts/" target="_blank" rel="noopener">Sandbox accounts</a><br>创建两个账号，BUSSINESS 以及 PERSONAL。<br>创建完成后登录沙盒账号测试是否登录成功（红线按钮登录）<br><img src="https://cdn.zhengxiangling.com/18-1-25/63582846.jpg" alt=""></p>
+<h5 id="5-使用sandbox-账号测试支付"><a href="#5-使用sandbox-账号测试支付" class="headerlink" title="5. 使用sandbox 账号测试支付"></a>5. 使用sandbox 账号测试支付</h5><p>当<code>env</code>环境为<code>sandbox</code>时，点击支付按钮时，使用<code>PERSONAL</code>账号来登录支付（测试账号默认有余额 $9999），当支付成功时会调用函数<code>onAuthorize</code>,可以弹窗<code>alert(&#39;pay success&#39;)</code>来测试是否支付成功。若成功，上线时将<code>env</code>转为<code>production</code>环境即可。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2018/01/25/web%E7%AB%99%E7%82%B9%E6%8E%A5%E5%85%A5PayPal%E6%94%AF%E4%BB%98/">blog.zhengxiangling.com/2018/01/25/web%E7%AB%99%E7%82%B9%E6%8E%A5%E5%85%A5PayPal%E6%94%AF%E4%BB%98/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/PayPal/"># PayPal</a>
+                    
+                        <a href="/tags/%E6%94%AF%E4%BB%98/"># 支付</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/01/29/MongoDB-%E5%AD%A6%E4%B9%A0/">MongoDB 学习</a>
+            
+            
+            <a class="next" rel="next" href="/2018/01/18/express-%E6%90%AD%E5%BB%BA%E5%90%8E%E5%8F%B0/">express 搭建后台</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

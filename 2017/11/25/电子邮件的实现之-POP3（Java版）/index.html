@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>电子邮件的实现之 POP3（Java版） | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">电子邮件的实现之 POP3（Java版）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 25, 2017&nbsp;&nbsp;10:47:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>POP3，全名为“Post Office Protocol - Version 3”，即“邮局协议版本3”。是TCP/IP协议族中的一员，由RFC1939 定义。本协议主要用于支持使用客户端远程管理在服务器上的电子邮件。提供了SSL加密的POP3协议被称为POP3S。<br>POP 协议支持“离线”邮件处理。其具体过程是：邮件发送到服务器上，电子邮件客户端调用邮件客户机程序以连接服务器，并下载所有未阅读的电子邮件。这种离线访问模式是一种存储转发服务，将邮件从邮件服务器端送到个人终端机器上，一般是PC机或 MAC。一旦邮件发送到 PC 机或MAC上，邮件服务器上的邮件将会被删除。但目前的POP3邮件服务器大都可以“只下载邮件，服务器端并不删除”，也就是改进的POP3协议。</p>
+<a id="more"></a>
+
+<p>POP3协议默认端口：110<br>POP3协议默认传输协议：TCP<br>POP3协议适用的构架结构：C/S<br>POP3协议的访问模式：离线访问    </p>
+<p>POP3命令码</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>USER [username]</td>
+<td>处理用户名</td>
+</tr>
+<tr>
+<td>PASS [password]</td>
+<td>处理用户密码</td>
+</tr>
+<tr>
+<td>APOP [Name,Digest]</td>
+<td>认可Digest是MD5消息摘要</td>
+</tr>
+<tr>
+<td>STAT</td>
+<td>处理请求服务器发回关于邮箱的统计资料，如邮件总数和总字节数</td>
+</tr>
+<tr>
+<td>UIDL [Msg#]</td>
+<td>处理返回邮件的唯一标识符，POP3会话的每个标识符都将是唯一的</td>
+</tr>
+<tr>
+<td>LIST [Msg#]</td>
+<td>处理返回邮件数量和每个邮件的大小</td>
+</tr>
+<tr>
+<td>RETR [Msg#]</td>
+<td>处理返回由参数标识的邮件的全部文本</td>
+</tr>
+<tr>
+<td>DELE [Msg#]</td>
+<td>处理服务器将由参数标识的邮件标记为删除，由quit命令执行</td>
+</tr>
+<tr>
+<td>RSET</td>
+<td>处理服务器将重置所有标记为删除的邮件，用于撤消DELE命令</td>
+</tr>
+<tr>
+<td>TOP [Msg# n]</td>
+<td>处理服务器将返回由参数标识的邮件前n行内容，n必须是正整数</td>
+</tr>
+<tr>
+<td>NOOP</td>
+<td>处理服务器返回一个肯定的响应</td>
+</tr>
+<tr>
+<td>QUIT</td>
+<td>终止会话</td>
+</tr>
+</tbody></table>
+<p>代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">package POP3;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"><span class="keyword">import</span> javax.mail.BodyPart;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Folder;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Message;</span><br><span class="line"><span class="keyword">import</span> javax.mail.MessagingException;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Multipart;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Part;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Session;</span><br><span class="line"><span class="keyword">import</span> javax.mail.Store;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">POP3</span> </span>&#123;</span><br><span class="line">	public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) &#123;</span><br><span class="line">		<span class="built_in">String</span> protocol = <span class="string">"pop3"</span>;<span class="comment">// 使用pop3协议</span></span><br><span class="line">		<span class="built_in">String</span> host = <span class="string">"pop.sina.cn"</span>;<span class="comment">// 163邮箱的pop3服务器</span></span><br><span class="line">		int port = <span class="number">110</span>;<span class="comment">// 端口</span></span><br><span class="line">		<span class="built_in">String</span> username = <span class="string">"your_name@sina.cn"</span>;<span class="comment">// 用户名</span></span><br><span class="line">		<span class="built_in">String</span> password = <span class="string">"your_password"</span>;<span class="comment">// 密码</span></span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		 * Properties是一个属性对象，用来创建Session对象</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">		props.put(<span class="string">"mail.pop3.host"</span>, host);</span><br><span class="line">		props.put(<span class="string">"mail.pop3.port"</span>, port);</span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		 * Session类定义了一个基本的邮件对话。</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Session session = Session.getDefaultInstance(props);</span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		 * Store类实现特定邮件协议上的读、写、监视、查找等操作。 通过Store类可以访问Folder类。</span></span><br><span class="line"><span class="comment">		 * Folder类用于分级组织邮件，并提供照Message格式访问email的能力。</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Store store = <span class="literal">null</span>;</span><br><span class="line">		Folder folder = <span class="literal">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			store = session.getStore(protocol);</span><br><span class="line">			store.connect(username, password);</span><br><span class="line"></span><br><span class="line">			folder = store.getFolder(<span class="string">"INBOX"</span>);</span><br><span class="line">			folder.open(Folder.READ_ONLY);<span class="comment">// 在这一步，收件箱所有邮件将被下载到本地</span></span><br><span class="line">			<span class="comment">// int size = folder.getMessageCount();// 获取邮件数目</span></span><br><span class="line">			Message[] messages = folder.getMessages();</span><br><span class="line">			<span class="comment">// Message message = folder.getMessage(size);// 取得最新的那个邮件</span></span><br><span class="line">			<span class="comment">// 解析邮件内容</span></span><br><span class="line">			<span class="keyword">for</span> (int i = <span class="number">0</span>, count = <span class="number">2</span>; i &lt; count; i++) &#123;</span><br><span class="line">				MimeMessage msg = (MimeMessage) messages[i];</span><br><span class="line">				parseMessage(msg);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (folder != <span class="literal">null</span>) &#123;</span><br><span class="line">					folder.close(<span class="literal">false</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> (store != <span class="literal">null</span>) &#123;</span><br><span class="line">					store.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"接收完毕！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	public <span class="keyword">static</span> <span class="keyword">void</span> getMailTextContent(Part part, StringBuffer content)</span><br><span class="line">			throws MessagingException, IOException &#123;</span><br><span class="line">		<span class="comment">// 如果是文本类型的附件，通过getContent方法可以取到文本内容，但这不是我们需要的结果，所以在这里要做判断</span></span><br><span class="line">		boolean isContainTextAttach = part.getContentType().indexOf(<span class="string">"name"</span>) &gt; <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span> (part.isMimeType(<span class="string">"text/*"</span>) &amp;&amp; !isContainTextAttach) &#123;</span><br><span class="line">			content.append(part.getContent().toString());</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (part.isMimeType(<span class="string">"message/rfc822"</span>)) &#123;</span><br><span class="line">			getMailTextContent((Part) part.getContent(), content);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (part.isMimeType(<span class="string">"multipart/*"</span>)) &#123;</span><br><span class="line">			Multipart multipart = (Multipart) part.getContent();</span><br><span class="line">			int partCount = multipart.getCount();</span><br><span class="line">			<span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; partCount; i++) &#123;</span><br><span class="line">				BodyPart bodyPart = multipart.getBodyPart(i);</span><br><span class="line">				getMailTextContent(bodyPart, content);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public <span class="keyword">static</span> <span class="keyword">void</span> parseMessage(MimeMessage msg) throws MessagingException,</span><br><span class="line">			IOException &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		System.out.println(<span class="string">"------------------解析第"</span> + msg.getMessageNumber()</span><br><span class="line">				+ <span class="string">"封邮件-------------------- "</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">String</span> <span class="keyword">from</span> = msg.getFrom()[<span class="number">0</span>].toString();</span><br><span class="line">		<span class="built_in">String</span> subject = msg.getSubject();</span><br><span class="line">		java.util.Date date = msg.getSentDate();</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"From: "</span> + <span class="keyword">from</span>);</span><br><span class="line">		System.out.println(<span class="string">"Subject: "</span> + subject);</span><br><span class="line">		System.out.println(<span class="string">"Date: "</span> + date);</span><br><span class="line">		StringBuffer content = <span class="keyword">new</span> StringBuffer(<span class="number">30</span>);</span><br><span class="line">		getMailTextContent(msg, content);</span><br><span class="line">		System.out.println(<span class="string">"邮件正文："</span></span><br><span class="line">				+ (content.length() &gt; <span class="number">100</span> ? content.substring(<span class="number">0</span>, <span class="number">100</span>) + <span class="string">"..."</span></span><br><span class="line">						: content));</span><br><span class="line">		System.out.println(<span class="string">"------------------第"</span> + msg.getMessageNumber()</span><br><span class="line">				+ <span class="string">"封邮件解析结束-------------------- "</span>);</span><br><span class="line">		System.out.println();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数分析</p>
+<p>CAPA：开始与 POP3 Server 送出的第一个指令，用于取得此服务器的功能选项清单<br>Capability list follows 返回指令<br>USER：与 POP3 Server 送出帐户名<br>PASS：与 POP3 Server 送出密码<br>STAT：取得服务器上本帐户存在的信件数量<br>NOOP：服务器返回一个肯定的响应，用于测试连接是否成功<br>TOP n m：取得第n封信件前m行的内容<br>TCP Spurious Retransmission：TCP虚假重传。<br>当抓到2次同一包数据时，wireshark判断网络发生了重传，同时，wireshark抓到初传包的反馈ack，因此wireshark判断初传包实际并没有丢失，因此称为虚假重传。<br>IMF： Internet Message Format<br>RETR n：取得第n封信件完整内容<br>octet = 1 Byte =  8 bits<br>QUIT 告知 POP3 服务器即将说再见．    </p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-POP3%EF%BC%88Java%E7%89%88%EF%BC%89/">blog.zhengxiangling.com/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-POP3%EF%BC%88Java%E7%89%88%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"># 电子邮件</a>
+                    
+                        <a href="/tags/Java/"># Java</a>
+                    
+                        <a href="/tags/POP3/"># POP3</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/11/25/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8BIMAP%EF%BC%88Java%E7%89%88%EF%BC%89/">电子邮件的实现之IMAP（Java版）</a>
+            
+            
+            <a class="next" rel="next" href="/2017/11/22/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-SMTP/">电子邮件的实现之 SMTP（Java版）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

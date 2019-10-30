@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置） | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 27, 2017&nbsp;&nbsp;14:16:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>快速配置 uWSGI + nginx 运行Django 项目</p>
+<a id="more"></a>
+
+<p>1.新建 Django 项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject site_uwsgi</span><br><span class="line"><span class="built_in">cd</span> site_uwsgi</span><br></pre></td></tr></table></figure>
+
+<p>2.对网站进行 nginx 配置</p>
+<p>目录中新建 <code>site_uwsgi.conf</code> 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen  <span class="number">8001</span>;</span><br><span class="line">    server_name your_server_name.com;</span><br><span class="line">    client_max_body_size <span class="number">50</span>m;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    location /<span class="keyword">static</span>/ &#123;</span><br><span class="line">        alias /data/www/vhosts/site_uwsgi/<span class="keyword">static</span>/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        uwsgi_pass  web;</span><br><span class="line">        include /data/www/vhosts/site_uwsgi/uwsgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">    access_log /<span class="keyword">var</span>/log/nginx/site_uwsgi.access_log;</span><br><span class="line">    error_log /<span class="keyword">var</span>/log/nginx/site_uwsgi.error_log;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream web &#123;</span><br><span class="line">    server unix:<span class="comment">///data/www/vhosts/site_uwsgi/socket.sock;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>连接进 <code>/etc/nginx/sites-enabled/</code>中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /data/www/vhosts/site_uwsgi/site_uwsgi.conf /etc/nginx/sites-enabled/</span><br></pre></td></tr></table></figure>
+
+<p>3.编辑 <code>site_uwsgi/settings.py</code> 文件及收集静态资源</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALLOWED_HOSTS = ['...'] # 有服务器的话需增加服务器ip</span><br><span class="line">STATIC_ROOT = os.path.join(BASE_DIR, <span class="string">'static/'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>收集静态资源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
+
+<p>4.目录中新建 <code>uwsgi_params</code> 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">uwsgi_param  QUERY_STRING       $query_string;</span><br><span class="line">uwsgi_param  REQUEST_METHOD     $request_method;</span><br><span class="line">uwsgi_param  CONTENT_TYPE       $content_type;</span><br><span class="line">uwsgi_param  CONTENT_LENGTH     $content_length;</span><br><span class="line"></span><br><span class="line">uwsgi_param  REQUEST_URI        $request_uri;</span><br><span class="line">uwsgi_param  PATH_INFO          $document_uri;</span><br><span class="line">uwsgi_param  DOCUMENT_ROOT      $document_root;</span><br><span class="line">uwsgi_param  SERVER_PROTOCOL    $server_protocol;</span><br><span class="line">uwsgi_param  REQUEST_SCHEME     $scheme;</span><br><span class="line">uwsgi_param  HTTPS              $https if_not_empty;</span><br><span class="line"></span><br><span class="line">uwsgi_param  REMOTE_ADDR        $remote_addr;</span><br><span class="line">uwsgi_param  REMOTE_PORT        $remote_port;</span><br><span class="line">uwsgi_param  SERVER_PORT        $server_port;</span><br><span class="line">uwsgi_param  SERVER_NAME        $server_name;</span><br></pre></td></tr></table></figure>
+
+<p>5.修改 <code>/etc/nginx/nginx.conf</code> 的 <code>user</code> 为 <code>root</code> 用户</p>
+<p>重启 nginx </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx restart</span><br></pre></td></tr></table></figure>
+
+<p>6.配置 uWSGI 使用 .ini 文件去运行项目<br><code>site_uwsgi.ini</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># site_uwsgi.ini file</span><br><span class="line">[uwsgi]</span><br><span class="line"># Django-related settings</span><br><span class="line"># the base directory (full path)</span><br><span class="line">chdir           = <span class="regexp">/data/</span>www/vhosts/site_uwsgi/</span><br><span class="line"># Django's wsgi file</span><br><span class="line"><span class="built_in">module</span>          = site_uwsgi.wsgi</span><br><span class="line"># the virtualenv (full path)</span><br><span class="line"># process-related settings</span><br><span class="line"># master</span><br><span class="line">master          = <span class="literal">true</span></span><br><span class="line"># maximum number of worker processes</span><br><span class="line">processes       = <span class="number">30</span></span><br><span class="line"># the socket (use the full path to be safe</span><br><span class="line">socket          = <span class="regexp">/data/</span>www/vhosts/site_uwsgi/socket.sock</span><br><span class="line"># ... with appropriate permissions - may be needed</span><br><span class="line">chmod-socket    = <span class="number">664</span></span><br><span class="line"># clear environment on exit</span><br><span class="line">vacuum          = <span class="literal">true</span></span><br><span class="line"># pidfile</span><br><span class="line">pidfile         = <span class="regexp">/data/</span>www/vhosts/site_uwsgi/site_uwsgi.pid</span><br><span class="line"># logger</span><br><span class="line"># daemonize       = /data/www/vhosts/site_uwsgi/access.log</span><br></pre></td></tr></table></figure>
+
+<p>7.后台挂载 uwsgi:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup uwsgi --ini mysite_uwsgi.ini &amp;</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>ip:8001</code>, <code>done</code></p>
+<p><img src="https://cdn.zhengxiangling.com/17-10-27/97231926.jpg" alt=""></p>
+<p>8.挂载之后，每次修改models.py，需要 reload uwsgi，和重启数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --reload yxpp.pid</span><br><span class="line">service mysql restart</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2017/10/27/%E4%BD%BF%E7%94%A8uWSGI-nginx-%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%EF%BC%8C%E9%85%8D%E7%BD%AE-uWSGI-%E4%BD%BF%E7%94%A8-ini-%E6%96%87%E4%BB%B6%E5%8E%BB%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%EF%BC%89/">blog.zhengxiangling.com/2017/10/27/%E4%BD%BF%E7%94%A8uWSGI-nginx-%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%EF%BC%8C%E9%85%8D%E7%BD%AE-uWSGI-%E4%BD%BF%E7%94%A8-ini-%E6%96%87%E4%BB%B6%E5%8E%BB%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"># 服务器</a>
+                    
+                        <a href="/tags/uWSGI/"># uWSGI</a>
+                    
+                        <a href="/tags/nginx/"># nginx</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/11/22/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B9%8B-SMTP/">电子邮件的实现之 SMTP（Java版）</a>
+            
+            
+            <a class="next" rel="next" href="/2017/10/26/%E4%BD%BF%E7%94%A8uWSGI-nginx%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%EF%BC%8C%E9%83%A8%E7%BD%B2Django%E9%A1%B9%E7%9B%AE%EF%BC%88%E5%85%A5%E9%97%A8%EF%BC%89/">使用uWSGI + nginx 提高性能，部署Django项目（入门）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

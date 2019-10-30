@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>搭建微信小程序服务 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">搭建微信小程序服务</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 11, 2018&nbsp;&nbsp;19:52:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>手把手搭建微信小程序服务。</p>
+<a id="more"></a>
+
+<p>1.安装 NodeJS 和 NPM</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -</span><br><span class="line">yum install nodejs -y</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后查看安装是否成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p>2.创建并进入文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /data/release/weapp</span><br><span class="line">$ <span class="built_in">cd</span> /data/release/weapp</span><br></pre></td></tr></table></figure>
+
+<p>3.新建package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"weapp"</span>,</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"1.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.添加 express 服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引用 express 来支持 HTTP Server 的实现</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 express 实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现唯一的一个中间件，对于所有请求，都输出 "Response from express"</span></span><br><span class="line">app.use(<span class="function">(<span class="params">request, response, next</span>) =&gt;</span> &#123;</span><br><span class="line">    response.write(<span class="string">'Response from express'</span>);</span><br><span class="line">    response.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听端口，等待连接</span></span><br><span class="line"><span class="keyword">const</span> port = <span class="number">8765</span>;</span><br><span class="line">app.listen(port);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出服务器启动日志</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Server listening at http://127.0.0.1:<span class="subst">$&#123;port&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>4.运行http<br>1)安装 pm2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 --global</span><br></pre></td></tr></table></figure>
+<p>2)安装 express</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express --save</span><br></pre></td></tr></table></figure>
+<p>3)安装完成后，使用 PM2 来启动 HTTP 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
+
+<p>pm2 常用命令</p>
+<p>要查看服务输出的日志，可以使用下面的命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
+<p>如果要重启服务，可以使用下面的命令：        </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart app</span><br></pre></td></tr></table></figure>
+
+<p>5.安装 Nginx<br>如果是 centOS，可以用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install nginx -y</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后启动nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<p>6.准备ssl证书，方法有很多种，现在有很多免费的ssl证书</p>
+<p>7.ssl配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen 443;</span><br><span class="line">        server_name www.example.com; # 改为绑定证书的域名</span><br><span class="line">        # ssl 配置</span><br><span class="line">        ssl on;</span><br><span class="line">        ssl_certificate 1_www.example.com_bundle.crt; # 改为自己申请得到的 crt 文件的名称</span><br><span class="line">        ssl_certificate_key 2_www.example.com.key; # 改为自己申请得到的 key 文件的名称</span><br><span class="line">        ssl_session_timeout 5m;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;</span><br><span class="line">        ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://127.0.0.1:8765;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>8.安装 mongoDB<br>以下是针对centOS的，其他方法之后补充。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mongodb-server mongodb -y</span><br></pre></td></tr></table></figure>
+
+<p>检查是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongod --version</span><br><span class="line">mongo --version</span><br></pre></td></tr></table></figure>
+
+<p>9.启动mongoDB<br>1)创建目录，用于 MongoDB 数据和日志存储</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/mongodb</span><br><span class="line">mkdir -p /data/logs/mongodb</span><br></pre></td></tr></table></figure>
+<p>2)启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --fork --dbpath /data/mongodb --logpath /data/logs/mongodb/weapp.log</span><br></pre></td></tr></table></figure>
+<p>(MongoDB 首次启动可能会花费大概 1min 时间，请耐心等待)</p>
+<p>3)检查是否启动成功<br>(MongoDB 默认监听 27017 端口等待连接，下面的命令查看当前 27017 端口被哪个进程占用，如果是 MongoDB 的进程，则表示启动成功。)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ltp | grep 27017</span><br></pre></td></tr></table></figure>
+
+<p>10.添加 MongoDB 用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mongo</span><br><span class="line"></span><br><span class="line">&gt; use weapp;</span><br><span class="line">&gt; db.createUser(&#123; user: <span class="string">'weapp'</span>, <span class="built_in">pwd</span>: <span class="string">'weapp-dev'</span>, roles: [<span class="string">'dbAdmin'</span>, <span class="string">'readWrite'</span>]&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>mongo2.x 的时候用db.addUser()</p>
+<p>创建完之后，<code>exit</code> 退出</p>
+<p>11.安装 Node 模块<br>实现小程序的会话功能，我们需要安装 connect-mongo 和 wafer-node-session</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/release/weapp</span><br><span class="line">npm install connect-mongo wafer-node-session</span><br></pre></td></tr></table></figure>
+
+<p>12.实现小程序会话<br>1)在工作目录<code>weapp</code>创建配置文件 <code>config.js</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123; </span><br><span class="line">    serverPort: <span class="string">'8765'</span>, </span><br><span class="line"></span><br><span class="line">    // 小程序 appId 和 appSecret </span><br><span class="line">    // 请到 https://mp.weixin.qq.com 获取 AppID 和 AppSecret</span><br><span class="line">    appId: <span class="string">'YORU_APP_ID'</span>, </span><br><span class="line">    appSecret: <span class="string">'YOUR_APP_SECRET'</span>, </span><br><span class="line"></span><br><span class="line">    // mongodb 连接配置，生产环境请使用更复杂的用户名密码</span><br><span class="line">    mongoHost: <span class="string">'127.0.0.1'</span>, </span><br><span class="line">    mongoPort: <span class="string">'27017'</span>, </span><br><span class="line">    mongoUser: <span class="string">'weapp'</span>, </span><br><span class="line">    mongoPass: <span class="string">'weapp-dev'</span>, </span><br><span class="line">    mongoDb: <span class="string">'weapp'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>2)修改 app.js，添加会话实现逻辑</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引用 express 来支持 HTTP Server 的实现</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">// 引用 wafer-session 支持小程序会话</span></span><br><span class="line"><span class="keyword">const</span> waferSession = <span class="built_in">require</span>(<span class="string">'wafer-node-session'</span>); </span><br><span class="line"><span class="comment">// 使用 MongoDB 作为会话的存储</span></span><br><span class="line"><span class="keyword">const</span> MongoStore = <span class="built_in">require</span>(<span class="string">'connect-mongo'</span>)(waferSession); </span><br><span class="line"><span class="comment">// 引入配置文件</span></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 express 实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加会话中间件，登录地址是 /login</span></span><br><span class="line">app.use(waferSession(&#123; </span><br><span class="line">    appId: config.appId, </span><br><span class="line">    appSecret: config.appSecret, </span><br><span class="line">    loginPath: <span class="string">'/login'</span>,</span><br><span class="line">    store: <span class="keyword">new</span> MongoStore(&#123; </span><br><span class="line">        url: <span class="string">`mongodb://<span class="subst">$&#123;config.mongoUser&#125;</span>:<span class="subst">$&#123;config.mongoPass&#125;</span>@<span class="subst">$&#123;config.mongoHost&#125;</span>:<span class="subst">$&#123;config.mongoPort&#125;</span>/<span class="subst">$&#123;config.mongoDb&#125;</span>`</span> </span><br><span class="line">    &#125;) </span><br><span class="line">&#125;)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 在路由 /me 下，输出会话里包含的用户信息</span></span><br><span class="line">app.use(<span class="string">'/me'</span>, (request, response, next) =&gt; &#123; </span><br><span class="line">    response.json(request.session ? request.session.userInfo : &#123; <span class="attr">noBody</span>: <span class="literal">true</span> &#125;); </span><br><span class="line">    <span class="keyword">if</span> (request.session) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Wafer session success with openId=<span class="subst">$&#123;request.session.userInfo.openId&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现一个中间件，对于未处理的请求，都输出 "Response from express"</span></span><br><span class="line">app.use(<span class="function">(<span class="params">request, response, next</span>) =&gt;</span> &#123;</span><br><span class="line">    response.write(<span class="string">'Response from express'</span>);</span><br><span class="line">    response.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听端口，等待连接</span></span><br><span class="line">app.listen(config.serverPort);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出服务器启动日志</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Server listening at http://127.0.0.1:<span class="subst">$&#123;config.serverPort&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>3)重启 <code>pm2</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart app</span><br></pre></td></tr></table></figure>
+
+<p>13.WebSocket 服务<br>1)安装 Node 模块<br>使用 ws 模块来在服务器上支持 WebSocket 协议，下面使用 NPM 来安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/release/weapp</span><br><span class="line">npm install ws --save</span><br></pre></td></tr></table></figure>
+
+<p>2)创建 websocket.js，实现 WebSocket 服务，可参考下面的代码：<br><code>websocket.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 ws 支持 WebSocket 的实现</span></span><br><span class="line"><span class="keyword">const</span> ws = <span class="built_in">require</span>(<span class="string">'ws'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出处理方法</span></span><br><span class="line">exports.listen = listen;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在 HTTP Server 上处理 WebSocket 请求</span></span><br><span class="line"><span class="comment"> * @param &#123;http.Server&#125; server</span></span><br><span class="line"><span class="comment"> * @param &#123;wafer.SessionMiddleware&#125; sessionMiddleware</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">listen</span>(<span class="params">server, sessionMiddleware</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 使用 HTTP Server 创建 WebSocket 服务，使用 path 参数指定需要升级为 WebSocket 的路径</span></span><br><span class="line">    <span class="keyword">const</span> wss = <span class="keyword">new</span> ws.Server(&#123; server, <span class="attr">path</span>: <span class="string">'/ws'</span> &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听 WebSocket 连接建立</span></span><br><span class="line">    wss.on(<span class="string">'connection'</span>, (ws,request) =&gt; &#123;<span class="comment">// 要升级到 WebSocket 协议的 HTTP 连接</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 被升级到 WebSocket 的请求不会被 express 处理，</span></span><br><span class="line">        <span class="comment">// 需要使用会话中间节获取会话</span></span><br><span class="line">        sessionMiddleware(request, <span class="literal">null</span>, () =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> session = request.session;</span><br><span class="line">            <span class="keyword">if</span> (!session) &#123;</span><br><span class="line">                <span class="comment">// 没有获取到会话，强制断开 WebSocket 连接</span></span><br><span class="line">                ws.send(<span class="built_in">JSON</span>.stringify(request.sessionError) || <span class="string">"No session avaliable"</span>);</span><br><span class="line">                ws.close();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 保留这个日志的输出可让实验室能检查到当前步骤是否完成</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`WebSocket client connected with openId=<span class="subst">$&#123;session.userInfo.openId&#125;</span>`</span>);</span><br><span class="line">            serveMessage(ws, session.userInfo);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听 WebSocket 服务的错误</span></span><br><span class="line">    wss.on(<span class="string">'error'</span>, (err) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 进行简单的 WebSocket 服务，对于客户端发来的所有消息都回复回去</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serveMessage</span>(<span class="params">ws, userInfo</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 监听客户端发来的消息</span></span><br><span class="line">    ws.on(<span class="string">'message'</span>, (message) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`WebSocket received: <span class="subst">$&#123;message&#125;</span>`</span>);</span><br><span class="line">        ws.send(<span class="string">`Server: Received(<span class="subst">$&#123;message&#125;</span>)`</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听关闭事件</span></span><br><span class="line">    ws.on(<span class="string">'close'</span>, (code, message) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`WebSocket client closed (code: <span class="subst">$&#123;code&#125;</span>, message: <span class="subst">$&#123;message || <span class="string">'none'</span>&#125;</span>)`</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接后马上发送 hello 消息给会话对应的用户</span></span><br><span class="line">    ws.send(<span class="string">`Server: 恭喜，<span class="subst">$&#123;userInfo.nickName&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>app.js</code> ,调用 WebSocket 服务，可参考下面代码:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HTTP 模块同时支持 Express 和 WebSocket</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>); </span><br><span class="line"><span class="comment">// 引用 express 来支持 HTTP Server 的实现</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">// 引用 wafer-session 支持小程序会话</span></span><br><span class="line"><span class="keyword">const</span> waferSession = <span class="built_in">require</span>(<span class="string">'wafer-node-session'</span>); </span><br><span class="line"><span class="comment">// 使用 MongoDB 作为会话的存储</span></span><br><span class="line"><span class="keyword">const</span> MongoStore = <span class="built_in">require</span>(<span class="string">'connect-mongo'</span>)(waferSession); </span><br><span class="line"><span class="comment">// 引入配置文件</span></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>); </span><br><span class="line"><span class="comment">// 引入 WebSocket 服务实现</span></span><br><span class="line"><span class="keyword">const</span> websocket = <span class="built_in">require</span>(<span class="string">'./websocket'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 express 实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 独立出会话中间件给 express 和 ws 使用</span></span><br><span class="line"><span class="keyword">const</span> sessionMiddleware = waferSession(&#123;</span><br><span class="line">    appId: config.appId,</span><br><span class="line">    appSecret: config.appSecret,</span><br><span class="line">    loginPath: <span class="string">'/login'</span>,</span><br><span class="line">    store: <span class="keyword">new</span> MongoStore(&#123;</span><br><span class="line">        url: <span class="string">`mongodb://<span class="subst">$&#123;config.mongoUser&#125;</span>:<span class="subst">$&#123;config.mongoPass&#125;</span>@<span class="subst">$&#123;config.mongoHost&#125;</span>:<span class="subst">$&#123;config.mongoPort&#125;</span>/<span class="subst">$&#123;config.mongoDb&#125;</span>`</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line">app.use(sessionMiddleware);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在路由 /me 下，输出会话里包含的用户信息</span></span><br><span class="line">app.use(<span class="string">'/me'</span>, (request, response, next) =&gt; &#123; </span><br><span class="line">    response.json(request.session ? request.session.userInfo : &#123; <span class="attr">noBody</span>: <span class="literal">true</span> &#125;); </span><br><span class="line">    <span class="keyword">if</span> (request.session) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Wafer session success with openId=<span class="subst">$&#123;request.session.userInfo.openId&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现一个中间件，对于未处理的请求，都输出 "Response from express"</span></span><br><span class="line">app.use(<span class="function">(<span class="params">request, response, next</span>) =&gt;</span> &#123;</span><br><span class="line">    response.write(<span class="string">'Response from express'</span>);</span><br><span class="line">    response.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 HTTP Server 而不是直接使用 express 监听</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(app);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 让 WebSocket 服务在创建的 HTTP 服务器上监听</span></span><br><span class="line">websocket.listen(server, sessionMiddleware);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动 HTTP 服务</span></span><br><span class="line">server.listen(config.serverPort);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出服务器启动日志</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Server listening at http://127.0.0.1:<span class="subst">$&#123;config.serverPort&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后，按 Ctrl + S 保存文件，并重启服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart app</span><br></pre></td></tr></table></figure>
+
+<p>3)更新 Nginx 代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># WebSocket 配置</span><br><span class="line">map $http_upgrade $connection_upgrade &#123;</span><br><span class="line">    default upgrade;</span><br><span class="line">    &apos;&apos;      close;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 443;</span><br><span class="line">        server_name www.example.com; # 改为绑定证书的域名</span><br><span class="line">        # ssl 配置</span><br><span class="line">        ssl on;</span><br><span class="line">        ssl_certificate 1_www.example.com.crt; # 改为自己申请得到的 crt 文件的名称</span><br><span class="line">        ssl_certificate_key 2_www.example.com.key; # 改为自己申请得到的 key 文件的名称</span><br><span class="line">        ssl_session_timeout 5m;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;</span><br><span class="line">        ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">        # WebSocket 配置</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection $connection_upgrade;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://127.0.0.1:8765;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>修改完成后重启<code>nginx</code>:<br>`` bash<br>nginx -s reload<br>```</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2018/04/11/%E6%90%AD%E5%BB%BA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%8D%E5%8A%A1/">blog.zhengxiangling.com/2018/04/11/%E6%90%AD%E5%BB%BA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%8D%E5%8A%A1/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"># 小程序</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/05/23/%E8%BD%AF%E8%80%83%E6%98%93%E9%94%99%E9%A2%98%E6%80%BB%E7%BB%93/">软考易错题总结</a>
+            
+            
+            <a class="next" rel="next" href="/2018/03/17/%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81%E5%8F%8Assl%E8%AF%81%E4%B9%A6%E7%8A%B6%E6%80%81%E5%9C%A8%E7%BA%BF%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/">网站服务状态及ssl证书状态在线检测工具</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

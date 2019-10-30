@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>网站服务状态及ssl证书状态在线检测工具 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">网站服务状态及ssl证书状态在线检测工具</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 17, 2018&nbsp;&nbsp;15:19:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>为了检测多个网站及检测网站ssl证书有效性，写了一个在线测试检测工具。</p>
+<a id="more"></a>
+
+<h5 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h5><p>自由添加和编辑站点信息<br>单选及多选检测<br>支持http和https检测<br>当有ssl证书时，检测证书的有效状态以及过期时间<br>查看检测历史     </p>
+<h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><p>python3 node-8.9.1 </p>
+<h5 id="框架及数据库"><a href="#框架及数据库" class="headerlink" title="框架及数据库"></a>框架及数据库</h5><p>后端：<code>tornado</code><br>前端：<code>vue</code><br>数据库：<code>mongo</code></p>
+<h5 id="http检测状态实现原理"><a href="#http检测状态实现原理" class="headerlink" title="http检测状态实现原理"></a>http检测状态实现原理</h5><p>通过 python <code>requests</code> 库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    web_url = <span class="string">'http://...'</span></span><br><span class="line">    <span class="comment"># timeout - 请求超时时间</span></span><br><span class="line">    r = requests.get(web_url, timeout=<span class="number">10</span>)</span><br><span class="line">    print(<span class="string">'请求成功'</span>)</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 输出错误原因</span></span><br><span class="line">    print(e)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="https-检测状态及ssl证书状态测试实现原理"><a href="#https-检测状态及ssl证书状态测试实现原理" class="headerlink" title="https 检测状态及ssl证书状态测试实现原理"></a>https 检测状态及ssl证书状态测试实现原理</h5><p>运用 <code>socket</code> 库建立连接，<code>ssl</code>库获取ssl证书的公钥，在通过<code>openssl</code>的<code>crypto</code>通过公钥解密获取ssl证书里的信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> OpenSSL <span class="keyword">import</span> crypto</span><br><span class="line"></span><br><span class="line">web_url = <span class="string">'https://...'</span></span><br><span class="line"><span class="comment"># ssl.PROTOCOL_TLS - ssl支持协议</span></span><br><span class="line">context = ssl.SSLContext(ssl.PROTOCOL_TLS)</span><br><span class="line"><span class="comment"># 建立 socket 连接   </span></span><br><span class="line"><span class="comment"># socket.AF_INET 为 IPv4 网络协议的套接字类型</span></span><br><span class="line">sock = socket.socket(socket.AF_INET)</span><br><span class="line"><span class="comment"># 设置超时时间 10s</span></span><br><span class="line">sock.settimeout(<span class="number">10</span>)</span><br><span class="line">wrappedSocket = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=web_url</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    wrappedSocket.connect(web_url, <span class="number">443</span>))</span><br><span class="line">    <span class="comment"># 获取 ssl 证书公钥</span></span><br><span class="line">    pem_cert = ssl.DER_cert_to_PEM_cert(wrappedSocket.getpeercert(<span class="literal">True</span>))</span><br><span class="line">    wrappedSocket.close()</span><br><span class="line">    <span class="comment"># 解密公钥</span></span><br><span class="line">    io_cert = crypto.load_certificate(crypto.FILETYPE_PEM, pem_cert)</span><br><span class="line">    <span class="comment"># 证书过期时间</span></span><br><span class="line">    ssl_time = io_cert.get_notAfter().decode()[:<span class="number">-1</span>]</span><br><span class="line">    ssl_not_after = ssl_time[<span class="number">0</span>:<span class="number">4</span>] + <span class="string">'年'</span> + ssl_time[<span class="number">4</span>:<span class="number">6</span>] + <span class="string">'月'</span> + ssl_time[<span class="number">6</span>:<span class="number">8</span>] + <span class="string">'日'</span> + ssl_time[<span class="number">8</span>:<span class="number">10</span>] + <span class="string">'时'</span> + ssl_time[<span class="number">10</span>:<span class="number">12</span>] + <span class="string">'分'</span> + ssl_time[<span class="number">12</span>:<span class="number">14</span>] + <span class="string">'秒'</span></span><br><span class="line">    <span class="comment"># 证书有效状态</span></span><br><span class="line">    ssl_expired = io_cert.has_expired()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 连接失败，输出错误原因</span></span><br><span class="line">    print(e)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h5><p>1.<code>webpack</code>打包时遇到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You are using the runtime-only build of Vue <span class="built_in">where</span> the template compiler is not available. Either pre-compile the templates into render <span class="built_in">functions</span>, or use the compiler-included build.</span><br></pre></td></tr></table></figure>
+
+<p>解决办法，在<code>webpack</code>配置中增加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">        vue: <span class="string">'vue/dist/vue.js'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h5><blockquote>
+<p>ssl — TLS/SSL wrapper for socket objects - <a href="https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert" target="_blank" rel="noopener">https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert</a></p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2018/03/17/%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81%E5%8F%8Assl%E8%AF%81%E4%B9%A6%E7%8A%B6%E6%80%81%E5%9C%A8%E7%BA%BF%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/">blog.zhengxiangling.com/2018/03/17/%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81%E5%8F%8Assl%E8%AF%81%E4%B9%A6%E7%8A%B6%E6%80%81%E5%9C%A8%E7%BA%BF%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/vue/"># vue</a>
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        <a href="/tags/webpack/"># webpack</a>
+                    
+                        <a href="/tags/tornado/"># tornado</a>
+                    
+                        <a href="/tags/ssl/"># ssl</a>
+                    
+                        <a href="/tags/mongo/"># mongo</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/04/11/%E6%90%AD%E5%BB%BA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%8D%E5%8A%A1/">搭建微信小程序服务</a>
+            
+            
+            <a class="next" rel="next" href="/2018/03/11/%E5%AD%A6%E4%B9%A0-webpack/">学习 webpack</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

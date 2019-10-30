@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>express 搭建后台 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">express 搭建后台</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 18, 2018&nbsp;&nbsp;9:52:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>安装 express</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">express sudo cnpm i express -g</span><br></pre></td></tr></table></figure>
+
+<p>安装 express 生成器 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install express-generator -g</span><br></pre></td></tr></table></figure>
+
+<p>安装 mongodb 数据库 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#mac</span><br><span class="line">brew install mongodb</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p><a href="https://github.com/StevenSLXie/Tutorials-for-Web-Developers/blob/master/MongoDB%20%E6%9E%81%E7%AE%80%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8.md" target="_blank" rel="noopener">MongoDB 极简实践入门</a></p>
+<p>启动mongodb 的方式</p>
+<figure class="highlight plain"><figcaption><span>js 	</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongod —config /usr/local/etc/mongod.conf</span><br><span class="line">(登录权限需要自行设置)</span><br></pre></td></tr></table></figure>
+
+<p>下载 mongodb GUI 工具 Robo 3T<br>自行安装</p>
+<p>安装 mongoose<br>node.js异步环境下对mongodb进行便捷操作的对象模型工具</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install mongoose --save</span><br></pre></td></tr></table></figure>
+
+<p>创建一个名为server的应用    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">express server</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd server</span><br><span class="line">cnpm install</span><br></pre></td></tr></table></figure>
+
+<p>启动应用的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Mac or Linux	</span><br><span class="line">DEBUG=myapp npm start </span><br><span class="line"># Windows	</span><br><span class="line"><span class="keyword">set</span> DEBUG=myapp &amp; npm start</span><br></pre></td></tr></table></figure>
+
+<p>操作mongodb，增加数据库myapp及集合goods</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 增加数据库</span><br><span class="line">use myapp</span><br><span class="line"></span><br><span class="line"># 插入数据</span><br><span class="line">db.goods.insert(&#123;<span class="string">'name'</span>: <span class="string">'apple'</span>, <span class="string">'price'</span>: <span class="string">'5'</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在server目录下创建文件夹，用于保存模型models<br>如：<br>创建一个goods模型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">goods.js</span><br><span class="line"><span class="keyword">let</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">let</span> Schema = mongoose.Schema;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> productSchema = <span class="keyword">new</span> Schema(&#123;</span><br><span class="line">    <span class="string">'name'</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="string">'price'</span>: <span class="built_in">Number</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Good'</span>, productSchema);</span><br><span class="line"><span class="comment">// 会自动将Good与goods集合相匹配，或者可以用下面的方法指定需要匹配的集合</span></span><br><span class="line"><span class="comment">//module.exports = mongoose.model('Good', productSchema, 'goods');</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在router中查询goods的数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> Goods = <span class="built_in">require</span>(<span class="string">'../models/goods'</span>);</span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line"><span class="comment">// mongoose.connect('mongodb://127.0.0.1:27017/myapp');</span></span><br><span class="line">mongoose.connect(<span class="string">'mongodb://localhost/konggu'</span>);</span><br><span class="line">mongoose.connection.on(<span class="string">'connected'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'MongoDB connected success.'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">mongoose.connection.on(<span class="string">'error'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'MongoDB connected fail.'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">mongoose.connection.on(<span class="string">'disconnected'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'MongoDB connected disconneted.'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// res.send('respond with a resource of goods');</span></span><br><span class="line">    Goods.find(&#123;&#125;, (err, doc) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            res.json(&#123;</span><br><span class="line">                status: <span class="string">'1'</span>,</span><br><span class="line">                mes: err.message</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.json(&#123;</span><br><span class="line">                status: <span class="string">'0'</span>,</span><br><span class="line">                msg: <span class="string">'success'</span>,</span><br><span class="line">                result: &#123;</span><br><span class="line">                    count: doc.length,</span><br><span class="line">                    list: doc</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+
+<p>chrome json格式化插件<br><a href="https://github.com/gildas-lormeau/JSONView-for-Chrome" target="_blank" rel="noopener">jsonview</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2018/01/18/express-%E6%90%AD%E5%BB%BA%E5%90%8E%E5%8F%B0/">blog.zhengxiangling.com/2018/01/18/express-%E6%90%AD%E5%BB%BA%E5%90%8E%E5%8F%B0/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/node/"># node</a>
+                    
+                        <a href="/tags/express/"># express</a>
+                    
+                        <a href="/tags/vue/"># vue</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/01/25/web%E7%AB%99%E7%82%B9%E6%8E%A5%E5%85%A5PayPal%E6%94%AF%E4%BB%98/">web站点接入PayPal支付</a>
+            
+            
+            <a class="next" rel="next" href="/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/">如何在邮件中写html</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
