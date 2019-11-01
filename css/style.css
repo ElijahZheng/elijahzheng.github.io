@@ -697,6 +697,9 @@ header label {
 .dark-theme .tag-cloud-tags a small {
   color: #fff;
 }
+.page .about-content {
+  padding-top: 0;
+}
 .page {
   padding-top: 0;
 }
