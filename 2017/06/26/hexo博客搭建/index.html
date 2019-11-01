@@ -180,7 +180,7 @@
 <p>然后访问<a href="http://localhost:4000/，访问成功说明成功了第一步了。" target="_blank" rel="noopener">http://localhost:4000/，访问成功说明成功了第一步了。</a></p>
 <p>9.使用hexo-admin可视化编写博客    </p>
 <p>1)install</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install --save hexo-admin</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnpm install --save bcrypt-nodejs</span><br><span class="line">cnpm install --save hexo-admin</span><br></pre></td></tr></table></figure>
 <p>2)创建admin的密码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">node</span><br><span class="line">&gt; const bcrypt = require(<span class="string">'bcrypt-nodejs'</span>)</span><br><span class="line">// undefined</span><br><span class="line">&gt; bcrypt.hashSync(<span class="string">'your_ password'</span>)</span><br><span class="line">//<span class="string">'$2a$10$cHnT1Ri... 这是密码的哈希映射值'</span></span><br></pre></td></tr></table></figure>
 
