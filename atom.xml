@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   <link href="content" rel="hub"/>
   <link href="blog.zhengxiangling.com/"/>
-  <updated>2019-10-30T08:13:41.546Z</updated>
+  <updated>2019-11-06T09:12:08.912Z</updated>
   <id>blog.zhengxiangling.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>区块链技术及应用现状</title>
+    <link href="blog.zhengxiangling.com/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/"/>
+    <id>blog.zhengxiangling.com/2019/11/06/区块链技术及应用现状-1/</id>
+    <published>2019-11-06T02:52:00.000Z</published>
+    <updated>2019-11-06T09:12:08.912Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>from 陈纯院士的讲座</p></blockquote><h2 id="区块链本质"><a href="#区块链本质" class="headerlink" title="区块链本质"></a>区块链本质</h2><h3 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h3><p>交易：交易指的是一次对账本的操作，如一笔转账交易。</p><p>区块：将一段时间内发生的所有交易和状态打包成为一个区块。</p><p>块链式数据结构（狭义区块链）：区块以时间顺序前后相连，组成一种块链式数据结构，及“区块链”一词的由来。</p><p>分布式账本（广义区块链）：多参与方各自部署，互联互通，构成分布式网络。</p><h3 id="三大支撑技术"><a href="#三大支撑技术" class="headerlink" title="三大支撑技术"></a>三大支撑技术</h3><p>共识算法：针对区块链上发生的交易，保障区块链所有节点数据一致性。</p><p>块链式数据结构：将一段时间内的交易数据打包成区块，再将多个区块按时间顺序有序链接的一种数据结构，用来确保数据的不可篡改性。</p><p>智能合约：一段部署在区块链上可自动运行的程序，可以自动化地执行预先定义好的规则和条款，通过减少人为干预的风险，提升交易的安全与可信任度。</p><h3 id="三种组织形态"><a href="#三种组织形态" class="headerlink" title="三种组织形态"></a>三种组织形态</h3><p>公有链：全球范围可以访问，不依赖于单个公司或辖区，匿名性强，任何参与者都可在中写入、读取、参与交易验证。</p><p>联盟链：联盟链仅限于联盟成员参与，系统内交易确认节点为事先设定，并通过共识机制确认。</p><p>私有链：仅在机构内使用，读写权、记账权由组织内自由定制。中心控制者制定可参与和进行交易验证成员范围。</p><h3 id="共识算法"><a href="#共识算法" class="headerlink" title="共识算法"></a>共识算法</h3><p>BFT(拜占庭容错算法)</p><ul><li><p>数学证明当且仅当三分之二以上的节点忠诚时，可以保证系统运行结果的正确性。</p></li><li><p>三大协议：</p><ul><li>三阶段共识协议：保证了主节点打包的区块通过三阶段共识完成打包结果的一致性确认</li><li>视图变更协议：保证了在主节点作恶情况下，系统可以通过该协议选举出新任的主节点进行共识，且不破坏其原有的共识状态</li><li>检查点机制：保证了各节点经过确认的一致性状态得以持久化</li></ul></li></ul><h3 id="行业分类"><a href="#行业分类" class="headerlink" title="行业分类"></a>行业分类</h3><p>币/模式：比特币 天秤币 Libra（Facebook发行） 摩根币 JPM（摩根大通发行）</p><p>链/技术：公有链 联盟链</p><h3 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h3><p>中共中央政治局10月24日下午就区块链技术发展现状和趋势进行第十八次集体学习。中共中央总书记习近平在主持学习时强调，区块链技术的集成应用在新的技术革新和产业变革中起着重要作用。我们要把区块链作为核心技术自主创新的重要突破口，明确主攻方向，加大投入力度，着力攻克一批关键核心技术，加快推动区块链技术和产业创新发展。</p><h4 id="产业应用"><a href="#产业应用" class="headerlink" title="产业应用"></a>产业应用</h4><ul><li><p>要推动区块链和实体经济深度融合，解决中小企业贷款融资难、银行风控难、部门监管难等问题。</p></li><li><p>要利用区块链技术探索数字经济模式创新。</p></li><li><p>要探索“区块链+”在民生领域的运用，积极推动区块链技术在教育、就业、养老、精准脱贫、医疗健康、商品防伪、食品安全、公益、社会救助等领域的应用，为人民群众提供更加智能、更加便捷、更加优质的公共服务。</p></li><li><p>要推动区块链底层技术服务和新型智慧城市建设相结合探索在信息基础设施、智慧交通、能源电力等领域的推广应用，提升城市管理的智能化、精准化水平。</p></li><li><p>要利用区块链技术促进城市间在信息、资金、人才、征信等方面更大规模的互联互通。</p></li><li><p>要探索利用区块链数据共享模式，实现政务数据跨部门、跨区域共同维护和利用，促进业务协同办理。</p></li></ul><h3 id="技术革新"><a href="#技术革新" class="headerlink" title="技术革新"></a>技术革新</h3><p>当下，各大互联网公司隐私泄露事件频出，一次次加深了公众对垄断性互联网公司的警惕，去中心化的区块链技术被认为是推倒垄断、走向平等的重要技术手段；利用区块链技术的链式存储结构，保证数据不可篡改，密码学保证用户隐私，共识算法保证数据权平等，区块链技术正在构建一个全新的分布式技术架构，成为新一代基础设施。</p><ul><li><p>提升多中心协作效率</p></li><li><p>去中介，提升多方信任</p></li><li><p>打破数据孤岛，提升数据应用效率</p></li><li><p>数据不可篡改，可追溯，可审计</p></li><li><p>自动执行预设，提升约束力，减少摩擦</p></li></ul><h3 id="三个阶段"><a href="#三个阶段" class="headerlink" title="三个阶段"></a>三个阶段</h3><p>可信计算与存储（数据可信）：数字存证 审计监管</p><p>数字化社会（资产可信）：资产数字化 数据资产化</p><p>分布式商业（合作可信）：多中心弱中介 激励生态化</p><h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>1.业务协作：养老金托管</p><p>利用区块链统筹管理养老金业务信息，将养老金业务流程线上化，提升资金使用效率。</p><ul><li><p>实现养老金业务信息在参与机构之间快速同步</p></li><li><p>提高业务处理流程的透明度，增加数据可信度</p></li><li><p>减少业务处理周期，提高养老金申购赎回频率，提升资金使用率</p></li></ul><p>2.数字资产：信用保险</p><p>供应链企业通过信用险增信，使得信用风险得到更大范围的分散，满足企业低成本融资的诉求。</p><ul><li><p>为中小企业增信，缓解融资困难</p></li><li><p>标准化企业信用，实现风险缓释</p></li><li><p>实现供应链金融体系的信用穿透</p></li><li><p>助力完善社会信用体系</p></li></ul><p>3.存证溯源：可信存证</p><p>存证方通过区块链平台实现电子存证可信存储，任意相关方在线查阅验证。</p><ul><li><p>多方协同，随时调用，实现方便、快捷的可信电子存证</p></li><li><p>存证电子化，节约纸张成本</p></li><li><p>电子存证灵活对接，便于业务拓展</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;from 陈纯院士的讲座&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;区块链本质&quot;&gt;&lt;a href=&quot;#区块链本质&quot; class=&quot;headerlink&quot; title=&quot;区块链本质&quot;&gt;&lt;/a&gt;区块链本质&lt;/h2&gt;&lt;h3 id=&quot;术语解释&quot;&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="区块链" scheme="blog.zhengxiangling.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+      <category term="技术应用" scheme="blog.zhengxiangling.com/tags/%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>macOS Mojave 安装双系统 bug 总结</title>
@@ -499,29 +528,6 @@
       <category term="fastclick" scheme="blog.zhengxiangling.com/tags/fastclick/"/>
     
       <category term="lazyload" scheme="blog.zhengxiangling.com/tags/lazyload/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ssh 连接远程服务器</title>
-    <link href="blog.zhengxiangling.com/2017/09/06/https%E9%83%A8%E7%BD%B2/"/>
-    <id>blog.zhengxiangling.com/2017/09/06/https部署/</id>
-    <published>2017-09-06T11:29:00.000Z</published>
-    <updated>2019-10-30T08:13:41.546Z</updated>
-    
-    <content type="html"><![CDATA[<p>登上远程服务器，除了使用登录密码之外，我们还可以使用公钥key来免手动输入密码进行登录。</p><a id="more"></a><p>这里使用linux服务器，默认启用root账户。</p><p>先在远程服务器操作</p><p>1.启用root权限用户</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br></pre></td></tr></table></figure><p>2.新建存放公钥的.ssh文件夹和放公钥文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">mkdir .ssh</span><br><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line">vim authorized_keys</span><br></pre></td></tr></table></figure><p>按<code>a</code>，然后输入你的公钥<code>id_rsa.pub</code>，完成后按<code>esc</code> <code>:</code> <code>w</code> <code>q</code>保存退出</p><p>3.本地连接远程服务器</p><p>在本地电脑</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">vim config</span><br></pre></td></tr></table></figure><p>添加</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host remote</span><br><span class="line">    HostName 远程服务器的ip</span><br><span class="line">    Port 22</span><br><span class="line">    User root</span><br><span class="line">    ServerAliveInterval 60</span><br></pre></td></tr></table></figure><p><code>esc</code> <code>:</code> <code>w</code> <code>q</code> 保存退出</p><p>然后就可以用 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@remote</span><br></pre></td></tr></table></figure><p>直接访问远程服务器了。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;登上远程服务器，除了使用登录密码之外，我们还可以使用公钥key来免手动输入密码进行登录。&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="ssh" scheme="blog.zhengxiangling.com/tags/ssh/"/>
-    
-      <category term="服务器" scheme="blog.zhengxiangling.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>区块链技术及应用现状 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">区块链技术及应用现状</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 6, 2019&nbsp;&nbsp;10:52:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>from 陈纯院士的讲座</p>
+</blockquote>
+<h2 id="区块链本质"><a href="#区块链本质" class="headerlink" title="区块链本质"></a>区块链本质</h2><h3 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h3><p>交易：交易指的是一次对账本的操作，如一笔转账交易。</p>
+<p>区块：将一段时间内发生的所有交易和状态打包成为一个区块。</p>
+<p>块链式数据结构（狭义区块链）：区块以时间顺序前后相连，组成一种块链式数据结构，及“区块链”一词的由来。</p>
+<p>分布式账本（广义区块链）：多参与方各自部署，互联互通，构成分布式网络。</p>
+<h3 id="三大支撑技术"><a href="#三大支撑技术" class="headerlink" title="三大支撑技术"></a>三大支撑技术</h3><p>共识算法：针对区块链上发生的交易，保障区块链所有节点数据一致性。</p>
+<p>块链式数据结构：将一段时间内的交易数据打包成区块，再将多个区块按时间顺序有序链接的一种数据结构，用来确保数据的不可篡改性。</p>
+<p>智能合约：一段部署在区块链上可自动运行的程序，可以自动化地执行预先定义好的规则和条款，通过减少人为干预的风险，提升交易的安全与可信任度。</p>
+<h3 id="三种组织形态"><a href="#三种组织形态" class="headerlink" title="三种组织形态"></a>三种组织形态</h3><p>公有链：全球范围可以访问，不依赖于单个公司或辖区，匿名性强，任何参与者都可在中写入、读取、参与交易验证。</p>
+<p>联盟链：联盟链仅限于联盟成员参与，系统内交易确认节点为事先设定，并通过共识机制确认。</p>
+<p>私有链：仅在机构内使用，读写权、记账权由组织内自由定制。中心控制者制定可参与和进行交易验证成员范围。</p>
+<h3 id="共识算法"><a href="#共识算法" class="headerlink" title="共识算法"></a>共识算法</h3><p>BFT(拜占庭容错算法)</p>
+<ul>
+<li><p>数学证明当且仅当三分之二以上的节点忠诚时，可以保证系统运行结果的正确性。</p>
+</li>
+<li><p>三大协议：</p>
+<ul>
+<li>三阶段共识协议：保证了主节点打包的区块通过三阶段共识完成打包结果的一致性确认</li>
+<li>视图变更协议：保证了在主节点作恶情况下，系统可以通过该协议选举出新任的主节点进行共识，且不破坏其原有的共识状态</li>
+<li>检查点机制：保证了各节点经过确认的一致性状态得以持久化</li>
+</ul>
+</li>
+</ul>
+<h3 id="行业分类"><a href="#行业分类" class="headerlink" title="行业分类"></a>行业分类</h3><p>币/模式：比特币 天秤币 Libra（Facebook发行） 摩根币 JPM（摩根大通发行）</p>
+<p>链/技术：公有链 联盟链</p>
+<h3 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h3><p>中共中央政治局10月24日下午就区块链技术发展现状和趋势进行第十八次集体学习。中共中央总书记习近平在主持学习时强调，区块链技术的集成应用在新的技术革新和产业变革中起着重要作用。我们要把区块链作为核心技术自主创新的重要突破口，明确主攻方向，加大投入力度，着力攻克一批关键核心技术，加快推动区块链技术和产业创新发展。</p>
+<h4 id="产业应用"><a href="#产业应用" class="headerlink" title="产业应用"></a>产业应用</h4><ul>
+<li><p>要推动区块链和实体经济深度融合，解决中小企业贷款融资难、银行风控难、部门监管难等问题。</p>
+</li>
+<li><p>要利用区块链技术探索数字经济模式创新。</p>
+</li>
+<li><p>要探索“区块链+”在民生领域的运用，积极推动区块链技术在教育、就业、养老、精准脱贫、医疗健康、商品防伪、食品安全、公益、社会救助等领域的应用，为人民群众提供更加智能、更加便捷、更加优质的公共服务。</p>
+</li>
+<li><p>要推动区块链底层技术服务和新型智慧城市建设相结合探索在信息基础设施、智慧交通、能源电力等领域的推广应用，提升城市管理的智能化、精准化水平。</p>
+</li>
+<li><p>要利用区块链技术促进城市间在信息、资金、人才、征信等方面更大规模的互联互通。</p>
+</li>
+<li><p>要探索利用区块链数据共享模式，实现政务数据跨部门、跨区域共同维护和利用，促进业务协同办理。</p>
+</li>
+</ul>
+<h3 id="技术革新"><a href="#技术革新" class="headerlink" title="技术革新"></a>技术革新</h3><p>当下，各大互联网公司隐私泄露事件频出，一次次加深了公众对垄断性互联网公司的警惕，去中心化的区块链技术被认为是推倒垄断、走向平等的重要技术手段；利用区块链技术的链式存储结构，保证数据不可篡改，密码学保证用户隐私，共识算法保证数据权平等，区块链技术正在构建一个全新的分布式技术架构，成为新一代基础设施。</p>
+<ul>
+<li><p>提升多中心协作效率</p>
+</li>
+<li><p>去中介，提升多方信任</p>
+</li>
+<li><p>打破数据孤岛，提升数据应用效率</p>
+</li>
+<li><p>数据不可篡改，可追溯，可审计</p>
+</li>
+<li><p>自动执行预设，提升约束力，减少摩擦</p>
+</li>
+</ul>
+<h3 id="三个阶段"><a href="#三个阶段" class="headerlink" title="三个阶段"></a>三个阶段</h3><p>可信计算与存储（数据可信）：数字存证 审计监管</p>
+<p>数字化社会（资产可信）：资产数字化 数据资产化</p>
+<p>分布式商业（合作可信）：多中心弱中介 激励生态化</p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>1.业务协作：养老金托管</p>
+<p>利用区块链统筹管理养老金业务信息，将养老金业务流程线上化，提升资金使用效率。</p>
+<ul>
+<li><p>实现养老金业务信息在参与机构之间快速同步</p>
+</li>
+<li><p>提高业务处理流程的透明度，增加数据可信度</p>
+</li>
+<li><p>减少业务处理周期，提高养老金申购赎回频率，提升资金使用率</p>
+</li>
+</ul>
+<p>2.数字资产：信用保险</p>
+<p>供应链企业通过信用险增信，使得信用风险得到更大范围的分散，满足企业低成本融资的诉求。</p>
+<ul>
+<li><p>为中小企业增信，缓解融资困难</p>
+</li>
+<li><p>标准化企业信用，实现风险缓释</p>
+</li>
+<li><p>实现供应链金融体系的信用穿透</p>
+</li>
+<li><p>助力完善社会信用体系</p>
+</li>
+</ul>
+<p>3.存证溯源：可信存证</p>
+<p>存证方通过区块链平台实现电子存证可信存储，任意相关方在线查阅验证。</p>
+<ul>
+<li><p>多方协同，随时调用，实现方便、快捷的可信电子存证</p>
+</li>
+<li><p>存证电子化，节约纸张成本</p>
+</li>
+<li><p>电子存证灵活对接，便于业务拓展</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/">blog.zhengxiangling.com/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8/"># 技术应用</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/03/23/macOS-Mojave%E5%AE%89%E8%A3%85%E5%8F%8C%E7%B3%BB%E7%BB%9F-bug-%E6%80%BB%E7%BB%93/">macOS Mojave 安装双系统 bug 总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
