@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>beautifulSoup爬取同步加载页面数据 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">beautifulSoup爬取同步加载页面数据</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 15, 2019&nbsp;&nbsp;11:00:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                            
+                        </span>
+                    
+                    
+                        <span id="busuanzi_container_page_pv" class="post-count">
+                    Count: <a href="#"><span id="busuanzi_value_page_pv"></span></a>
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>beautifulSoup 可以很方便的获取 html 页面的标签节点，而且也很容易获取到标签的属性和文本内容。我们就运用 beautifulSoup 来爬取同步加载页面数据，然后我们将获取到的数据存入到 excel 中。</p>
+<a id="more"></a>
+
+<h2 id="爬取同步加载页面数据"><a href="#爬取同步加载页面数据" class="headerlink" title="爬取同步加载页面数据"></a>爬取同步加载页面数据</h2><p>我们这里爬取豆瓣电影Top 250 的数据做描述，<code>request</code>库请求页面，<code>beautifulSoup</code>用来获取页面节点，所使用到的库自行安装。</p>
+<h3 id="获取页面源码"><a href="#获取页面源码" class="headerlink" title="获取页面源码"></a>获取页面源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from urllib import request</span><br><span class="line">from chardet import detect</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_soup(page_url):</span><br><span class="line">    &quot;&quot;&quot;获取源码&quot;&quot;&quot;</span><br><span class="line">    with request.urlopen(page_url) as fp:</span><br><span class="line">        byt = fp.read()</span><br><span class="line">        det = detect(byt)</span><br><span class="line">        return BeautifulSoup(byt.decode(det[&apos;encoding&apos;]), &apos;lxml&apos;)</span><br></pre></td></tr></table></figure>
+<p><code>page_url</code>为页面地址，<code>lxml</code>为<code>python</code>库自行安装。</p>
+<h3 id="获取页面数据"><a href="#获取页面数据" class="headerlink" title="获取页面数据"></a>获取页面数据</h3><p>我们运用<code>beautifulSoup</code>来获取页面的数据，数据一般存放在页面的节点内容中（如：标题、价格、数量）和节点的属性中（图片链接），所以我们需要找到这些存放数据的相应节点。</p>
+<p><img src="https://cdn.zhengxiangling.com/superbed/2019/11/15/5dce0edf8e0e2e3ee92f82d9.jpg" alt="douban电影top250数据节点"></p>
+<p>我们需要从中找到一些规律，每部电影的数据都存放在一个<code>li</code>中，所有的<code>li</code>都存放在一个<code>ol</code>中，图片的链接在<code>li</code>的<code>img</code>标签的<code>src</code>属性中，其他的数据都放在带有<code>class</code>属性的<code>span</code>标签中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 正则式</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">def get_data(page):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    获取数据</span><br><span class="line">    selelct 可以用css语法获取标签，find可以获取标签里的 attrs 属性值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    data = []</span><br><span class="line">    ol = page.find(&apos;ol&apos;, attrs=&#123;&apos;class&apos;: &apos;grid_view&apos;&#125;)</span><br><span class="line">    for li in ol.select(&apos;li&apos;):</span><br><span class="line">        # 单元</span><br><span class="line">        tmp = []</span><br><span class="line">        # 多个 title</span><br><span class="line">        titles = []</span><br><span class="line">        img_url = li.find(&apos;img&apos;).attrs[&apos;src&apos;].strip()</span><br><span class="line">        tmp.append(img_url)</span><br><span class="line">        for span in li.findAll(&apos;span&apos;, attrs=&#123;&quot;class&quot;: re.compile(&apos;&apos;)&#125;):</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;title&apos;:</span><br><span class="line">                titles.append(span.string.strip())</span><br><span class="line">            # 评价</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;rating_num&apos;:</span><br><span class="line">                tmp.append(span.string.strip())</span><br><span class="line">            # 简评</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;inq&apos;:</span><br><span class="line">                tmp.append(span.string.strip())</span><br><span class="line">        tmp.insert(0, titles)</span><br><span class="line">        data.append(tmp)</span><br><span class="line">    return data</span><br></pre></td></tr></table></figure>
+<h3 id="获取下一页的数据"><a href="#获取下一页的数据" class="headerlink" title="获取下一页的数据"></a>获取下一页的数据</h3><p>我们先需要在页面中找到下一页数据请求的参数<br><img src="https://cdn.zhengxiangling.com/superbed/2019/11/15/5dce1b588e0e2e3ee931cd7c.jpg" alt="下一页按钮"><br>我们可以看到下一页的参数为<code>?start=25&amp;filter=</code>，所以获取到这个参数然后加入到之前的网址当中，获取到的数据就是下一页的数据了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def next_url(page):</span><br><span class="line">    &quot;&quot;&quot;获取下一页链接后缀&quot;&quot;&quot;</span><br><span class="line">    a = page.find(&apos;a&apos;, text=re.compile(&quot;^后页&quot;))</span><br><span class="line">    if a:</span><br><span class="line">        return a.attrs[&apos;href&apos;]</span><br><span class="line">    else:</span><br><span class="line">        return None</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存数据到-excel-中"><a href="#保存数据到-excel-中" class="headerlink" title="保存数据到 excel 中"></a>保存数据到 excel 中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import xlwt</span><br><span class="line"></span><br><span class="line">def xls_save(workbook, data, count):</span><br><span class="line">    &quot;&quot;&quot;保存数据到excel&quot;&quot;&quot;</span><br><span class="line">    for d in data:</span><br><span class="line">        for i in range(len(d)):</span><br><span class="line">            # print(d[i])</span><br><span class="line">            workbook.write(count, i, d[i])</span><br><span class="line">        count = count + 1</span><br><span class="line">    return workbook, count</span><br></pre></td></tr></table></figure>
+<p><code>xlwt</code>为<code>python</code>库自行安装，<code>workbook</code>为要保存的<code>excel</code>对象，<code>data</code>为<code>beautifulSoup</code>对象，<code>count</code>为要写入数据的行数。</p>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"># 爬取豆瓣电影 top250</span><br><span class="line"></span><br><span class="line">from urllib import request</span><br><span class="line">from chardet import detect</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import re</span><br><span class="line">import xlwt</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_soup(page_url):</span><br><span class="line">    &quot;&quot;&quot;获取源码&quot;&quot;&quot;</span><br><span class="line">    with request.urlopen(page_url) as fp:</span><br><span class="line">        byt = fp.read()</span><br><span class="line">        det = detect(byt)</span><br><span class="line">        return BeautifulSoup(byt.decode(det[&apos;encoding&apos;]), &apos;lxml&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_data(page):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    获取数据</span><br><span class="line">    selelct 可以用css语法获取标签，find可以获取标签里的 attrs 属性值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    data = []</span><br><span class="line">    ol = page.find(&apos;ol&apos;, attrs=&#123;&apos;class&apos;: &apos;grid_view&apos;&#125;)</span><br><span class="line">    for li in ol.select(&apos;li&apos;):</span><br><span class="line">        # 单元</span><br><span class="line">        tmp = []</span><br><span class="line">        # 多个 title</span><br><span class="line">        titles = []</span><br><span class="line">        img_url = li.find(&apos;img&apos;).attrs[&apos;src&apos;].strip()</span><br><span class="line">        tmp.append(img_url)</span><br><span class="line">        for span in li.findAll(&apos;span&apos;, attrs=&#123;&quot;class&quot;: re.compile(&apos;&apos;)&#125;):</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;title&apos;:</span><br><span class="line">                titles.append(span.string.strip())</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;rating_num&apos;:</span><br><span class="line">                tmp.append(span.string.strip())</span><br><span class="line">            if span.attrs[&apos;class&apos;][0] == &apos;inq&apos;:</span><br><span class="line">                tmp.append(span.string.strip())</span><br><span class="line">        tmp.insert(0, titles)</span><br><span class="line">        data.append(tmp)</span><br><span class="line">    return data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def next_url(page):</span><br><span class="line">    &quot;&quot;&quot;获取下一页链接后缀&quot;&quot;&quot;</span><br><span class="line">    a = page.find(&apos;a&apos;, text=re.compile(&quot;^后页&quot;))</span><br><span class="line">    if a:</span><br><span class="line">        return a.attrs[&apos;href&apos;]</span><br><span class="line">    else:</span><br><span class="line">        return None</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def xls_save(workbook, data, count):</span><br><span class="line">    &quot;&quot;&quot;保存数据到excel&quot;&quot;&quot;</span><br><span class="line">    for d in data:</span><br><span class="line">        for i in range(len(d)):</span><br><span class="line">            # print(d[i])</span><br><span class="line">            workbook.write(count, i, d[i])</span><br><span class="line">        count = count + 1</span><br><span class="line">    return workbook, count</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    url = &apos;https://movie.douban.com/top250&apos;</span><br><span class="line">    soup = get_soup(url)</span><br><span class="line">    # print(get_data(soup))</span><br><span class="line">    path = os.path.join(os.getcwd() + &quot;\\&quot; + &quot;douban-top250.xls&quot;)</span><br><span class="line">    xls_file = os.path.exists(path)</span><br><span class="line">    if xls_file:</span><br><span class="line">        os.remove(path)</span><br><span class="line">    wb = xlwt.Workbook(encoding=&apos;utf-8&apos;)</span><br><span class="line">    xls = wb.add_sheet(&apos;top250&apos;)</span><br><span class="line">    head = [&apos;标题&apos;, &apos;图片地址&apos;, &apos;评分&apos;, &apos;简评&apos;]  # 表头</span><br><span class="line">    row = 1</span><br><span class="line">    for h in range(len(head)):</span><br><span class="line">        xls.write(0, h, head[h])</span><br><span class="line">    xls, row = xls_save(xls, get_data(soup), 1)</span><br><span class="line">    nxt = next_url(soup)</span><br><span class="line">    while nxt:</span><br><span class="line">        soup = get_soup(url + nxt)</span><br><span class="line">        xls, row = xls_save(xls, get_data(soup), row)</span><br><span class="line">        nxt = next_url(soup)</span><br><span class="line">    wb.save(&apos;douban-top250.xls&apos;)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/">blog.zhengxiangling.com/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/beautifulSoup/"># beautifulSoup</a>
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/">区块链技术及应用现状</a>
+            
+        </section>
+
+        
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTM0NS81OTEz">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    </div>
+</body>
+</html>
