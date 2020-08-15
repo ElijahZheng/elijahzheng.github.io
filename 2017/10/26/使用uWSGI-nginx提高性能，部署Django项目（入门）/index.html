@@ -43,6 +43,7 @@
     
 
 
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Elijah Zheng's Blog" type="application/atom+xml">
 </head>
 <body>
     <div class="wrapper">
@@ -63,7 +64,6 @@
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
             </div>
-
         </div>
     </nav>
 
@@ -211,7 +211,7 @@
 <h5 id="uWSGI-基本安装和配置"><a href="#uWSGI-基本安装和配置" class="headerlink" title="uWSGI 基本安装和配置"></a>uWSGI 基本安装和配置</h5><h6 id="安装-uWSGI"><a href="#安装-uWSGI" class="headerlink" title="安装 uWSGI"></a>安装 uWSGI</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install uwsgi</span><br></pre></td></tr></table></figure>
 <p>当然还有其他的方法来安装uWSGI，不过<code>pip</code>来安装是最好的安装方法之一。</p>
 <h6 id="基本测试"><a href="#基本测试" class="headerlink" title="基本测试"></a>基本测试</h6><p>创建 <code>test.py</code> 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># test.py</span><br><span class="line">def application(env, start_response):</span><br><span class="line">    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;,&apos;text/html&apos;)])</span><br><span class="line">    return [b&quot;Hello World&quot;] # python3</span><br><span class="line">    #return [&quot;Hello World&quot;] # python2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># test.py</span><br><span class="line">def application(env, start_response):</span><br><span class="line">    start_response(&#39;200 OK&#39;, [(&#39;Content-Type&#39;,&#39;text&#x2F;html&#39;)])</span><br><span class="line">    return [b&quot;Hello World&quot;] # python3</span><br><span class="line">    #return [&quot;Hello World&quot;] # python2</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <blockquote>
@@ -264,7 +264,7 @@
 <p>如果访问失败，看错误日志然后做相应的修改，然后重启 nginx。</p>
 <h5 id="使用-Unix-sockets-来代替端口"><a href="#使用-Unix-sockets-来代替端口" class="headerlink" title="使用 Unix sockets 来代替端口"></a>使用 Unix sockets 来代替端口</h5><p>到目前为止，我们已经使用了TCP端口的套接字（socket），因为它比较的简单，但实际上使用 Unix socket 会更好 - 开销较少。</p>
 <p>编辑 <code>mysite_nginx.conf</code><br>取消下列注释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server unix:///data/www/vhosts/mysite/mysite.sock; # for a file socket</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server unix:&#x2F;&#x2F;&#x2F;data&#x2F;www&#x2F;vhosts&#x2F;mysite&#x2F;mysite.sock; # for a file socket</span><br></pre></td></tr></table></figure>
 
 <p>然后重启 nginx<br>然后重新运行 uWSGI：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --socket mysite.sock --wsgi-file test.py</span><br></pre></td></tr></table></figure>
