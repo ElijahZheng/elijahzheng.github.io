@@ -1,141 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang=zh>
 <head>
-    <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <meta name="author" content="Elijah Zheng">
-
-
-
-
-
-<title>如何在邮件中写html | Elijah Zheng&#39;s Blog</title>
-
-
-
-    <link rel="icon" href="/favicon.jpg">
-
-
-
-
-    <!-- stylesheets list from _config.yml -->
-    
-    <link rel="stylesheet" href="/css/style.css">
-    
-
-
-
-    <!-- scripts list from _config.yml -->
-    
-    <script src="/js/script.js"></script>
-    
-    <script src="/js/tocbot.min.js"></script>
-    
-
-
-
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在邮件中写html">
+<meta property="og:url" content="blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/index.html">
+<meta property="og:site_name" content="Elijah Zheng&#39;s Blog">
+<meta property="og:description" content="当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2017-12-21T10:43:31.000Z">
+<meta property="article:modified_time" content="2019-10-30T08:13:42.000Z">
+<meta property="article:author" content="Elijah Zheng">
+<meta name="twitter:card" content="summary">
     
     
         
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
     
+    <!-- title -->
+    <title>如何在邮件中写html</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Elijah Zheng's Blog" type="application/atom+xml">
 </head>
+
 <body>
-    <div class="wrapper">
-        <header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
-            <div class="menu navbar-right">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-                <input id="switch_default" type="checkbox" class="switch_default">
-                <label for="switch_default" class="toggleBtn"></label>
-            </div>
-        </div>
-    </nav>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">Elijah Zheng&#39;s Blog</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
 
+    <div class="background">
+      
+        <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/01/18/express-%E6%90%AD%E5%BB%BA%E5%90%8E%E5%8F%B0/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/11/30/three-js-%E5%88%9D%E8%AF%86/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/" target="_blank" rel="noopener"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&text=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&is_video=false&description=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何在邮件中写html&body=Check out this article: blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&name=如何在邮件中写html&description=&lt;p&gt;当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。&lt;/p&gt;" target="_blank" rel="noopener"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
     
-    <nav class="navbar-mobile" id="nav-mobile">
-        <div class="container">
-            <div class="navbar-header">
-                <div>
-                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
-                </div>
-                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
-            </div>
-            <div class="menu" id="mobile-menu">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-            </div>
-        </div>
-    </nav>
+    <h1 class="posttitle" itemprop="name headline">
+        如何在邮件中写html
+    </h1>
 
-</header>
-<script>
-    var mobileBtn = function f() {
-        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
-        var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
-           toggleMenu.classList.remove("active")
-            mobileMenu.classList.remove("active")
-        }else{
-            toggleMenu.classList.add("active")
-            mobileMenu.classList.add("active")
-        }
-    }
-</script>
-        <div class="main">
-            <div class="container">
-    
-    
 
-    
-    <article class="post-wrap">
-        <header class="post-header">
-            <h1 class="post-title">如何在邮件中写html</h1>
-            
-                <div class="post-meta">
-                    
-                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
-                    
 
-                    
-                        <span class="post-time">
-                        Date: <a href="#">December 21, 2017&nbsp;&nbsp;18:43:31</a>
-                        </span>
-                    
-                    
-                    
-                        <span id="busuanzi_container_page_pv" class="post-count">
-                    Count: <a href="#"><span id="busuanzi_value_page_pv"></span></a>
-                        </span>
-                    
-                </div>
-            
-        </header>
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Elijah Zheng</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-12-21T10:43:31.000Z" itemprop="datePublished">2017-12-21</time>
+    </div>
 
-        <div class="post-content">
-            <p>当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。</p>
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。</p>
 <a id="more"></a>
 
 <p>1.Doctype<br>使用这个是为了兼容性，但是就意味着不能使用HTML5。</p>
@@ -166,89 +208,93 @@
 <p>2)移动设备邮件模板宽度建议480px。</p>
 <p>3)模板通常是1－3列式布局，推荐1-2列式。</p>
 
-        </div>
+  </div>
+</article>
 
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
         
-            <section class="post-copyright">
-                
-                    <p class="copyright-item">
-                        <span>Author:</span>
-                        <span>Elijah Zheng</span>
-                    </p>
-                
-                
-                    <p class="copyright-item">
-                        <span>Permalink:</span>
-                        <span><a href="blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/">blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/</a></span>
-                    </p>
-                
-                
-                
-                     <p class="copyright-item">
-                         <span>Slogan:</span>
-                         <span>今天学习的收获</span>
-                     </p>
-                
-
-            </section>
-        
-        <section class="post-tags">
-            <div>
-                <span>Tag(s):</span>
-                <span class="tag">
-                    
-                </span>
-            </div>
-            <div>
-                <a href="javascript:window.history.back();">back</a>
-                <span>· </span>
-                <a href="/">home</a>
-            </div>
-        </section>
-        <section class="post-nav">
-            
-                <a class="prev" rel="prev" href="/2018/01/18/express-%E6%90%AD%E5%BB%BA%E5%90%8E%E5%8F%B0/">express 搭建后台</a>
-            
-            
-            <a class="next" rel="next" href="/2017/11/30/three-js-%E5%88%9D%E8%AF%86/">three.js 初识</a>
-            
-        </section>
-
-        
-    <!-- 来必力City版安装代码 -->
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTM0NS81OTEz">
-    <script type="text/javascript">
-        (function(d, s) {
-            var j, e = d.getElementsByTagName(s)[0];
-
-            if (typeof LivereTower === 'function') { return; }
-
-            j = d.createElement(s);
-            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-            j.async = true;
-
-            e.parentNode.insertBefore(j, e);
-        })(document, 'script');
-    </script>
-    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+      </ul>
     </div>
-    <!-- City版安装代码已完成 -->
 
+    <div id="toc-footer" style="display: none">
+      
+    </div>
 
-    </article>
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/" target="_blank" rel="noopener"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&text=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&is_video=false&description=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何在邮件中写html&body=Check out this article: blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&title=如何在邮件中写html" target="_blank" rel="noopener"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=blog.zhengxiangling.com/2017/12/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%82%AE%E4%BB%B6%E4%B8%AD%E5%86%99html/&name=如何在邮件中写html&description=&lt;p&gt;当我们需要在邮件中显示想要的自己定义的格式的时候，就需要在 email 中编写 html，以下将列举一些制作过程中个人的一些总结。&lt;/p&gt;" target="_blank" rel="noopener"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
-        </div>
-        <footer id="footer" class="footer">
-    <div class="copyright">
-        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
-    </div>
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Elijah Zheng
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
 
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
+<script src="/js/main.js"></script>
 
+<!-- Google Analytics -->
+
+<!-- Disqus Comments -->
 
 
     </div>

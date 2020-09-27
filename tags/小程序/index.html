@@ -1,146 +1,864 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang=zh>
 <head>
-    <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <meta name="author" content="Elijah Zheng">
-
-
-
-
-
-<title>Tag: 小程序 | Elijah Zheng&#39;s Blog</title>
-
-
-
-    <link rel="icon" href="/favicon.jpg">
-
-
-
-
-    <!-- stylesheets list from _config.yml -->
-    
-    <link rel="stylesheet" href="/css/style.css">
-    
-
-
-
-    <!-- scripts list from _config.yml -->
-    
-    <script src="/js/script.js"></script>
-    
-    <script src="/js/tocbot.min.js"></script>
-    
-
-
-
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Elijah Zheng&#39;s Blog">
+<meta property="og:url" content="blog.zhengxiangling.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="Elijah Zheng&#39;s Blog">
+<meta property="og:locale" content="zh">
+<meta property="article:author" content="Elijah Zheng">
+<meta name="twitter:card" content="summary">
     
     
         
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
     
+    <!-- title -->
+    <title>Elijah Zheng&#39;s Blog</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Elijah Zheng's Blog" type="application/atom+xml">
 </head>
+
 <body>
-    <div class="wrapper">
-        <header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
-            <div class="menu navbar-right">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-                <input id="switch_default" type="checkbox" class="switch_default">
-                <label for="switch_default" class="toggleBtn"></label>
-            </div>
-        </div>
-    </nav>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">Elijah Zheng&#39;s Blog</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
 
+    <div class="background">
+      
+      <div class="content index width mx-auto px2 my4">
+          
+            <header id="header">
+  <a href="/">
+  
     
-    <nav class="navbar-mobile" id="nav-mobile">
-        <div class="container">
-            <div class="navbar-header">
-                <div>
-                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
-                </div>
-                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
-            </div>
-            <div class="menu" id="mobile-menu">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-            </div>
-        </div>
-    </nav>
-
+      <div id="logo" style="background-image: url(/images/logo.png);"></div>
+    
+  
+    <div id="title">
+      <h1>Elijah Zheng&#39;s Blog</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fa fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/about/">About</a></li>
+       
+        <li><a href="/archives/">Writing</a></li>
+       
+        <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
+      
+    </ul>
+  </div>
 </header>
-<script>
-    var mobileBtn = function f() {
-        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
-        var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
-           toggleMenu.classList.remove("active")
-            mobileMenu.classList.remove("active")
-        }else{
-            toggleMenu.classList.add("active")
-            mobileMenu.classList.add("active")
-        }
-    }
-</script>
-        <div class="main">
-            
 
-    
-<div class="container">
-    <div class="post-wrap tags">
-        <h2 class="post-title">-&nbsp;Tag&nbsp;·&nbsp;小程序-</h2>
+          
+          <div id="article-banner">
+    <h2>所有标签</h2>
+  </div>
+  <main class="app-body">
+    <div id="tag-cloud">
+      
+        <a class="tag1" href="#tag-CSS布局" title="CSS布局">CSS布局</a>
+      
+        <a class="tag0" href="#tag-Django" title="Django">Django</a>
+      
+        <a class="tag1" href="#tag-git" title="git">git</a>
+      
+        <a class="tag1" href="#tag-随笔" title="随笔">随笔</a>
+      
+        <a class="tag1" href="#tag-beautifulSoup" title="beautifulSoup">beautifulSoup</a>
+      
+        <a class="tag0" href="#tag-python" title="python">python</a>
+      
+        <a class="tag2" href="#tag-css" title="css">css</a>
+      
+        <a class="tag1" href="#tag-Mongo DB" title="Mongo DB">Mongo DB</a>
+      
+        <a class="tag2" href="#tag-数据库" title="数据库">数据库</a>
+      
+        <a class="tag1" href="#tag-java" title="java">java</a>
+      
+        <a class="tag1" href="#tag-ssh" title="ssh">ssh</a>
+      
+        <a class="tag1" href="#tag-服务器" title="服务器">服务器</a>
+      
+        <a class="tag0" href="#tag-https" title="https">https</a>
+      
+        <a class="tag1" href="#tag-macOS" title="macOS">macOS</a>
+      
+        <a class="tag2" href="#tag-linux" title="linux">linux</a>
+      
+        <a class="tag1" href="#tag-Vue" title="Vue">Vue</a>
+      
+        <a class="tag3" href="#tag-vue-router" title="vue-router">vue-router</a>
+      
+        <a class="tag2" href="#tag-django" title="django">django</a>
+      
+        <a class="tag2" href="#tag-pillow" title="pillow">pillow</a>
+      
+        <a class="tag2" href="#tag-node" title="node">node</a>
+      
+        <a class="tag2" href="#tag-express" title="express">express</a>
+      
+        <a class="tag2" href="#tag-vue" title="vue">vue</a>
+      
+        <a class="tag2" href="#tag-scss" title="scss">scss</a>
+      
+        <a class="tag1" href="#tag-three" title="three">three</a>
+      
+        <a class="tag0" href="#tag-图形学" title="图形学">图形学</a>
+      
+        <a class="tag3" href="#tag-PayPal" title="PayPal">PayPal</a>
+      
+        <a class="tag1" href="#tag-支付" title="支付">支付</a>
+      
+        <a class="tag0" href="#tag-fastclick" title="fastclick">fastclick</a>
+      
+        <a class="tag0" href="#tag-lazyload" title="lazyload">lazyload</a>
+      
+        <a class="tag1" href="#tag-webpack" title="webpack">webpack</a>
+      
+        <a class="tag1" href="#tag-uWSGI" title="uWSGI">uWSGI</a>
+      
+        <a class="tag1" href="#tag-nginx" title="nginx">nginx</a>
+      
+        <a class="tag2" href="#tag-性能" title="性能">性能</a>
+      
+        <a class="tag1" href="#tag-技术应用" title="技术应用">技术应用</a>
+      
+        <a class="tag1" href="#tag-vuex" title="vuex">vuex</a>
+      
+        <a class="tag2" href="#tag-小程序" title="小程序">小程序</a>
+      
+        <a class="tag2" href="#tag-电子邮件" title="电子邮件">电子邮件</a>
+      
+        <a class="tag0" href="#tag-Java" title="Java">Java</a>
+      
+        <a class="tag2" href="#tag-POP3" title="POP3">POP3</a>
+      
+        <a class="tag3" href="#tag-SMTP" title="SMTP">SMTP</a>
+      
+        <a class="tag1" href="#tag-JAVA" title="JAVA">JAVA</a>
+      
+        <a class="tag0" href="#tag-tornado" title="tornado">tornado</a>
+      
+        <a class="tag1" href="#tag-ssl" title="ssl">ssl</a>
+      
+        <a class="tag1" href="#tag-mongo" title="mongo">mongo</a>
+      
+        <a class="tag0" href="#tag-IMAP" title="IMAP">IMAP</a>
+      
     </div>
-    <div class="post-wrap archive">
     
-    
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-CSS布局">CSS布局</h3>
         
-
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/27/CSS-Sticky-Footer布局/">CSS-Sticky-Footer 布局</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-Django">Django</h3>
         
-            <h3>2018</h3>
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/08/25/Django-Admin-使用-Quill-定制后台/">Django Admin 使用富文本插件 Quill 定制后台</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/08/25/Django-上传七牛图片/">Django 运用 七牛云 作为图床上传图片</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/26/使用uWSGI-nginx提高性能，部署Django项目（入门）/">使用uWSGI + nginx 提高性能，部署Django项目（入门）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-git">git</h3>
         
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2018/04/11/%E6%90%AD%E5%BB%BA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9C%8D%E5%8A%A1/">搭建微信小程序服务</a>
-            <span class="archive-item-date">April 11, 2018</span>
-        </article>
-    
-    
-</div>
-</div>
-
-        </div>
-        <footer id="footer" class="footer">
-    <div class="copyright">
-        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
-    </div>
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/07/Git入门/">Git入门</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-随笔">随笔</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/13/2017学年个人总结/">2017学年个人总结</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-beautifulSoup">beautifulSoup</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2019/11/15/beautifulSoup爬取同步加载页面数据/">beautifulSoup爬取同步加载页面数据</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-python">python</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2019/11/15/beautifulSoup爬取同步加载页面数据/">beautifulSoup爬取同步加载页面数据</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/08/27/linux-安装-pyhton3-6-及-使用-Virtualenv-管理python版本/">linux 安装 python3.6 及 使用 Virtualenv 管理python版本</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-css">css</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/08/css常用居中/">css居中</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-Mongo DB">Mongo DB</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/29/MongoDB-ѧϰ/">MongoDB 学习</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-数据库">数据库</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/29/MongoDB-ѧϰ/">MongoDB 学习</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-java">java</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2019/12/05/Java-读取公钥、私钥，加签、验签/">Java 读取公钥、私钥，SHA256算法加签、验签</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-ssh">ssh</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/09/06/https部署/">ssh 连接远程服务器</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-服务器">服务器</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/09/06/https部署/">ssh 连接远程服务器</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/27/使用uWSGI-nginx-提高性能，配置-uWSGI-使用-ini-文件去运行项目（基本配置）/">使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-https">https</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/08/03/http到https-并用cdn加速资源/">http到https 并用cdn加速资源</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-macOS">macOS</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2019/03/23/macOS-Mojave安装双系统-bug-总结/">macOS Mojave 安装双系统 bug 总结</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-linux">linux</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/08/27/linux-安装-pyhton3-6-及-使用-Virtualenv-管理python版本/">linux 安装 python3.6 及 使用 Virtualenv 管理python版本</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-Vue">Vue</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/14/Vue2-X-Router-的使用/">Vue2.X Router 的使用</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-vue-router">vue-router</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/14/Vue2-X-Router-的使用/">Vue2.X Router 的使用</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2020/08/15/vue-router-拦截用户页面路由访问/">vue-router 拦截用户页面路由访问</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-django">django</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/02/13/django-实现登录，注册，用-Pillow-添加验证码/">Django 实现登录，注册，用 Pillow 添加验证码</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-pillow">pillow</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/02/13/django-实现登录，注册，用-Pillow-添加验证码/">Django 实现登录，注册，用 Pillow 添加验证码</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-node">node</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/18/express-搭建后台/">express 搭建后台</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-express">express</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/18/express-搭建后台/">express 搭建后台</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-vue">vue</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/18/express-搭建后台/">express 搭建后台</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/27/vue-cli脚手架使用（二）-vue-resource数据请求、引用公共css文件/">vue-cli脚手架使用（二）-- vue-resource数据请求、引用公共css文件</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/25/vue-cli脚手架使用（一）/">vue-cli脚手架使用（一）-- 起步、组件、路由</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/13/vue-使用-fastclick-和-lazyload-图片懒加载/">vue 使用 fastclick 和 lazyload 图片懒加载</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2020/08/15/vue-router-拦截用户页面路由访问/">vue-router 拦截用户页面路由访问</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/02/13/ѧϰ-vuex/">学习 vuex</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-scss">scss</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/07/27/vue-cli脚手架使用（二）-vue-resource数据请求、引用公共css文件/">vue-cli脚手架使用（二）-- vue-resource数据请求、引用公共css文件</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-three">three</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/30/three-js-初识/">three.js 初识</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-图形学">图形学</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/30/three-js-初识/">three.js 初识</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-PayPal">PayPal</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/25/web站点接入PayPal支付/">web站点接入PayPal支付</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-支付">支付</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/01/25/web站点接入PayPal支付/">web站点接入PayPal支付</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-fastclick">fastclick</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/13/vue-使用-fastclick-和-lazyload-图片懒加载/">vue 使用 fastclick 和 lazyload 图片懒加载</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-lazyload">lazyload</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/13/vue-使用-fastclick-和-lazyload-图片懒加载/">vue 使用 fastclick 和 lazyload 图片懒加载</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-webpack">webpack</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/11/ѧϰ-webpack/">学习 webpack</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-uWSGI">uWSGI</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/27/使用uWSGI-nginx-提高性能，配置-uWSGI-使用-ini-文件去运行项目（基本配置）/">使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-nginx">nginx</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/27/使用uWSGI-nginx-提高性能，配置-uWSGI-使用-ini-文件去运行项目（基本配置）/">使用uWSGI + nginx 提高性能，配置 uWSGI 使用 .ini 文件去运行项目（基本配置）</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/26/使用uWSGI-nginx提高性能，部署Django项目（入门）/">使用uWSGI + nginx 提高性能，部署Django项目（入门）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-性能">性能</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/10/26/使用uWSGI-nginx提高性能，部署Django项目（入门）/">使用uWSGI + nginx 提高性能，部署Django项目（入门）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-技术应用">技术应用</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2019/11/06/区块链技术及应用现状-1/">区块链技术及应用现状</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-vuex">vuex</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/02/13/ѧϰ-vuex/">学习 vuex</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-小程序">小程序</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/04/11/搭建微信小程序服务/">搭建微信小程序服务</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-电子邮件">电子邮件</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之-POP3（Java版）/">电子邮件的实现之 POP3（Java版）</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/22/电子邮件的实现之-SMTP/">电子邮件的实现之 SMTP（Java版）</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之IMAP（Java版）/">电子邮件的实现之IMAP（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-Java">Java</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之-POP3（Java版）/">电子邮件的实现之 POP3（Java版）</a>
+            </li>
+          </ul>
+          
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之IMAP（Java版）/">电子邮件的实现之IMAP（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-POP3">POP3</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之-POP3（Java版）/">电子邮件的实现之 POP3（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-SMTP">SMTP</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/22/电子邮件的实现之-SMTP/">电子邮件的实现之 SMTP（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-JAVA">JAVA</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/22/电子邮件的实现之-SMTP/">电子邮件的实现之 SMTP（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-tornado">tornado</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-ssl">ssl</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-mongo">mongo</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2018/03/17/网站服务状态及ssl证书状态在线检测工具/">网站服务状态及ssl证书状态在线检测工具</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+      <div class="tag-list">
+        <h3 class="tag-name" id="tag-IMAP">IMAP</h3>
+        
+          <ul class="tag-preview">
+            <li>
+              <a href="/2017/11/25/电子邮件的实现之IMAP（Java版）/">电子邮件的实现之IMAP（Java版）</a>
+            </li>
+          </ul>
+          
+      </div>
+      
+  </main>
+  
+  <script>
+    (function () {
+      var tag = location.hash.replace('#', '')
+      if (tag) {
+        var tagId = "#tag-" + tag;
+        $("html, body").animate({
+          scrollTop: $(tagId).offset().top 
+        }, 400)
+      }
+    })();
+  </script>
+      </div>
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Elijah Zheng
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
 
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
+<script src="/js/main.js"></script>
 
+<!-- Google Analytics -->
+
+<!-- Disqus Comments -->
 
 
     </div>
