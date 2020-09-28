@@ -521,9 +521,9 @@
     
       <category term="服务器" scheme="blog.zhengxiangling.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
-      <category term="uWSGI" scheme="blog.zhengxiangling.com/tags/uWSGI/"/>
-    
       <category term="nginx" scheme="blog.zhengxiangling.com/tags/nginx/"/>
+    
+      <category term="uWSGI" scheme="blog.zhengxiangling.com/tags/uWSGI/"/>
     
   </entry>
   
