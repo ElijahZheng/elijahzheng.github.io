@@ -2099,7 +2099,6 @@ article .content .caption {
 }
 pre {
   font-family: "Menlo", monospace;
-  font-size: 13px;
   padding: 10px 15px;
   padding-bottom: 0;
   line-height: 22px;
@@ -2108,21 +2107,18 @@ pre {
   border: 1px dotted #666;
   overflow-x: auto;
 }
-pre .line {
-  font-size: 13px;
-}
-code {
+pre code {
   -webkit-border-radius: 2px;
   border-radius: 2px;
   border: 1px dotted #666;
   padding: 0 5px;
 }
-pre code {
+pre pre code {
   border: none;
   display: block;
   padding: 0;
 }
-.highlight {
+pre .highlight {
   font-family: "Menlo", monospace;
   background: #3b3b3b;
   -webkit-border-radius: 4px;
@@ -2131,35 +2127,35 @@ pre code {
   overflow-x: auto;
   margin: 1rem 0 1rem 0;
 }
-.highlight figcaption {
+pre .highlight figcaption {
   zoom: 1;
   margin: -5px 0 5px;
   font-size: 0.9em;
   color: #999;
 }
-.highlight figcaption a {
+pre .highlight figcaption a {
   float: right;
 }
-.highlight figcaption:before,
-.highlight figcaption content: "" {
+pre .highlight figcaption:before,
+pre .highlight figcaption content: "" {
   display: table;
 }
-.highlight figcaption:after {
+pre .highlight figcaption:after {
   clear: both;
 }
-.highlight pre {
+pre .highlight pre {
   padding: 0;
   border: none;
   background: none;
 }
-.highlight table {
+pre .highlight table {
   width: auto;
 }
-.background {
+pre .background {
   width: 100%;
   z-index: 20;
 }
-.small {
+pre .small {
   max-width: 130px;
   margin: 20px auto;
   border-width: 2px;
