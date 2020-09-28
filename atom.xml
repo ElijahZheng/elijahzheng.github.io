@@ -38,9 +38,9 @@
       <category term="Vue" scheme="blog.zhengxiangling.com/categories/Vue/"/>
     
     
-      <category term="vue" scheme="blog.zhengxiangling.com/tags/vue/"/>
+      <category term="vue" scheme="blog.zhengxiangling.com/tag/vue/"/>
     
-      <category term="vue-router" scheme="blog.zhengxiangling.com/tags/vue-router/"/>
+      <category term="vue-router" scheme="blog.zhengxiangling.com/tag/vue-router/"/>
     
   </entry>
   
@@ -63,7 +63,7 @@
       <category term="java" scheme="blog.zhengxiangling.com/categories/java/"/>
     
     
-      <category term="java" scheme="blog.zhengxiangling.com/tags/java/"/>
+      <category term="java" scheme="blog.zhengxiangling.com/tag/java/"/>
     
   </entry>
   
@@ -86,9 +86,9 @@
       <category term="爬虫" scheme="blog.zhengxiangling.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="beautifulSoup" scheme="blog.zhengxiangling.com/tags/beautifulSoup/"/>
+      <category term="beautifulSoup" scheme="blog.zhengxiangling.com/tag/beautifulSoup/"/>
     
-      <category term="python" scheme="blog.zhengxiangling.com/tags/python/"/>
+      <category term="python" scheme="blog.zhengxiangling.com/tag/python/"/>
     
   </entry>
   
@@ -117,7 +117,7 @@
       <category term="区块链" scheme="blog.zhengxiangling.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     
-      <category term="技术应用" scheme="blog.zhengxiangling.com/tags/%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8/"/>
+      <category term="技术应用" scheme="blog.zhengxiangling.com/tag/%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8/"/>
     
   </entry>
   
@@ -147,7 +147,7 @@
       <category term="系统" scheme="blog.zhengxiangling.com/categories/%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="macOS" scheme="blog.zhengxiangling.com/tags/macOS/"/>
+      <category term="macOS" scheme="blog.zhengxiangling.com/tag/macOS/"/>
     
   </entry>
   
@@ -187,7 +187,7 @@
     
     
     
-      <category term="小程序" scheme="blog.zhengxiangling.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+      <category term="小程序" scheme="blog.zhengxiangling.com/tag/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
   </entry>
   
@@ -208,17 +208,17 @@
     
     
     
-      <category term="python" scheme="blog.zhengxiangling.com/tags/python/"/>
+      <category term="vue" scheme="blog.zhengxiangling.com/tag/vue/"/>
     
-      <category term="vue" scheme="blog.zhengxiangling.com/tags/vue/"/>
+      <category term="python" scheme="blog.zhengxiangling.com/tag/python/"/>
     
-      <category term="webpack" scheme="blog.zhengxiangling.com/tags/webpack/"/>
+      <category term="webpack" scheme="blog.zhengxiangling.com/tag/webpack/"/>
     
-      <category term="tornado" scheme="blog.zhengxiangling.com/tags/tornado/"/>
+      <category term="tornado" scheme="blog.zhengxiangling.com/tag/tornado/"/>
     
-      <category term="ssl" scheme="blog.zhengxiangling.com/tags/ssl/"/>
+      <category term="ssl" scheme="blog.zhengxiangling.com/tag/ssl/"/>
     
-      <category term="mongo" scheme="blog.zhengxiangling.com/tags/mongo/"/>
+      <category term="mongo" scheme="blog.zhengxiangling.com/tag/mongo/"/>
     
   </entry>
   
@@ -243,7 +243,7 @@
     
     
     
-      <category term="webpack" scheme="blog.zhengxiangling.com/tags/webpack/"/>
+      <category term="webpack" scheme="blog.zhengxiangling.com/tag/webpack/"/>
     
   </entry>
   
@@ -269,9 +269,9 @@
     
     
     
-      <category term="django" scheme="blog.zhengxiangling.com/tags/django/"/>
+      <category term="django" scheme="blog.zhengxiangling.com/tag/django/"/>
     
-      <category term="pillow" scheme="blog.zhengxiangling.com/tags/pillow/"/>
+      <category term="pillow" scheme="blog.zhengxiangling.com/tag/pillow/"/>
     
   </entry>
   
@@ -295,9 +295,9 @@
     
     
     
-      <category term="vue" scheme="blog.zhengxiangling.com/tags/vue/"/>
+      <category term="vue" scheme="blog.zhengxiangling.com/tag/vue/"/>
     
-      <category term="vuex" scheme="blog.zhengxiangling.com/tags/vuex/"/>
+      <category term="vuex" scheme="blog.zhengxiangling.com/tag/vuex/"/>
     
   </entry>
   
@@ -322,9 +322,9 @@
     
     
     
-      <category term="Mongo DB" scheme="blog.zhengxiangling.com/tags/Mongo-DB/"/>
+      <category term="Mongo DB" scheme="blog.zhengxiangling.com/tag/Mongo-DB/"/>
     
-      <category term="数据库" scheme="blog.zhengxiangling.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+      <category term="数据库" scheme="blog.zhengxiangling.com/tag/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -346,9 +346,9 @@
     
     
     
-      <category term="PayPal" scheme="blog.zhengxiangling.com/tags/PayPal/"/>
+      <category term="PayPal" scheme="blog.zhengxiangling.com/tag/PayPal/"/>
     
-      <category term="支付" scheme="blog.zhengxiangling.com/tags/%E6%94%AF%E4%BB%98/"/>
+      <category term="支付" scheme="blog.zhengxiangling.com/tag/%E6%94%AF%E4%BB%98/"/>
     
   </entry>
   
@@ -376,11 +376,11 @@
     
     
     
-      <category term="node" scheme="blog.zhengxiangling.com/tags/node/"/>
+      <category term="vue" scheme="blog.zhengxiangling.com/tag/vue/"/>
     
-      <category term="express" scheme="blog.zhengxiangling.com/tags/express/"/>
+      <category term="node" scheme="blog.zhengxiangling.com/tag/node/"/>
     
-      <category term="vue" scheme="blog.zhengxiangling.com/tags/vue/"/>
+      <category term="express" scheme="blog.zhengxiangling.com/tag/express/"/>
     
   </entry>
   
@@ -420,9 +420,9 @@
     
     
     
-      <category term="three" scheme="blog.zhengxiangling.com/tags/three/"/>
+      <category term="three" scheme="blog.zhengxiangling.com/tag/three/"/>
     
-      <category term="图形学" scheme="blog.zhengxiangling.com/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+      <category term="图形学" scheme="blog.zhengxiangling.com/tag/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
     
   </entry>
   
@@ -443,11 +443,11 @@
     
     
     
-      <category term="电子邮件" scheme="blog.zhengxiangling.com/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
+      <category term="电子邮件" scheme="blog.zhengxiangling.com/tag/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
     
-      <category term="Java" scheme="blog.zhengxiangling.com/tags/Java/"/>
+      <category term="Java" scheme="blog.zhengxiangling.com/tag/Java/"/>
     
-      <category term="IMAP" scheme="blog.zhengxiangling.com/tags/IMAP/"/>
+      <category term="IMAP" scheme="blog.zhengxiangling.com/tag/IMAP/"/>
     
   </entry>
   
@@ -468,11 +468,11 @@
     
     
     
-      <category term="电子邮件" scheme="blog.zhengxiangling.com/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
+      <category term="电子邮件" scheme="blog.zhengxiangling.com/tag/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
     
-      <category term="Java" scheme="blog.zhengxiangling.com/tags/Java/"/>
+      <category term="Java" scheme="blog.zhengxiangling.com/tag/Java/"/>
     
-      <category term="POP3" scheme="blog.zhengxiangling.com/tags/POP3/"/>
+      <category term="POP3" scheme="blog.zhengxiangling.com/tag/POP3/"/>
     
   </entry>
   
@@ -494,11 +494,11 @@
     
     
     
-      <category term="电子邮件" scheme="blog.zhengxiangling.com/tags/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
+      <category term="电子邮件" scheme="blog.zhengxiangling.com/tag/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
     
-      <category term="SMTP" scheme="blog.zhengxiangling.com/tags/SMTP/"/>
+      <category term="SMTP" scheme="blog.zhengxiangling.com/tag/SMTP/"/>
     
-      <category term="JAVA" scheme="blog.zhengxiangling.com/tags/JAVA/"/>
+      <category term="JAVA" scheme="blog.zhengxiangling.com/tag/JAVA/"/>
     
   </entry>
   
@@ -519,11 +519,11 @@
     
     
     
-      <category term="服务器" scheme="blog.zhengxiangling.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+      <category term="服务器" scheme="blog.zhengxiangling.com/tag/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
-      <category term="uWSGI" scheme="blog.zhengxiangling.com/tags/uWSGI/"/>
+      <category term="uWSGI" scheme="blog.zhengxiangling.com/tag/uWSGI/"/>
     
-      <category term="nginx" scheme="blog.zhengxiangling.com/tags/nginx/"/>
+      <category term="nginx" scheme="blog.zhengxiangling.com/tag/nginx/"/>
     
   </entry>
   

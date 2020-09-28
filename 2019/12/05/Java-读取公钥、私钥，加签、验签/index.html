@@ -1,194 +1,210 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh">
 <head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Java 读取公钥、私钥，SHA256算法加签、验签">
-<meta property="og:url" content="blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/index.html">
-<meta property="og:site_name" content="Elijah Zheng&#39;s Blog">
-<meta property="og:description" content="最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：">
-<meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2019-12-05T07:27:00.000Z">
-<meta property="article:modified_time" content="2019-12-06T01:01:20.000Z">
-<meta property="article:author" content="Elijah Zheng">
-<meta property="article:tag" content="java">
-<meta name="twitter:card" content="summary">
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Elijah Zheng">
+
+
+
+
+
+<title>Java 读取公钥、私钥，SHA256算法加签、验签 | Elijah Zheng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
     
+    <link rel="stylesheet" href="/css/style.css">
     
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
+
+
+
+    <!-- scripts list from _config.yml -->
     
-    <!-- title -->
-    <title>Java 读取公钥、私钥，SHA256算法加签、验签</title>
-    <!-- styles -->
+    <script src="/js/script.js"></script>
     
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
 
     
-<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+    
+        
+    
 
-    
-<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
-
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- rss -->
-    
-    
-    <!-- jquery -->
-    
-<script src="/lib/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Elijah Zheng's Blog" type="application/atom+xml">
 </head>
-
 <body>
-    <div class="banner">
-<div id="blogtitel" class="blogtitel">Elijah Zheng&#39;s Blog</div>
-<ul id="wrapper" class="wrapper">
-  <div class="sun">
-    <div class="star"></div>
-  </div>
-  <div class="mercury">
-    <div class="planet">
-      <div class="shadow"></div>
-    </div>
-  </div>
-  <div class="venus">
-    <div class="planet">
-      <div class="shadow"></div>
-    </div>
-  </div>
-  <div class="earth">
-    <div class="planet"><div class="shadow"></div></div>
-  </div>
-  <div class="mars">
-    <div class="planet"><div class="shadow"></div></div>
-  </div>
-  <div class="jupiter">
-    <div class="planet"><div class="shadow"></div></div>
-  </div>
-</ul>
-</div>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Elijah Zheng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
 
-    <div class="background">
-      
-        <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2020/08/15/vue-router-%E6%8B%A6%E6%88%AA%E7%94%A8%E6%88%B7%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1%E8%AE%BF%E9%97%AE/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
-        
-        
-        <li><a class="icon" href="/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
-        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/" target="_blank" rel="noopener"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&text=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&is_video=false&description=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Java 读取公钥、私钥，SHA256算法加签、验签&body=Check out this article: blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&name=Java 读取公钥、私钥，SHA256算法加签、验签&description=&lt;p&gt;最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：&lt;/p&gt;" target="_blank" rel="noopener"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取公钥"><span class="toc-number">1.</span> <span class="toc-text">读取公钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取私钥"><span class="toc-number">2.</span> <span class="toc-text">读取私钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加签"><span class="toc-number">3.</span> <span class="toc-text">加签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签"><span class="toc-number">4.</span> <span class="toc-text">验签</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-      
-      <div class="content index width mx-auto px2 my4">
-          
-          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
     
-    <h1 class="posttitle" itemprop="name headline">
-        Java 读取公钥、私钥，SHA256算法加签、验签
-    </h1>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Elijah Zheng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
 
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Elijah Zheng</span>
-      </span>
-      
-    <div class="postdate">
-        <time datetime="2019-12-05T07:27:00.000Z" itemprop="datePublished">2019-12-05</time>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
     </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
 
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
 
-      
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <!-- <a class="tag-link" href="/tags/java/" rel="tag">java</a> -->
-        
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java 读取公钥、私钥，SHA256算法加签、验签</h1>
             
-            <a class="tag-link" href="/tags/#java" title="java">java</a>
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Elijah Zheng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 5, 2019&nbsp;&nbsp;15:27:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/java/">java</a>
+                            
+                        </span>
+                    
+                    
+                        <span id="busuanzi_container_page_pv" class="post-count">
+                    Count: <a href="#"><span id="busuanzi_value_page_pv"></span></a>
+                        </span>
+                    
+                </div>
             
-        
-    </div>
+        </header>
 
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <p>最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：</p>
+        <div class="post-content">
+            <p>最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：</p>
 <a id="more"></a>
 
 <h2 id="读取公钥"><a href="#读取公钥" class="headerlink" title="读取公钥"></a>读取公钥</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PublicKey <span class="title">getPublicKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"公钥 cer 路径"</span>);</span><br><span class="line">        InputStream inStream = <span class="keyword">new</span> FileInputStream(file);</span><br><span class="line">        <span class="comment">// 创建X509工厂类</span></span><br><span class="line">        CertificateFactory cf = CertificateFactory.getInstance(<span class="string">"X.509"</span>);</span><br><span class="line">        <span class="comment">// 创建证书对象</span></span><br><span class="line">        X509Certificate cert = (X509Certificate) cf</span><br><span class="line">                .generateCertificate(inStream);</span><br><span class="line">        inStream.close();</span><br><span class="line">        PublicKey publicKey = cert.getPublicKey();</span><br><span class="line">        <span class="keyword">return</span> publicKey;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -198,93 +214,93 @@
 <h2 id="加签"><a href="#加签" class="headerlink" title="加签"></a>加签</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 私钥加签</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> unsignstr 需要加签的拼接串</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> 加签串</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">GetSign</span><span class="params">(String unsignstr)</span></span>&#123;</span><br><span class="line">    String signature = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] signed = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        PrivateKey privateKey = getPrivateKey();</span><br><span class="line">        String privateKeyValue = Base64.getEncoder().encodeToString(privateKey.getEncoded());</span><br><span class="line">        System.out.println(<span class="string">"私钥-------------&gt;"</span> + privateKeyValue);</span><br><span class="line">        Signature Sign = Signature.getInstance(SIGNATURE_ALGORITHM);</span><br><span class="line">        Sign.initSign(privateKey);</span><br><span class="line"></span><br><span class="line">        System.out.println(unsignstr);</span><br><span class="line">        <span class="keyword">byte</span>[] outputDigest_sign = unsignstr.getBytes();</span><br><span class="line">        Sign.update(outputDigest_sign);</span><br><span class="line">        signed = Sign.sign();</span><br><span class="line">        signature = Base64.getEncoder().encodeToString(signed);</span><br><span class="line">        logger.info(signature);</span><br><span class="line">        System.out.println(signature);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> signature;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="验签"><a href="#验签" class="headerlink" title="验签"></a>验签</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 公钥验签</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> requsetBody 验签报文</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> signature 验签串</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">read_cer_and_verify_sign</span><span class="params">(String requsetBody, String signature)</span> </span>&#123;</span><br><span class="line">    String filePath = <span class="string">"公钥路径"</span>;</span><br><span class="line">    X509Certificate cert = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        CertificateFactory cf = CertificateFactory.getInstance(<span class="string">"X.509"</span>);</span><br><span class="line">        cert = (X509Certificate) cf</span><br><span class="line">                .generateCertificate(<span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(filePath)));</span><br><span class="line">        PublicKey publicKey = cert.getPublicKey();</span><br><span class="line">        String publicKeyString = <span class="keyword">new</span> String(Base64.getEncoder().encode(publicKey</span><br><span class="line">                .getEncoded()));</span><br><span class="line">        System.out.println(<span class="string">"-----------------公钥--------------------"</span>);</span><br><span class="line">        System.out.println(publicKeyString);</span><br><span class="line">        System.out.println(<span class="string">"-----------------公钥--------------------"</span>);</span><br><span class="line">        Signature verifySign = Signature.getInstance(SIGNATURE_ALGORITHM);</span><br><span class="line">        verifySign.initVerify(publicKey);</span><br><span class="line">        <span class="comment">// 用于验签的数据</span></span><br><span class="line">        System.out.println(<span class="string">"requestBody is "</span> + requsetBody);</span><br><span class="line">        verifySign.update(requsetBody.getBytes());</span><br><span class="line">        <span class="keyword">boolean</span> flag = verifySign.verify(Base64.getDecoder().decode(signature));</span><br><span class="line">        System.out.println(<span class="string">"verifySign is "</span> + flag);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SignatureException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CertificateException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-  </div>
-</article>
+        </div>
 
-
-
-      </div>
-      
-       <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
         
-      </ul>
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Elijah Zheng</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/">blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>今天学习的收获</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/15/vue-router-%E6%8B%A6%E6%88%AA%E7%94%A8%E6%88%B7%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1%E8%AE%BF%E9%97%AE/">vue-router 拦截用户页面路由访问</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/">beautifulSoup爬取同步加载页面数据</a>
+            
+        </section>
+
+        
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTM0NS81OTEz">
+    <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+    <!-- City版安装代码已完成 -->
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取公钥"><span class="toc-number">1.</span> <span class="toc-text">读取公钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取私钥"><span class="toc-number">2.</span> <span class="toc-text">读取私钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加签"><span class="toc-number">3.</span> <span class="toc-text">加签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签"><span class="toc-number">4.</span> <span class="toc-text">验签</span></a></li></ol>
-    </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/" target="_blank" rel="noopener"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&text=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&is_video=false&description=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Java 读取公钥、私钥，SHA256算法加签、验签&body=Check out this article: blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&title=Java 读取公钥、私钥，SHA256算法加签、验签" target="_blank" rel="noopener"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=blog.zhengxiangling.com/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/&name=Java 读取公钥、私钥，SHA256算法加签、验签&description=&lt;p&gt;最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：&lt;/p&gt;" target="_blank" rel="noopener"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-      <ul>
-        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
-        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
-        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
-        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
-      </ul>
-    </div>
-
-  </div>
+    </article>
 </div>
 
-      
-      <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2020 Elijah Zheng
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="http://github.com/ElijahZheng" target="_blank" rel="noopener">Projects</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Elijah Zheng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
 </footer>
 
-      
-<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script src="/js/main.js"></script>
-
-<!-- Google Analytics -->
-
-<!-- Disqus Comments -->
 
 
     </div>
