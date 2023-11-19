@@ -1910,7 +1910,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2667,34 +2667,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><img src="https://cdn.zhengxiangling.com/17-8-25/16063078.jpg" class="lazyload" data-srcset="https://cdn.zhengxiangling.com/17-8-25/16063078.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
 <h5 id="在admin-py中注册你需要增加富文本插件的表"><a href="#在admin-py中注册你需要增加富文本插件的表" class="headerlink" title="在admin.py中注册你需要增加富文本插件的表"></a>在admin.py中注册你需要增加富文本插件的表</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> app <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="meta">@admin.register(<span class="params">models.YourTable</span>)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">YourTableAdmin</span>(admin.ModelAdmin):</span><br><span class="line">    search_fields = (<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;desc&#x27;</span>, <span class="string">&#x27;type__name&#x27;</span>)</span><br><span class="line">    list_display = (<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;desc&#x27;</span>, <span class="string">&#x27;type&#x27;</span>)</span><br><span class="line">    ordering = (<span class="string">&#x27;-id&#x27;</span>, )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Media</span>:</span><br><span class="line">        js = (</span><br><span class="line">            <span class="string">&#x27;http://cdn.quilljs.com/1.2.4/quill.min.js&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;静态路径/my_admin.js&#x27;</span>,</span><br><span class="line">        )</span><br><span class="line">        css = &#123;</span><br><span class="line">            <span class="string">&#x27;all&#x27;</span>: (</span><br><span class="line">                <span class="string">&#x27;http://cdn.quilljs.com/1.2.4/quill.snow.css&#x27;</span>,</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://cdn.zhengxiangling.com/17-8-25/85990711.jpg" class="lazyload" data-srcset="https://cdn.zhengxiangling.com/17-8-25/85990711.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>
-<table>
-<thead>
-<tr>
-<th>要点</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>@admin.register()</td>
-<td align="center">括号里填你要运用富文本的数据表</td>
-</tr>
-<tr>
-<td>search_fields</td>
-<td align="center">加入搜索功能，括号里填表中拥有的字段，搜索内容会从填入字段中进行查询</td>
-</tr>
-<tr>
-<td>list_display</td>
-<td align="center">填入表中拥有的字段，定义在admin中显示的字段信息</td>
-</tr>
-<tr>
-<td>ordering</td>
-<td align="center">排序关键字，-id代表按id倒序排列，也就是最新的会排在上面</td>
-</tr>
-<tr>
-<td>class Media</td>
-<td align="center">引入外部资源，引入我们需要用到的Quill的css和js文件，其中 静态路径/my_admin.js是我们自己新建的js文件，用来自定义Quill所需要的样式</td>
-</tr>
-</tbody></table>
+<p>|    要点     | 解释<br>|: ————- :|:————-:|<br>| @admin.register()      | 括号里填你要运用富文本的数据表 |<br>| search_fields| 加入搜索功能，括号里填表中拥有的字段，搜索内容会从填入字段中进行查询      |<br>| list_display | 填入表中拥有的字段，定义在admin中显示的字段信息      |<br>| ordering      | 排序关键字，-id代表按id倒序排列，也就是最新的会排在上面 |<br>| class Media      | 引入外部资源，引入我们需要用到的Quill的css和js文件，其中 静态路径&#x2F;my_admin.js是我们自己新建的js文件，用来自定义Quill所需要的样式 |</p>
 <h5 id="在my-admin-js-中定义Quill样式及富文本要显示的位置"><a href="#在my-admin-js-中定义Quill样式及富文本要显示的位置" class="headerlink" title="在my_admin.js 中定义Quill样式及富文本要显示的位置"></a>在my_admin.js 中定义Quill样式及富文本要显示的位置</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">django.<span class="title function_">jQuery</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> $ = django.<span class="property">jQuery</span></span><br><span class="line"></span><br><span class="line">    $(<span class="string">&#x27;#id_desc&#x27;</span>).<span class="title function_">css</span>(&#123;</span><br><span class="line">        <span class="string">&#x27;opacity&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;height&#x27;</span>: <span class="string">&#x27;1em&#x27;</span>,</span><br><span class="line">    &#125;).<span class="title function_">after</span>(<span class="string">&#x27;&lt;div id=&quot;descEditor&quot; style=&quot;height: 600px&quot;&gt;&lt;/div&gt;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> toolbarOptions = [</span><br><span class="line">        [<span class="string">&#x27;bold&#x27;</span>, <span class="string">&#x27;italic&#x27;</span>, <span class="string">&#x27;underline&#x27;</span>, <span class="string">&#x27;strike&#x27;</span>], <span class="comment">// toggled buttons</span></span><br><span class="line">        [<span class="string">&#x27;blockquote&#x27;</span>, <span class="string">&#x27;code-block&#x27;</span>],</span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">&#x27;list&#x27;</span>: <span class="string">&#x27;ordered&#x27;</span> &#125;, &#123; <span class="string">&#x27;list&#x27;</span>: <span class="string">&#x27;bullet&#x27;</span> &#125;],</span><br><span class="line">        [&#123; <span class="string">&#x27;indent&#x27;</span>: <span class="string">&#x27;-1&#x27;</span> &#125;, &#123; <span class="string">&#x27;indent&#x27;</span>: <span class="string">&#x27;+1&#x27;</span> &#125;], <span class="comment">// outdent/indent</span></span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">&#x27;header&#x27;</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="literal">false</span>] &#125;],</span><br><span class="line"></span><br><span class="line">        [&#123; <span class="string">&#x27;color&#x27;</span>: [] &#125;], <span class="comment">// dropdown with defaults from theme</span></span><br><span class="line">        [&#123; <span class="string">&#x27;font&#x27;</span>: [] &#125;],</span><br><span class="line">        [&#123; <span class="string">&#x27;align&#x27;</span>: [] &#125;],</span><br><span class="line">        [<span class="string">&#x27;clean&#x27;</span>], <span class="comment">// remove formatting button</span></span><br><span class="line">        [<span class="string">&#x27;image&#x27;</span>]</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> editor = <span class="keyword">new</span> <span class="title class_">Quill</span>(<span class="string">&#x27;#descEditor&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">modules</span>: &#123;</span><br><span class="line">            <span class="attr">toolbar</span>: &#123;</span><br><span class="line">                <span class="attr">container</span>: toolbarOptions,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">theme</span>: <span class="string">&#x27;snow&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> $textarea = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#id_desc&#x27;</span>)</span><br><span class="line">    editor.<span class="title function_">on</span>(<span class="string">&#x27;text-change&#x27;</span>, <span class="keyword">function</span>(<span class="params">delta, oldDelta, source</span>) &#123;</span><br><span class="line">        $textarea.<span class="property">value</span> = editor.<span class="property">root</span>.<span class="property">innerHTML</span></span><br><span class="line">    &#125;)</span><br><span class="line">    editor.<span class="property">root</span>.<span class="property">innerHTML</span> = $textarea.<span class="property">value</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <table>
@@ -2705,7 +2678,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tr>
 </thead>
 <tbody><tr>
-<td>var $ = django.jQuery</td>
+<td>var $ &#x3D; django.jQuery</td>
 <td align="center">Django自带jquery，赋值给$比较符合平常使用规范</td>
 </tr>
 <tr>
@@ -2713,8 +2686,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <td align="center">选中需要运用富文本元素的id（id为admin自己生成），所有id需要自行修改</td>
 </tr>
 <tr>
-<td>id=”descEditor”</td>
-<td align="center">id=”descEditor”为需要插入的富文本插件的id，可自行修改</td>
+<td>id&#x3D;”descEditor”</td>
+<td align="center">id&#x3D;”descEditor”为需要插入的富文本插件的id，可自行修改</td>
 </tr>
 <tr>
 <td>editor.on(‘text-change’)</td>
@@ -2722,7 +2695,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tr>
 </tbody></table>
 <p>editor.on()的作用是，将富文本编辑好的源代码保存在原来的<code>textarea</code>中，这样点击保存修改时才会将富文本的源代码存回到数据库中。</p>
-<h5 id="点击上传图片按钮时，将图片保存到-七牛云"><a href="#点击上传图片按钮时，将图片保存到-七牛云" class="headerlink" title="点击上传图片按钮时，将图片保存到 七牛云"></a>点击上传图片按钮时，将图片保存到 七牛云</h5><p>首先，我们要获取token值    </p>
+<h5 id="点击上传图片按钮时，将图片保存到-七牛云"><a href="#点击上传图片按钮时，将图片保存到-七牛云" class="headerlink" title="点击上传图片按钮时，将图片保存到 七牛云"></a>点击上传图片按钮时，将图片保存到 七牛云</h5><p>首先，我们要获取token值	</p>
 <blockquote>
 <blockquote>
 <p>token值是什么，可以参考我的文章 – <a href="https://blog.zhengxiangling.com/Django-%E4%B8%8A%E4%BC%A0%E4%B8%83%E7%89%9B%E5%9B%BE%E7%89%87/">DJANGO 运用 七牛云 作为图床上传图片</a><br>定义获取token值的api</p>

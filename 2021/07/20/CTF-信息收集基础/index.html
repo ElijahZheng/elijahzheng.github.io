@@ -1909,7 +1909,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2678,7 +2678,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="抓包-burpsuit"><a href="#抓包-burpsuit" class="headerlink" title="抓包  burpsuit"></a>抓包  burpsuit</h3><p>通过抓包，分析报文内的信息，有可能 <code>flag</code> 隐藏在 <code>header</code> 的 <code>cookies</code>、<code>session</code>或者 <code>data</code>内，如果有flag相关的明文、base64编码、md5值等，都可以作为待分析的为flag的地方。</p>
 <ul>
-<li><p><code>base64</code> 编码，编码最后的字符有双等号 ==。</p>
+<li><p><code>base64</code> 编码，编码最后的字符有双等号 &#x3D;&#x3D;。</p>
 </li>
 <li><p><code>md5</code> 破解常用的网址 <code>somd5.com</code>。<code>md5</code> 破解不了，只能走代码审计，找数据库的<code>password</code></p>
 </li>

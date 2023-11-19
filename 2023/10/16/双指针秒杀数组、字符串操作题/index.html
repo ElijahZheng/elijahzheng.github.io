@@ -35,20 +35,20 @@
   <!-- feed -->
       <link rel="alternate" href="/atom.xml" title="Elijah Zheng's Blog" type="application/atom+xml">
   <!-- 页面元数据 -->
-  <title>双指针秒杀数组、字符串操作题 - Elijah Zheng's Blog</title>
+  <title>滑动窗口找满足规则的区间问题 - Elijah Zheng's Blog</title>
   <meta name="keywords" content="滑动窗口,null">
-  <meta desc name="description" content="双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。
-重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。 - Elijah Zheng - Elijah Zheng's Blog">
+  <meta desc name="description" content="滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。
+常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。 - Elijah Zheng - Elijah Zheng's Blog">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="双指针秒杀数组、字符串操作题">
+<meta property="og:title" content="滑动窗口找满足规则的区间问题">
 <meta property="og:url" content="https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/index.html">
 <meta property="og:site_name" content="Elijah Zheng&#39;s Blog">
-<meta property="og:description" content="双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。 重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。">
+<meta property="og:description" content="滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。 常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-16T00:12:00.000Z">
-<meta property="article:modified_time" content="2023-11-17T14:27:30.009Z">
+<meta property="article:modified_time" content="2023-11-18T12:41:09.592Z">
 <meta property="article:author" content="Elijah Zheng">
 <meta property="article:tag" content="滑动窗口">
 <meta name="twitter:card" content="summary">
@@ -1911,7 +1911,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2604,7 +2604,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        双指针秒杀数组、字符串操作题
+        滑动窗口找满足规则的区间问题
       </h1>
       <div class='new-meta-box'>
         
@@ -2665,21 +2665,144 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <p>双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。</p>
-<p>重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。</p>
+    <p>滑动窗口也为快慢指针。两个指针，<code>fast</code>指针在前面探路，<code>slow</code>指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。</p>
+<p>常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。</p>
 <span id="more"></span>
 
-<h5 id="快慢指针（滑动窗口）"><a href="#快慢指针（滑动窗口）" class="headerlink" title="快慢指针（滑动窗口）"></a>快慢指针（滑动窗口）</h5><p>快慢指针的意思为，两个指针，<code>fast</code>指针在前面探路，<code>slow</code>指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间，这种操作方式也叫做<code>滑动窗口</code>。</p>
-<p>常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。</p>
-<p>滑动窗口算法框架：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* 滑动窗口算法框架 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">slidingWindow</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">    HashMap&lt;Character, Integer&gt; need = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    HashMap&lt;Character, Integer&gt; window = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">char</span> c : t.toCharArray()) need.put(c, need.getOrDefault(c, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">valid</span> <span class="operator">=</span> <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">while</span> (right &lt; s.length()) &#123;</span><br><span class="line">        <span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> s.charAt(right);</span><br><span class="line">        <span class="comment">// 右移（增大）窗口</span></span><br><span class="line">        right++;</span><br><span class="line">        <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">        <span class="keyword">if</span> (need.containsKey(c)) &#123;</span><br><span class="line">            window.put(c, window.getOrDefault(c, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (window.get(c).equals(need.get(c))) valid++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (window needs shrink) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">d</span> <span class="operator">=</span> s.charAt(left);</span><br><span class="line">            <span class="comment">// 左移（缩小）窗口</span></span><br><span class="line">            left++;</span><br><span class="line">            <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">            <span class="keyword">if</span> (need.containsKey(d)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (window.get(d).equals(need.get(d))) valid--;</span><br><span class="line">                window.put(d, window.getOrDefault(d, <span class="number">0</span>) - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="滑动窗口算法框架"><a href="#滑动窗口算法框架" class="headerlink" title="滑动窗口算法框架"></a>滑动窗口算法框架</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 滑动窗口算法框架 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">slidingWindow</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">    HashMap&lt;Character, Integer&gt; need = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    HashMap&lt;Character, Integer&gt; window = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">char</span> c : t.toCharArray()) need.put(c, need.getOrDefault(c, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">valid</span> <span class="operator">=</span> <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">while</span> (right &lt; s.length()) &#123;</span><br><span class="line">        <span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> s.charAt(right);</span><br><span class="line">        <span class="comment">// 右移（增大）窗口</span></span><br><span class="line">        right++;</span><br><span class="line">        <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">        <span class="keyword">if</span> (need.containsKey(c)) &#123;</span><br><span class="line">            window.put(c, window.getOrDefault(c, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (window.get(c).equals(need.get(c))) valid++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (window needs shrink) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">d</span> <span class="operator">=</span> s.charAt(left);</span><br><span class="line">            <span class="comment">// 左移（缩小）窗口</span></span><br><span class="line">            left++;</span><br><span class="line">            <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">            <span class="keyword">if</span> (need.containsKey(d)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (window.get(d).equals(need.get(d))) valid--;</span><br><span class="line">                window.put(d, window.getOrDefault(d, <span class="number">0</span>) - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="左右指针"><a href="#左右指针" class="headerlink" title="左右指针"></a>左右指针</h5><p>左右指针即为最开始，左指针<code>left</code>在数组的最开始位置，右指针<code>right</code>在数组的末尾，然后循环时在判断左右指针什么时候开始相向移动，直至<code>left == right</code>左右指针相遇。</p>
-<p>常见题目：二分查找，求两数之和、反转数组等。</p>
-<p>重点为<code>二分查找</code>，二分查找的数组可能包含重复值，重复值的寻找条件可能包含第一寻找到相同元素返回、寻找指定元素的最左边界位置、寻找指定元素的最右边界位置等三种情况。三种边界的区别在于，寻找到指定元素后是否需要第一时间返回位置值，即<code>nums[mid]==target</code>时的操作不同，可见下列算法。</p>
-<p>算法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">binary_search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>; </span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target) &#123;</span><br><span class="line">            right = mid - <span class="number">1</span>; </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] == target) &#123;</span><br><span class="line">            <span class="comment">// 直接返回</span></span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 直接返回</span></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">left_bound</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target) &#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] == target) &#123;</span><br><span class="line">            <span class="comment">// 别返回，锁定左侧边界</span></span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断 target 是否存在于 nums 中</span></span><br><span class="line">    <span class="keyword">if</span> (left &lt; <span class="number">0</span> || left &gt;= nums.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断一下 nums[left] 是不是 target</span></span><br><span class="line">    <span class="keyword">return</span> nums[left] == target ? left : -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">right_bound</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target) &#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] == target) &#123;</span><br><span class="line">            <span class="comment">// 别返回，锁定右侧边界</span></span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断 target 是否存在于 nums 中</span></span><br><span class="line">    <span class="comment">// if (left - 1 &lt; 0 || left - 1 &gt;= nums.length) &#123;</span></span><br><span class="line">    <span class="comment">//     return -1;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 由于 while 的结束条件是 right == left - 1，且现在在求右边界</span></span><br><span class="line">    <span class="comment">// 所以用 right 替代 left - 1 更好记</span></span><br><span class="line">    <span class="keyword">if</span> (right &lt; <span class="number">0</span> || right &gt;= nums.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums[right] == target ? right : -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2760-最长奇偶子数组"><a href="#2760-最长奇偶子数组" class="headerlink" title="2760. 最长奇偶子数组"></a>2760. 最长奇偶子数组</h5><blockquote>
+<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-even-odd-subarray-with-threshold/description/">2760. 最长奇偶子数组</a></p>
+</blockquote>
+<div class="elfjS" data-track-load="description_content"><p>给你一个下标从 <strong>0</strong> 开始的整数数组 <code>nums</code> 和一个整数 <code>threshold</code> 。</p>
 
+<p>请你从 <code>nums</code> 的子数组中找出以下标 <code>l</code> 开头、下标 <code>r</code> 结尾 <code>(0 &lt;= l &lt;= r &lt; nums.length)</code> 且满足以下条件的 <strong>最长子数组</strong> ：</p>
+
+<ul>
+    <li><code>nums[l] % 2 == 0</code></li>
+    <li>对于范围&nbsp;<code>[l, r - 1]</code> 内的所有下标 <code>i</code> ，<code>nums[i] % 2 != nums[i + 1] % 2</code></li>
+    <li>对于范围&nbsp;<code>[l, r]</code> 内的所有下标 <code>i</code> ，<code>nums[i] &lt;= threshold</code></li>
+</ul>
+
+<p>以整数形式返回满足题目要求的最长子数组的长度。</p>
+
+<p><strong>注意：子数组</strong> 是数组中的一个连续非空元素序列。</p>
+
+<p><strong>示例 1：</strong></p>
+
+<pre><strong>输入：</strong>nums = [3,2,5,4], threshold = 5
+<strong>输出：</strong>3
+<strong>解释：</strong>在这个示例中，我们选择从 l = 1 开始、到 r = 3 结束的子数组 =&gt; [2,5,4] ，满足上述条件。
+因此，答案就是这个子数组的长度 3 。可以证明 3 是满足题目要求的最大长度。</pre>
+
+<p><strong>示例 2：</strong></p>
+
+<pre><strong>输入：</strong>nums = [1,2], threshold = 2
+<strong>输出：</strong>1
+<strong>解释：</strong>
+在这个示例中，我们选择从 l = 1 开始、到 r = 1 结束的子数组 =&gt; [2] 。
+该子数组满足上述全部条件。可以证明 1 是满足题目要求的最大长度。
+</pre>
+
+<p><strong>示例 3：</strong></p>
+
+<pre><strong>输入：</strong>nums = [2,3,4,5], threshold = 4
+<strong>输出：</strong>3
+<strong>解释：</strong>
+在这个示例中，我们选择从 l = 0 开始、到 r = 2 结束的子数组 =&gt; [2,3,4] 。 
+该子数组满足上述全部条件。
+因此，答案就是这个子数组的长度 3 。可以证明 3 是满足题目要求的最大长度。</pre>
+
+<p><strong>提示：</strong></p>
+
+<ul>
+    <li><code>1 &lt;= nums.length &lt;= 100 </code></li>
+    <li><code>1 &lt;= nums[i] &lt;= 100 </code></li>
+    <li><code>1 &lt;= threshold &lt;= 100</code></li>
+</ul>
+</div>
+
+
+<ol>
+<li><p>思路</p>
+<blockquote>
+<p>题目求区间长度，区间设定了规则，那么用双指针，结合if匹配规则找出最大的区间长度即可。</p>
+</blockquote>
+</li>
+<li><p>解题方法</p>
+<blockquote>
+<p>滑动窗口，在条件里满足所有设定规则即可</p>
+</blockquote>
+</li>
+<li><p>复杂度</p>
+</li>
+</ol>
+<ul>
+<li><p>时间复杂度:</p>
+<blockquote>
+<p>$O(n)$</p>
+</blockquote>
+</li>
+<li><p>空间复杂度:</p>
+<blockquote>
+<p>$O(1)$</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>Code</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestAlternatingSubarray</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> threshold)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> Integer.MIN_VALUE;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(right &lt; n) &#123;</span><br><span class="line">            <span class="comment">// 先满足 nums[l] % 2 == 0</span></span><br><span class="line">            <span class="keyword">if</span> (nums[left] % <span class="number">2</span> != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">while</span>(left &lt; n &amp;&amp; nums[left]  %<span class="number">2</span> != <span class="number">0</span>) &#123;</span><br><span class="line">                    left++;</span><br><span class="line">                &#125;</span><br><span class="line">                right = left;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">if</span> (right &gt;= n) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">// 满足 nums[i] &lt;= threshold</span></span><br><span class="line">            <span class="keyword">if</span> (left == right &amp;&amp; nums[right] &lt;= threshold) &#123;</span><br><span class="line">                ans = Math.max(ans, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(left == right &amp;&amp; nums[right] &gt; threshold) &#123;</span><br><span class="line">                right++;</span><br><span class="line">                left = right;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 满足 nums[i] % 2 != nums[i + 1] % 2</span></span><br><span class="line">            right++;</span><br><span class="line">            <span class="keyword">if</span>(right &lt; n &amp;&amp; (nums[right] % <span class="number">2</span> != nums[right-<span class="number">1</span>] % <span class="number">2</span>) &amp;&amp; nums[right] &lt;= threshold) &#123;</span><br><span class="line">                ans = Math.max(ans, right - left + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans != Integer.MIN_VALUE ? ans: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="632-最小区间"><a href="#632-最小区间" class="headerlink" title="632.最小区间"></a>632.最小区间</h5><blockquote>
+<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-range-covering-elements-from-k-lists/description/">632. 最小区间</a></p>
+</blockquote>
+<div class="elfjS" data-track-load="description_content"><p>你有&nbsp;<code>k</code>&nbsp;个 <strong>非递减排列</strong> 的整数列表。找到一个 <strong>最小 </strong>区间，使得&nbsp;<code>k</code>&nbsp;个列表中的每个列表至少有一个数包含在其中。</p>
+
+<p>我们定义如果&nbsp;<code>b-a &lt; d-c</code>&nbsp;或者在&nbsp;<code>b-a == d-c</code>&nbsp;时&nbsp;<code>a &lt; c</code>，则区间 <code>[a,b]</code> 比 <code>[c,d]</code> 小。</p>
+
+<p><strong>示例 1：</strong></p>
+
+<pre><strong>输入：</strong>nums = [[4,10,15,24,26], [0,9,12,20], [5,18,22,30]]
+<strong>输出：</strong>[20,24]
+<strong>解释：</strong> 
+列表 1：[4, 10, 15, 24, 26]，24 在区间 [20,24] 中。
+列表 2：[0, 9, 12, 20]，20 在区间 [20,24] 中。
+列表 3：[5, 18, 22, 30]，22 在区间 [20,24] 中。
+</pre>
+
+<p><strong>示例 2：</strong></p>
+
+<pre><strong>输入：</strong>nums = [[1,2,3],[1,2,3],[1,2,3]]
+<strong>输出：</strong>[1,1]
+</pre>
+
+<p><strong>提示：</strong></p>
+
+<ul>
+    <li><code>nums.length == k</code></li>
+    <li><code>1 &lt;= k &lt;= 3500</code></li>
+    <li><code>1 &lt;= nums[i].length &lt;= 50</code></li>
+    <li><code>-10<sup>5</sup> &lt;= nums[i][j] &lt;= 10<sup>5</sup></code></li>
+    <li><code>nums[i]</code> 按非递减顺序排列</li>
+</ul>
+</div>
+
+<ol>
+<li><p>思路</p>
+<blockquote>
+<p>要求满足区间，可以用左右双指针去找；求每个列表都有一个数满足在区间内，可以用memo数组存储是否满足，当need满足列表长度时为满足所求，然后算出最小区间即可。</p>
+</blockquote>
+</li>
+<li><p>解题方法</p>
+<blockquote>
+<p>思路在于把列表内的值都转化为hash映射，把列表都转化为index求是否所有的index都在区间内即可。</p>
+</blockquote>
+</li>
+<li><p>Code</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] smallestRange(List&lt;List&lt;Integer&gt;&gt; nums) &#123;</span><br><span class="line">        <span class="comment">// 整体思路：把列表里面的数都映射进hash表，然后用need数组need[nums.length]判断所求的区间是否都满足了每个列表都有一个数在区间内</span></span><br><span class="line">        Map&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> nums.size();</span><br><span class="line">        <span class="comment">// 初始化满足的最小区间，最小值为所有列表里面的值的最小值，最大值为所有列表里面的值的最大值</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">minVal</span> <span class="operator">=</span> Integer.MAX_VALUE, maxVal = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> x: nums.get(i)) &#123;</span><br><span class="line">                List&lt;Integer&gt; list = map.getOrDefault(x, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">                list.add(i);</span><br><span class="line">                map.put(x, list);</span><br><span class="line">                minVal = Math.min(minVal, x);</span><br><span class="line">                maxVal = Math.max(maxVal, x);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 滑动窗口从最新值开始滑动</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> minVal, right = minVal;</span><br><span class="line">        <span class="comment">// 记录是否列表</span></span><br><span class="line">        <span class="type">int</span>[] memo = <span class="keyword">new</span> <span class="title class_">int</span>[size];</span><br><span class="line">        <span class="type">int</span> <span class="variable">need</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">bestL</span> <span class="operator">=</span> minVal, bestR = maxVal;</span><br><span class="line">        <span class="keyword">while</span>(right &lt;= maxVal) &#123;</span><br><span class="line">            <span class="comment">// 如果right在map当中</span></span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(right)) &#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> x: map.get(right)) &#123;</span><br><span class="line">                    <span class="comment">// 记录区间满足了第x个列表</span></span><br><span class="line">                    memo[x]++;</span><br><span class="line">                    <span class="keyword">if</span> (memo[x] == <span class="number">1</span>) need++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="comment">// 当所有列表都满足了，记录区间大小，并缩小窗口</span></span><br><span class="line">            <span class="keyword">while</span>(need == size) &#123;</span><br><span class="line">                <span class="comment">// 缩小区间</span></span><br><span class="line">                <span class="keyword">if</span>(right - left &lt; bestR - bestL) &#123;</span><br><span class="line">                    bestL = left;</span><br><span class="line">                    bestR = right;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(map.containsKey(left)) &#123;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> x: map.get(left)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (memo[x] == <span class="number">1</span>) need--;</span><br><span class="line">                        memo[x]--;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;bestL, bestR&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="中间向两端扩散指针"><a href="#中间向两端扩散指针" class="headerlink" title="中间向两端扩散指针"></a>中间向两端扩散指针</h5><p>中间向两端扩散，即左右指针分别朝左右两边扩散，常见为<code>寻找回文子串</code>，判断回文子串的重点为判断子串的长度是奇数还是偶数。</p>
 <p>从给定位置寻找回文子串的算法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 s 中寻找以 s[l] 和 s[r] 为中心的最长回文串</span></span><br><span class="line">String <span class="title function_">palindrome</span><span class="params">(String s, <span class="type">int</span> l, <span class="type">int</span> r)</span> &#123;</span><br><span class="line">    <span class="comment">// 防止索引越界</span></span><br><span class="line">    <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; r &lt; s.length()</span><br><span class="line">            &amp;&amp; s.charAt(l) == s.charAt(r)) &#123;</span><br><span class="line">        <span class="comment">// 双指针，向两边展开</span></span><br><span class="line">        l--; r++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回以 s[l] 和 s[r] 为中心的最长回文串</span></span><br><span class="line">    <span class="keyword">return</span> s.substring(l + <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2709,10 +2832,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-17T22:27:30+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-18T20:41:09+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月17日</p>
+    <p>更新于：2023年11月18日</p>
   </a>
 </div>
 
@@ -2735,8 +2858,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=双指针秒杀数组、字符串操作题 - Elijah Zheng's Blog&summary=双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。
-重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。"
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=滑动窗口找满足规则的区间问题 - Elijah Zheng's Blog&summary=滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。
+常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。"
           
           >
           
@@ -2748,8 +2871,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=双指针秒杀数组、字符串操作题 - Elijah Zheng's Blog&summary=双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。
-重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。"
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=滑动窗口找满足规则的区间问题 - Elijah Zheng's Blog&summary=滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。
+常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。"
           
           >
           
@@ -2761,8 +2884,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=双指针秒杀数组、字符串操作题 - Elijah Zheng's Blog&summary=双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。
-重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。"
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/&title=滑动窗口找满足规则的区间问题 - Elijah Zheng's Blog&summary=滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。
+常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。"
           
           >
           
@@ -2865,7 +2988,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%EF%BC%88%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%89"><span class="toc-text">快慢指针（滑动窗口）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B7%A6%E5%8F%B3%E6%8C%87%E9%92%88"><span class="toc-text">左右指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E5%90%91%E4%B8%A4%E7%AB%AF%E6%89%A9%E6%95%A3%E6%8C%87%E9%92%88"><span class="toc-text">中间向两端扩散指针</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="toc-text">滑动窗口算法框架</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2760-%E6%9C%80%E9%95%BF%E5%A5%87%E5%81%B6%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-text">2760. 最长奇偶子数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#632-%E6%9C%80%E5%B0%8F%E5%8C%BA%E9%97%B4"><span class="toc-text">632.最小区间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E5%90%91%E4%B8%A4%E7%AB%AF%E6%89%A9%E6%95%A3%E6%8C%87%E9%92%88"><span class="toc-text">中间向两端扩散指针</span></a></li></ol>
     </div>
   </section>
 
@@ -3503,7 +3626,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/","sameAs":["https://github.com/volantis-x"],"description":"Elijah Zheng's Blog"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://blog.zhengxiangling.com/","name":"Elijah Zheng's Blog"}},{"@type":"ListItem","position":2,"item":{"@id":"https://blog.zhengxiangling.com/categories/计算机算法/","name":"计算机算法"}},{"@type":"ListItem","position":2,"item":{"@id":"https://blog.zhengxiangling.com/categories/计算机算法/双指针/","name":"双指针"}},{"@type":"ListItem","position":3,"item":{"@id":"https://blog.zhengxiangling.com/2023/10/16/双指针秒杀数组、字符串操作题/","name":"双指针秒杀数组、字符串操作题"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","keywords":null,"description":"Elijah Zheng's Blog","author":{"@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/","description":"Elijah Zheng's Blog"},"publisher":{"@type":"Organization","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://blog.zhengxiangling.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"双指针秒杀数组、字符串操作题","description":"双指针的操作方法包括快慢指针（滑动窗口）、左右指针和中间向两端扩散指针，掌握这些指针操作方法，可以秒杀大多操作数组和字符串的题目。\n重点为滑动窗口和左右指针，左右指针的二分查找包括求查找中间值和左右边界值的写法。","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/"},"author":{"@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/"},"publisher":{"@type":"Organization","name":"Elijah Zheng's Blog","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/","wordCount":106,"datePublished":"2023-10-16T00:12:00.000Z","dateModified":"2023-11-17T14:27:30.009Z","articleSection":"计算机算法","keywords":"滑动窗口","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/","sameAs":["https://github.com/volantis-x"],"description":"Elijah Zheng's Blog"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://blog.zhengxiangling.com/","name":"Elijah Zheng's Blog"}},{"@type":"ListItem","position":2,"item":{"@id":"https://blog.zhengxiangling.com/categories/计算机算法/","name":"计算机算法"}},{"@type":"ListItem","position":2,"item":{"@id":"https://blog.zhengxiangling.com/categories/计算机算法/双指针/","name":"双指针"}},{"@type":"ListItem","position":3,"item":{"@id":"https://blog.zhengxiangling.com/2023/10/16/双指针秒杀数组、字符串操作题/","name":"滑动窗口找满足规则的区间问题"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","keywords":null,"description":"Elijah Zheng's Blog","author":{"@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/","description":"Elijah Zheng's Blog"},"publisher":{"@type":"Organization","name":"Elijah Zheng's Blog","url":"https://blog.zhengxiangling.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://blog.zhengxiangling.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"滑动窗口找满足规则的区间问题","description":"滑动窗口也为快慢指针。两个指针，fast指针在前面探路，slow指针负责在移动前做判断条件，然后再移动，两个指针覆盖的长度即为要找的元素空间。\n常见的快慢指针题目：找满足条件的最长子串、删除排序的重复元素等。","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/"},"author":{"@type":"Person","name":"Elijah Zheng","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://blog.zhengxiangling.com/"},"publisher":{"@type":"Organization","name":"Elijah Zheng's Blog","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://blog.zhengxiangling.com/2023/10/16/%E5%8F%8C%E6%8C%87%E9%92%88%E7%A7%92%E6%9D%80%E6%95%B0%E7%BB%84%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E9%A2%98/","wordCount":104,"datePublished":"2023-10-16T00:12:00.000Z","dateModified":"2023-11-18T12:41:09.592Z","articleSection":"计算机算法","keywords":"滑动窗口","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

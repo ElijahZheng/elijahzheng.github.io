@@ -1915,7 +1915,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2658,9 +2658,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <p>为了检测多个网站及检测网站ssl证书有效性，写了一个在线测试检测工具。</p>
 <span id="more"></span>
 
-<h5 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h5><p>自由添加和编辑站点信息<br>单选及多选检测<br>支持http和https检测<br>当有ssl证书时，检测证书的有效状态以及过期时间<br>查看检测历史     </p>
+<h5 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h5><p>自由添加和编辑站点信息 	<br>单选及多选检测 	<br>支持http和https检测    	<br>当有ssl证书时，检测证书的有效状态以及过期时间   	<br>查看检测历史 	</p>
 <h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><p>python3 node-8.9.1 </p>
-<h5 id="框架及数据库"><a href="#框架及数据库" class="headerlink" title="框架及数据库"></a>框架及数据库</h5><p>后端：<code>tornado </code><br>前端：<code>vue</code><br>数据库：<code>mongo</code></p>
+<h5 id="框架及数据库"><a href="#框架及数据库" class="headerlink" title="框架及数据库"></a>框架及数据库</h5><p>后端：<code>tornado </code> 	<br>前端：<code>vue</code>	<br>数据库：<code>mongo</code></p>
 <h5 id="http检测状态实现原理"><a href="#http检测状态实现原理" class="headerlink" title="http检测状态实现原理"></a>http检测状态实现原理</h5><p>通过 python <code>requests</code> 库</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    web_url = <span class="string">&#x27;http://...&#x27;</span></span><br><span class="line">    <span class="comment"># timeout - 请求超时时间</span></span><br><span class="line">    r = requests.get(web_url, timeout=<span class="number">10</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;请求成功&#x27;</span>)</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 输出错误原因</span></span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span>;</span><br></pre></td></tr></table></figure>
 
@@ -2674,7 +2674,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">        <span class="attr">vue</span>: <span class="string">&#x27;vue/dist/vue.js&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h5><blockquote>
-<p>ssl — TLS/SSL wrapper for socket objects - <a target="_blank" rel="noopener" href="https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert">https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert</a></p>
+<p>ssl — TLS&#x2F;SSL wrapper for socket objects - <a target="_blank" rel="noopener" href="https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert">https://docs.python.org/3.2/library/ssl.html#ssl.SSLSocket.getpeercert</a></p>
 </blockquote>
 
   </div>

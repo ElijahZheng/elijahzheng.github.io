@@ -1907,7 +1907,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2586,6 +2586,385 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2020/09/30/SpringBoot-使用org-slf4j-Logger记录日志/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2020/09/30/SpringBoot-%E4%BD%BF%E7%94%A8org-slf4j-Logger%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97/"  itemprop="url">
+        SpringBoot 使用org.slf4j.Logger 记录日志
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+          我们在本地运行应用程序时，可以通过控制台查看程序运行情况。但我们把应用部署到生产服务器时，或者对应用测试时需要查看程序运行的情况，我们可以把运行的情况记录到日志中，这样我们就可以通过日志查询程序运行的好坏情况，以及方便后续程序出错时找出错误点及时修复。
+  以下是在springboot通过org.slf4j.Logger记录日志,slf4j是springboot默认自带的日志框架，所以不...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2020-09-30T18:13:00+08:00">2020-09-30</time>
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/09/30/SpringBoot-%E4%BD%BF%E7%94%A8org-slf4j-Logger%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2020/08/15/vue-router-拦截用户页面路由访问/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2020/08/15/vue-router-%E6%8B%A6%E6%88%AA%E7%94%A8%E6%88%B7%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1%E8%AE%BF%E9%97%AE/"  itemprop="url">
+        vue-router 拦截用户页面路由访问
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        在对需要做登录的系统前端页面访问做控制时，可以用router的beforeEach方式来对跳转到的路径做管理。如果访问的路径在路径白名单内，则可以继续访问，如果不在，则判断用户是否登录，如果未登录，则被强制跳转到登录页面。
+一般在前端，用户登录完成之后，我们会将管理用户状态的token值存在Cookie或者session中，所以可以用是否有token值来判断用户是否已经做了登录。
+权限判断逻...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2020-08-15T19:05:00+08:00">2020-08-15</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/Vue/">Vue</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/Vue/" itemprop="url"><span itemprop="name">Vue</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2020/08/15/vue-router-%E6%8B%A6%E6%88%AA%E7%94%A8%E6%88%B7%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1%E8%AE%BF%E9%97%AE/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2019/12/05/Java-读取公钥、私钥，加签、验签/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/"  itemprop="url">
+        Java 读取公钥、私钥，SHA256算法加签、验签
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      <p>最近在做利用私钥加签，和对加签串利用公钥验签，作如下总结：</p>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2019-12-05T15:27:00+08:00">2019-12-05</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/java/">java</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/java/" itemprop="url"><span itemprop="name">java</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/12/05/Java-%E8%AF%BB%E5%8F%96%E5%85%AC%E9%92%A5%E3%80%81%E7%A7%81%E9%92%A5%EF%BC%8C%E5%8A%A0%E7%AD%BE%E3%80%81%E9%AA%8C%E7%AD%BE/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2019/11/15/beautifulSoup爬取同步加载页面数据/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/"  itemprop="url">
+        beautifulSoup爬取同步加载页面数据
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      <p>beautifulSoup 可以很方便的获取 html 页面的标签节点，而且也很容易获取到标签的属性和文本内容。我们就运用 beautifulSoup 来爬取同步加载页面数据，然后我们将获取到的数据存入到 excel 中。</p>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2019-11-15T11:00:00+08:00">2019-11-15</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url"><span itemprop="name">爬虫</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/11/15/beautifulSoup%E7%88%AC%E5%8F%96%E5%90%8C%E6%AD%A5%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2019/11/06/区块链技术及应用现状-1/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/"  itemprop="url">
+        区块链技术及应用现状
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      <blockquote>
+<p>from 陈纯院士的讲座</p>
+</blockquote>
+<h2 id="区块链本质"><a href="#区块链本质" class="headerlink" title="区块链本质"></a>区块链本质</h2><h3 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h3><p>交易：交易指的是一次对账本的操作，如一笔转账交易。</p>
+<p>区块：将一段时间内发生的所有交易和状态打包成为一个区块。</p>
+<p>块链式数据结构（狭义区块链）：区块以时间顺序前后相连，组成一种块链式数据结构，及“区块链”一词的由来。</p>
+<p>分布式账本（广义区块链）：多参与方各自部署，互联互通，构成分布式网络。</p>
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2019-11-06T10:52:00+08:00">2019-11-06</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url"><span itemprop="name">区块链</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/11/06/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6-1/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2019/03/23/macOS-Mojave安装双系统-bug-总结/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="Elijah Zheng's Blog">
+    <meta itemprop="description" content="Elijah Zheng's Blog">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2019/03/23/macOS-Mojave%E5%AE%89%E8%A3%85%E5%8F%8C%E7%B3%BB%E7%BB%9F-bug-%E6%80%BB%E7%BB%93/"  itemprop="url">
+        macOS Mojave 安装双系统 bug 总结
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+          在 mac 上装 windows10 双系统一般是由于	
+
+开发的需要，有些系统级的架构只支持windows，不适合在 mac 上开发。
+运行的游戏只支持 windows，无法在 mac 上运行。
+
+	
+macOS Mojave 只支持安装 windows10，往下的版本不再支持。启动转移助理（BootCamp）的功能目前也限制于制作双系统和将双系统恢复为单一分区，取消了之前支持wind...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2019-03-23T09:24:00+08:00">2019-03-23</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/%E7%B3%BB%E7%BB%9F/" itemprop="url"><span itemprop="name">系统</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2019/03/23/macOS-Mojave%E5%AE%89%E8%A3%85%E5%8F%8C%E7%B3%BB%E7%BB%9F-bug-%E6%80%BB%E7%BB%93/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
   <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/05/23/软考易错题总结/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="Elijah Zheng's Blog">
@@ -2803,353 +3182,6 @@ css预...
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/03/11/学习-webpack/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/03/11/%E5%AD%A6%E4%B9%A0-webpack/"  itemprop="url">
-        学习 webpack
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        learn-webpack学习webpack
-环境node 8.9.1npm 5.7.1webpack 4   
-script开发模式 - npm run dev打包 - npm run build运行打包后的文件 - npm run server   
-实现
-多入口 html - 配置入口 config/entry.json   
-base64 处理limit限制以下的图片   
-css预...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-03-11T12:18:00+08:00">2018-03-11</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/03/11/%E5%AD%A6%E4%B9%A0-webpack/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/02/13/django-实现登录，注册，用-Pillow-添加验证码/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/02/13/django-%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%EF%BC%8C%E6%B3%A8%E5%86%8C%EF%BC%8C%E7%94%A8-Pillow-%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%A0%81/"  itemprop="url">
-        Django 实现登录，注册，用 Pillow 添加验证码
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        用 Django 作为后端，Django 有自己的一套登录和注册方式（User Model），可以对 User Model 进行扩展，新作一张表 user_ext 。    
-然后用 Pillow 生成验证码，防止刷用户注册。
-github 传送门
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-02-13T14:52:00+08:00">2018-02-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/02/13/django-%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%EF%BC%8C%E6%B3%A8%E5%86%8C%EF%BC%8C%E7%94%A8-Pillow-%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%A0%81/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/02/13/ѧϰ-vuex/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/02/13/%D1%A7%CF%B0-vuex/"  itemprop="url">
-        学习 vuex
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        vuex 可以用来帮助我们管理全局的状态，以音乐播放器来举例。我们在播放音乐的时候，需要将音乐的信息保存到全局变量中，然后当点击其他页面的时候，音乐的信息保存有，就可以在其他页面自由切换，不至于点到其他页面的时候之前播放的音乐的信息就没有了。当想调用音乐信息的时候，从全局变量中调出即可。
-github 传送门
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-02-13T14:43:00+08:00">2018-02-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/02/13/%D1%A7%CF%B0-vuex/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/02/13/学习-vuex/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/02/13/%E5%AD%A6%E4%B9%A0-vuex/"  itemprop="url">
-        学习 vuex
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        vuex 可以用来帮助我们管理全局的状态，以音乐播放器来举例。我们在播放音乐的时候，需要将音乐的信息保存到全局变量中，然后当点击其他页面的时候，音乐的信息保存有，就可以在其他页面自由切换，不至于点到其他页面的时候之前播放的音乐的信息就没有了。当想调用音乐信息的时候，从全局变量中调出即可。
-github 传送门
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-02-13T14:43:00+08:00">2018-02-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/02/13/%E5%AD%A6%E4%B9%A0-vuex/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/01/29/MongoDB-ѧϰ/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/01/29/MongoDB-%D1%A7%CF%B0/"  itemprop="url">
-        MongoDB 学习
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      <p>1.进入数据库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mongo</span></span><br></pre></td></tr></table></figure>
-<p>不进行任何操作的时候，默认使用的数据库为<code>test</code></p>
-<p>2.创建或切换数据库    </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">use learndb</span></span><br><span class="line">switched to db learndb</span><br></pre></td></tr></table></figure>
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-01-29T14:59:00+08:00">2018-01-29</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/01/29/MongoDB-%D1%A7%CF%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://blog.zhengxiangling.com/2018/01/29/MongoDB-学习/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="Elijah Zheng's Blog">
-    <meta itemprop="description" content="Elijah Zheng's Blog">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2018/01/29/MongoDB-%E5%AD%A6%E4%B9%A0/"  itemprop="url">
-        MongoDB 学习
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      <p>1.进入数据库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mongo</span></span><br></pre></td></tr></table></figure>
-<p>不进行任何操作的时候，默认使用的数据库为<code>test</code></p>
-<p>2.创建或切换数据库    </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">use learndb</span></span><br><span class="line">switched to db learndb</span><br></pre></td></tr></table></figure>
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2018-01-29T14:59:00+08:00">2018-01-29</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2018/01/29/MongoDB-%E5%AD%A6%E4%B9%A0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3164,7 +3196,7 @@ github 传送门
           </a>
         
         <p class="current">
-          3 / 6
+          3 / 7
         </p>
         
           <a class="next" rel="next" href="/page/4/">
@@ -3304,17 +3336,42 @@ github 传送门
           <li><a class="flat-box"
             title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"
             active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395"
-            ><div class='name'>计算机算法</div><div class='badge'>(7)</div></a></li>
+            ><div class='name'>计算机算法</div><div class='badge'>(13)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"
+            active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E4BA8CE58886E69FA5E689BE"
+            ><div class='name'>二分查找</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box child"
             title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88/"
             active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E58F8CE68C87E99288"
-            ><div class='name'>双指针</div><div class='badge'>(1)</div></a></li>
+            ><div class='name'>双指针</div><div class='badge'>(2)</div></a></li>
         
           <li><a class="flat-box child"
             title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"
             active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E59B9EE6BAAFE7AE97E6B395"
             ><div class='name'>回溯算法</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/"
+            active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E5B7AEE58886E695B0E7BB84"
+            ><div class='name'>差分数组</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%B9%B6%E6%9F%A5%E9%9B%86/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E5%B9%B6%E6%9F%A5%E9%9B%86/"
+            active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E5B9B6E69FA5E99B86"
+            ><div class='name'>并查集</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"
+            active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E69C80E79FADE8B7AFE5BE84"
+            ><div class='name'>最短路径</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/"
+            active-action="action-categoriesE8AEA1E7AE97E69CBAE7AE97E6B395E6A091E78AB6E695B0E7BB84"
+            ><div class='name'>树状数组</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box child"
             title="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%A8%A1%E6%8B%9F/" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/%E6%A8%A1%E6%8B%9F/"

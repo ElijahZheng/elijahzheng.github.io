@@ -1909,7 +1909,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2670,7 +2670,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&#x27;assert&#x27;</span>;</span><br><span class="line"><span class="variable">$a</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>然后通过发送 <code>post</code> 请求传参，传入 <code>phpinfo()</code> 或者系统命令执行相关命令来获取 <code>flag</code>。</p>
-<h3 id="linux中，-amp-和-amp-amp-和-的区别"><a href="#linux中，-amp-和-amp-amp-和-的区别" class="headerlink" title="linux中，&amp;和&amp;&amp;,|和||的区别"></a>linux中，&amp;和&amp;&amp;,|和||的区别</h3><ul>
+<h3 id="linux中，-和-和-的区别"><a href="#linux中，-和-和-的区别" class="headerlink" title="linux中，&amp;和&amp;&amp;,|和||的区别"></a>linux中，&amp;和&amp;&amp;,|和||的区别</h3><ul>
 <li><p><code>&amp;</code> 表示任务在后台执行，如要在后台运行 <code>redis-server</code>,则有 <code>redis-server &amp;</code></p>
 </li>
 <li><p><code>&amp;&amp;</code> 表示前一条命令执行成功时，才执行后一条命令 ，如 <code>echo &#39;1‘ &amp;&amp; echo &#39;2&#39;</code>    </p>
@@ -2693,7 +2693,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="判断服务器为linux或windows"><a href="#判断服务器为linux或windows" class="headerlink" title="判断服务器为linux或windows"></a>判断服务器为linux或windows</h3><ul>
 <li><code>windows</code> 对大小写不敏感，将 <code>x</code> 改为 <code>X</code>，如果不变，则为 <code>windows</code></li>
-<li><code>windows</code> 查看文件使用指令 <code>type</code>,  </li>
+<li><code>windows</code> 查看文件使用指令 <code>type</code>,</li>
 </ul>
 <h3 id="文件名绕过技巧"><a href="#文件名绕过技巧" class="headerlink" title="文件名绕过技巧"></a>文件名绕过技巧</h3><p>如 <code>flag</code> 文件被绕过，可通过如下方法绕过</p>
 <ul>
@@ -2881,7 +2881,7 @@ sql注入类别分为：联合注入、报错注入、布尔盲注、时间盲�
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E4%BF%A1%E6%81%AF%E5%8C%85"><span class="toc-text">获取页面信息包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E4%B8%AD%EF%BC%8C-amp-%E5%92%8C-amp-amp-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">linux中，&amp;和&amp;&amp;,|和||的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-text">空格绕过技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%BAlinux%E6%88%96windows"><span class="toc-text">判断服务器为linux或windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-text">文件名绕过技巧</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E4%BF%A1%E6%81%AF%E5%8C%85"><span class="toc-text">获取页面信息包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E4%B8%AD%EF%BC%8C-%E5%92%8C-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">linux中，&amp;和&amp;&amp;,|和||的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-text">空格绕过技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%BAlinux%E6%88%96windows"><span class="toc-text">判断服务器为linux或windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-text">文件名绕过技巧</span></a></li></ol></li></ol>
     </div>
   </section>
 

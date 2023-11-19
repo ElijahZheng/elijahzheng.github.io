@@ -1913,7 +1913,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2672,7 +2672,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </code></pre>
 <span id="more"></span>
 
-<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p>src/main.js</p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p>src&#x2F;main.js</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="comment">// 引用vue-resource</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueResource</span> <span class="keyword">from</span> <span class="string">&#x27;vue-resource&#x27;</span></span><br></pre></td></tr></table></figure>
 <h4 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="comment">// 引用vue-resource</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueResource</span> <span class="keyword">from</span> <span class="string">&#x27;vue-resource&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueResource</span>)</span><br></pre></td></tr></table></figure>
 
@@ -2697,7 +2697,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>子组件要用props来接受值的传递</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">my_value</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Object</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>就可以和<code>data</code>里面的数据一样用 大胡子语法 来使用了。</p>
-<p>引用公共<code>css</code>文件<br>如有 common/scss/common.scss 文件</p>
+<p>引用公共<code>css</code>文件<br>如有 common&#x2F;scss&#x2F;common.scss 文件</p>
 <p>引用方式 （@import）</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot; rel=&quot;stylesheet/scss&quot;&gt;</span><br><span class="line">  <span class="keyword">@import</span> <span class="string">&quot;..路径/common/scss/common.scss&quot;</span>;</span><br><span class="line">  ...</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
   </div>
@@ -2826,8 +2826,8 @@ vue-resource安装.$ npm install vue-resource
       
         <a class='next' href='/2017/07/25/vue-cli%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BD%BF%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/'>
           <p class='title'>vue-cli脚手架使用（一）-- 起步、组件、路由<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>使用vue-cli脚手架之前，建议对vue有一定了解之后再使用构建工具。    
-起步123456789# 全局安装 vue-cli$ npm install --global vue-cli#...</p>
+          <p class='content'>使用vue-cli脚手架之前，建议对vue有一定了解之后再使用构建工具。	
+起步123456789# 全局安装 vue-cli$ npm install --global vue-cli# 创建...</p>
         </a>
       
     </div>

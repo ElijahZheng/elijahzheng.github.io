@@ -1910,7 +1910,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700294691341),
+    lastupdate: new Date(1700376891127),
     sidebar: {
       for_page: ["blogger","category","tagcloud","donate"],
       for_post: ["toc"],
@@ -2655,19 +2655,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <h4 id="1-注册七牛云个人账户"><a href="#1-注册七牛云个人账户" class="headerlink" title="1.注册七牛云个人账户"></a>1.注册七牛云个人账户</h4><p>选择个人账户</p>
 <h4 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h4><p>注册成功在资源主页 点击对象存储 –&gt;立即添加，存储名称 （按自己喜好），这里为了后面方便先起名为chuangyi（创意），存储区域默认，访问空间选择公开空间。–&gt; 确定创建</p>
-<h4 id="3-获取有用的信息。"><a href="#3-获取有用的信息。" class="headerlink" title="3.获取有用的信息。"></a>3.获取有用的信息。</h4><p>1）秘钥<br>左边栏，进入个人中心，点击秘钥管理，然后会有公钥和密钥。    </p>
-<table>
-<thead>
-<tr>
-<th>AccessKey</th>
-<th align="center">SecretKey</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>AK:a40Z71LFfbz_kDJnfOJflyI**</td>
-<td align="center">SK:JnfOJflyIOYpMy6eOnXMbsP**</td>
-</tr>
-</tbody></table>
+<h4 id="3-获取有用的信息。"><a href="#3-获取有用的信息。" class="headerlink" title="3.获取有用的信息。"></a>3.获取有用的信息。</h4><p>1）秘钥<br>左边栏，进入个人中心，点击秘钥管理，然后会有公钥和密钥。	</p>
+<p>|AccessKey|SecretKey<br>|: ————- :|:————-:|<br>|AK:a40Z71LFfbz_kDJnfOJflyI**|SK:JnfOJflyIOYpMy6eOnXMbsP**|</p>
 <p>这里的公钥和密钥后面会有用。<br>2）测试域名<br>  找到存储空间列表，点击chuangyi，空间概览里右边有测试域名。<br>  我这里是 <code>opjb0b***.bkt.clouddn.com</code> 每个人的都会不一样。</p>
 <h4 id="4-在django项目中引入七牛。"><a href="#4-在django项目中引入七牛。" class="headerlink" title="4.在django项目中引入七牛。"></a>4.在django项目中引入七牛。</h4><p>在有 manager.py的目录下，执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install qiniu</span><br></pre></td></tr></table></figure>
@@ -2678,14 +2667,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qiniu</span><br><span class="line"></span><br><span class="line">qn = qiniu.Auth(</span><br><span class="line">    <span class="string">&#x27;a40Z71LFfbz_kDJnfOJflyI**&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;JnfOJflyIOYpMy6eOnXMbsP**&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>（说明：Auth中填入的是之前说的公钥和秘钥。每个人的公钥和密钥都不一样，请自行替换）</p>
-<p>2）运用七牛<br>从views.py中传token值到页面中。<br>引入qn<br>views.py</p>
+<p>2）运用七牛	<br>从views.py中传token值到页面中。	<br>引入qn	<br>views.py</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> cyzc.settings <span class="keyword">import</span> qn</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">qn_test</span>(<span class="params">request</span>):</span><br><span class="line">	data = &#123;</span><br><span class="line">        <span class="string">&#x27;upload_token&#x27;</span>: qn.upload_token(<span class="string">&quot;chuangyi&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
 
 <p>将token值返回给html，因为用七牛上传图片时需要上传的权限，这个token值就是上传时需要的证明。<br>其中upload_token()中的值为对应的七牛上面创建的存储空间的名字。</p>
 <p>3）在html页面给input绑定这个token值</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if upload_token %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;qn&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;http://upload.qiniu.com/&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;token&quot;</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; upload_token &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;qnUpload&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;image/*&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display: none&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
 <p>这个直接复制粘贴就可以了。</p>
-<p>4）给需要上传图片的按钮增加class=”upload-btn”</p>
+<p>4）给需要上传图片的按钮增加class&#x3D;”upload-btn”</p>
 <p>我们需要用到的是先创建一个隐藏的input，其中name对应着要上传的字段的名字。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">class</span>=<span class="string">&quot;my_upload&quot;</span> <span class="attr">name</span>=<span class="string">&quot;img&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -2700,7 +2689,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>data为上传成功时返回的图片数据，data.hash则为图片的名称。</p>
 <p>7）然后我们可以直接获取上传成功的图片路径然后渲染在html页面上。<br>图片的路径为</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> img_src = <span class="string">&#x27;http://opjb0***.bkt.clouddn.com/&#x27;</span> + data.<span class="property">hash</span>;</span><br></pre></td></tr></table></figure>
-<p>其中<code>http://~~</code>为之前说的测试域名（ps：拼接路径名时别忘记了 ‘/‘ ）。</p>
+<p>其中<code>http://~~</code>为之前说的测试域名（ps：拼接路径名时别忘记了 ‘&#x2F;‘ ）。</p>
 <h4 id="6-需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。"><a href="#6-需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。" class="headerlink" title="6. 需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。"></a>6. 需要上传的字段的信息，已经存储在input的value里了，post的时候就可以获取到图片的路径，然后就可以存储到数据库中了。</h4>
   </div>
   
